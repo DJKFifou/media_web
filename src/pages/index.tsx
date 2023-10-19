@@ -5,6 +5,22 @@ import styles from '@/styles/Home.module.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 
+async function getUser(){
+  try {
+  const data = await fetch('/api/users', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({id: 'clnwy79320001djrbnb08txod'}),
+  })
+  const user = await data.json()
+  console.log(user)
+  }catch (e) {
+    console.error(e)
+  }
+}
+
 export default function Home() {
   return (
     <>
@@ -29,6 +45,7 @@ export default function Home() {
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
               <a href="/register" className={styles.inscriptionLink}>S'inscrire</a>
               <button>Se connecter</button>
+              <button onClick={() => getUser()}>getUser</button>
             </div>
           </div>
         </div>
