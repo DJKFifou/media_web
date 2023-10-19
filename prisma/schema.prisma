@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Theme_Name {
+  GEOPOLITIC
+  SPORT
+  FASHION
+  POLITIC
+  GEOGRAPHY
+  HISTORY
+  LIFESTYLE
+  ENVIRONMENT
+  HEALTH
+  CULTURE
+  TRAVEL
+  INTERNATIONAL
+  NATIONAL
+}
+
+enum Format_Name {
+  VIDEO
+  ARTICLE
+  PODCAST
+}
+
+enum Article_Frequency {
+  DAY
+  WEEK
+  MONTH
+}
+
+model Article {
+  id               String   @id @default(cuid())
+  title            String
+  // save_by          User[]
+  Topic            Topic?   @relation(fields: [topicId], references: [id])
+  topicId          String?
+  content          String
+  publish_date     DateTime
+  reading_duration Int
+  recommanded_by   User[]
+}
+
+model User {
+  id                String             @id @default(cuid())
+  user_name         String
+  email             String
+  password          String
+  type              Role
+  liked_articles    Article[]
+  theme             Theme[]
+  format            Format[]
+  article_number    Int?
+  article_frequency Article_Frequency?
+}
+
+model Theme {
+  id    String     @id @default(cuid())
+  title Theme_Name
+  slug  String
+  User  User[]
+  topic Topic[]
+}
+
+model Format {
+  id    String      @id @default(cuid())
+  title Format_Name
+  User  User[]
+}
+
+model Topic {
+  id                String    @id @default(cuid())
+  introduction_text String
+  articles          Article[]
+  theme             Theme[]
+  is_hot            Boolean
+}
+
+model Test {
+  id    String @id @default(cuid())
+  title String
+}
