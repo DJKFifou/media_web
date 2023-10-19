@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
@@ -20,7 +19,7 @@ export default function Home() {
           <h1 className={styles.titleConnexion}>Se connecter</h1>
           <div className={styles.containerConnexion}>
             <div className={styles.contentConnexion}>
-              <label htmlFor="">Identifiant</label>
+              <label htmlFor="">Email</label>
               <input type="email" placeholder='john.doe@gmail.com'/>
             </div>
             <div className={styles.contentConnexion}>

@@ -12,15 +12,11 @@ export default function Register() {
             <h1 className={styles.titleConnexion}>S'inscrire</h1>
             <div className={styles.containerConnexion}>
               <div className={styles.contentConnexion}>
-                <label htmlFor="">Nom</label>
-                <input type="text" placeholder='Doe'/> 
+                <label htmlFor="">Pseudo</label>
+                <input type="text" placeholder='Johnny'/>
               </div>
               <div className={styles.contentConnexion}>
-                <label htmlFor="">Prénom</label>
-                <input type="text" placeholder='John'/>
-              </div>
-              <div className={styles.contentConnexion}>
-                <label htmlFor="">Identifiant</label>
+                <label htmlFor="">Email</label>
                 <input type="email" placeholder='john.doe@gmail.com'/>
               </div>
               <div className={styles.contentConnexion}>
