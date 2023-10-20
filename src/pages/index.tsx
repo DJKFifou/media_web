@@ -2,34 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
-import {useState, useEffect} from "react";
+import { signIn } from "next-auth/react"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [themes, setThemes] = useState([]);
-
-  async function getThemes(){
-    try {
-      const data = await fetch('/api/themes', {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-      const themes = await data.json()
-      setThemes(themes)
-    }catch (e) {
-      console.error(e)
-    }
-  }
-
-  useEffect(() => {
-    getThemes()
-  }, []);
-
-  console.log(themes)
-
   return (
     <>
       <Head>
@@ -52,7 +29,7 @@ export default function Home() {
             </div>
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
               <Link href="/register" className={styles.inscriptionLink}>S'inscrire</Link>
-              <button>Se connecter</button>
+              <button onClick={() => signIn()}>Se connecter</button>
             </div>
           </div>
         </div>
