@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
 
@@ -19,15 +19,15 @@ export default function Home() {
           <h1 className={styles.titleConnexion}>Se connecter</h1>
           <div className={styles.containerConnexion}>
             <div className={styles.contentConnexion}>
-              <label htmlFor="">Identifiant</label>
+              <label htmlFor="">Email</label>
               <input type="email" placeholder='john.doe@gmail.com'/>
             </div>
             <div className={styles.contentConnexion}>
               <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='***********'/>
+              <input type="password" placeholder='**************'/>
             </div>
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
-              <a href="/register" className={styles.inscriptionLink}>S'inscrire</a>
+              <Link href="/register" className={styles.inscriptionLink}>S'inscrire</Link>
               <button>Se connecter</button>
             </div>
           </div>
