@@ -57,9 +57,8 @@ model Article {
 
 model User {
   id                String             @id @default(cuid())
-  user_name         String
-  password          String
-  type              Role
+  user_name         String?
+  type              Role               @default(USER)
   liked_articles    Article[]
   theme             Theme[]
   format            Format[]
