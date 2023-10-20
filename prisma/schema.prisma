@@ -79,6 +79,7 @@ model Theme {
 model Format {
   id    String      @id @default(cuid())
   title Format_Name
+  slug  String
   User  User[]
 }
 
