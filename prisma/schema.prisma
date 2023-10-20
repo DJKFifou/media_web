@@ -64,14 +64,14 @@ model User {
   format            Format[]
   article_number    Int?
   article_frequency Article_Frequency?
-
+  hasAccess         Boolean            @default(false)
   // Next-Auth
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  name              String?
+  email             String?            @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
 }
 
 model Theme {
