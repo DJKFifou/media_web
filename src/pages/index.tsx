@@ -2,11 +2,36 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
+import {useEffect, useState} from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const user = useSession()
+  const hasAccess = user.data?.user.hasAccess;
+  const userId = user.data?.user.id
+  const callbackUrl = hasAccess ? '/home' : '/register'
+  async function grandAccess(){
+    try {
+      if(userId){
+        await fetch('/api/user/grandUserAccess', {
+          body: {
+            id: userId
+          }
+        })
+      }
+    }catch (e) {
+      console.log(e)
+    }
+  }
+
+  // useEffect(() => {
+  //   if(hasAccess && userId){
+  //     grandAccess()
+  //   }
+  // }, [hasAccess, userId]);
+
   return (
     <>
       <Head>
@@ -29,7 +54,7 @@ export default function Home() {
             </div>
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
               <Link href="/register" className={styles.inscriptionLink}>S'inscrire</Link>
-              <button onClick={() => signIn()}>Se connecter</button>
+              <button onClick={() => signIn('google', {callbackUrl: callbackUrl})}>Se connecter</button>
             </div>
           </div>
         </div>
