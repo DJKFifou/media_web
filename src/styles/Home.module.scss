@@ -29,6 +29,19 @@
           cursor: pointer;
         }
       }
+      &.flexColumn {
+        display: flex;
+        flex-direction: column;
+        height: 190px;
+        overflow-y: scroll;
+        margin: 20px 0;
+      }
+      .selection {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
       label {
         min-width: 100px;
       }

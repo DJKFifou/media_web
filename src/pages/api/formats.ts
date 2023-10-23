@@ -1,6 +1,6 @@
 import {prisma} from '@/lib/prisma';
 import {NextApiRequest, NextApiResponse} from "next";
-import {Format_Name} from ".prisma/client";
+import {Format_Name}  from '@prisma/client';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 	const method = req.method;
