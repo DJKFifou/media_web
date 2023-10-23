@@ -2,35 +2,35 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
-import { signIn, useSession } from "next-auth/react"
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import useAuth from "@/hooks/useAuth";
+import {Credentials} from "@/types";
+import { useRouter } from 'next/router'
+import {supabase} from "@/lib/initSupabase";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const user = useSession()
-  const hasAccess = user.data?.user.hasAccess;
-  const userId = user.data?.user.id
-  const callbackUrl = hasAccess ? '/home' : '/register'
-  async function grandAccess(){
-    try {
-      if(userId){
-        await fetch('/api/user/grandUserAccess', {
-          body: {
-            id: userId
-          }
-        })
-      }
-    }catch (e) {
-      console.log(e)
-    }
+  const {signIn} = useAuth()
+  const router = useRouter()
+  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
+  function onUpdateUserCredentials(key: string, value: string){
+    setUserCredentials(prevState => ({...prevState, [key]: value}))
   }
 
-  // useEffect(() => {
-  //   if(hasAccess && userId){
-  //     grandAccess()
-  //   }
-  // }, [hasAccess, userId]);
+  function onSignIn(){
+    if(!userCredentials){
+      console.log('NO USER CREDENTIALS')
+    }else{
+      signIn(userCredentials).then(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if(user){
+          await router.push(`/users/${user.id}`)
+        }
+      })
+    }
+  }
 
   return (
     <>
@@ -46,15 +46,15 @@ export default function Home() {
           <div className={styles.containerConnexion}>
             <div className={styles.contentConnexion}>
               <label htmlFor="">Email</label>
-              <input type="email" placeholder='john.doe@gmail.com'/>
+              <input type="email" placeholder='john.doe@gmail.com' onChange={(event) => {onUpdateUserCredentials('email', event.target.value)}}/>
             </div>
             <div className={styles.contentConnexion}>
               <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='**************'/>
+              <input type="password" placeholder='**************' onChange={(event) => {onUpdateUserCredentials('password', event.target.value)}}/>
             </div>
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
               <Link href="/register" className={styles.inscriptionLink}>S'inscrire</Link>
-              <button onClick={() => signIn('google', {callbackUrl: callbackUrl})}>Se connecter</button>
+              <button onClick={() => {onSignIn()}}>Se connecter</button>
             </div>
           </div>
         </div>
