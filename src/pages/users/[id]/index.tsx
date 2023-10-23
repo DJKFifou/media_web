@@ -9,11 +9,9 @@ export default function User(){
 	const id = router.query.id;
 	async function getUser(){
 		try {
-			const getUser = await fetch('/api/users/getUser' + new URLSearchParams({
-				id: id
-			}))
-			const user = getUser.json();
-			console.log(user)
+			const getUser = await fetch(`/api/users/getUser?id=${id}`);
+			const user = await getUser.json();
+			setCurrentUser(user)
 		}catch (e) {
 			console.error(e)
 		}
@@ -25,7 +23,7 @@ export default function User(){
 
 	return (
 		<div>
-			<p>{`Home ${id}`}</p>
+			<p>{`Bienvenue ${currentUser?.user_name}`}</p>
 		</div>
 	)
 }
