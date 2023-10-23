@@ -5,11 +5,13 @@ import useAuth from "@/hooks/useAuth";
 import {useState} from "react";
 import {Credentials} from "@/types";
 import {supabase} from "@/lib/initSupabase";
+import {useRouter} from "next/router";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Register() {
   const {signUp} = useAuth();
+  const router = useRouter()
   const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
   const [userPseudo, setUserPseudo] = useState<string | null>(null);
 
@@ -22,11 +24,7 @@ export default function Register() {
       signUp(userCredentials).then(async() => {
         const { data: { user } } = await supabase.auth.getUser();
         if(user){
-          await fetch('/api/users/test', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({userId: user.id, pseudo: userPseudo})
-          })
+          router.push(`/users/${user.id}`)
         }
       })
     }
