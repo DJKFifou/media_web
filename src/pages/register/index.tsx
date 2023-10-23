@@ -124,7 +124,7 @@ export default function Register() {
               </div>
               {/* <div className={styles.contentConnexion}>
                 <label htmlFor="">Email</label>
-                <input type="email" placeholder='john.doe@gmail.com'/>
+                <input type="email" placeholder='john.doe@gmail.com' onChange={(event) => onUpdateUserCredentials('email', event.target.value)}/>
               </div>
               <div className={styles.contentConnexion}>
                 <label htmlFor="">Mot de passe</label>
