@@ -236,7 +236,7 @@ $breakpoint-tablet: 768px;
 
 h1,
 h2,
-a {
+button {
   font-family: $font-main-Bold;
 }
 
@@ -313,7 +313,8 @@ p {
   }
 }
 
-a {
+a,
+button {
   font-size: pixelsCalc(16);
   margin: 0;
   text-transform: uppercase;

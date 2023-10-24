@@ -1,0 +1,15 @@
+@import '@/styles/_variables.scss';
+
+.inputButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 10px;
+    border-radius: 8px;
+    color: $color-text-2;
+    background-color: $color-bg-2;
+    border: 1.5px solid $color-primary-1;
+    outline: none !important;
+    // transform: transition 0.3s ease-out;
+  }

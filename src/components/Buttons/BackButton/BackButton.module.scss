@@ -1,0 +1,17 @@
+@import '@/styles/_variables.scss';
+
+.backButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 30px;
+    background-color: $color-bg-2;
+    border: 2px solid $color-secondary-1;
+    cursor: pointer;
+    // transform: transition 0.3s ease-out;
+    &:hover {
+        background-color: $color-secondary-1;
+    }
+  }

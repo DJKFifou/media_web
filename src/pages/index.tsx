@@ -7,6 +7,9 @@ import useAuth from "@/hooks/useAuth";
 import {Credentials} from "@/types";
 import { useRouter } from 'next/router'
 import {supabase} from "@/lib/initSupabase";
+import PrimaryButton from '@/components/Buttons/PrimaryButton/PrimaryButton.component'
+import SecondaryButton from '@/components/Buttons/SecondaryButton/SecondaryButton.component'
+import InputButton from '@/components/Buttons/InputButton/InputButton.component';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -46,15 +49,18 @@ export default function Home() {
           <div className={styles.containerConnexion}>
             <div className={styles.contentConnexion}>
               <label htmlFor="">Email</label>
-              <input type="email" placeholder='john.doe@gmail.com' onChange={(event) => {onUpdateUserCredentials('email', event.target.value)}}/>
+                <InputButton type="email" placeholder="Adresse mail" onChange={(event) => {onUpdateUserCredentials('email', event.target.value)}} />
             </div>
             <div className={styles.contentConnexion}>
               <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='**************' onChange={(event) => {onUpdateUserCredentials('password', event.target.value)}}/>
+              <InputButton type="password" placeholder="Mot de passe" onChange={(event) => {onUpdateUserCredentials('password', event.target.value)}} />
             </div>
             <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
-              <Link href="/register" className={styles.inscriptionLink}>S'inscrire</Link>
-              <button onClick={() => {onSignIn()}}>Se connecter</button>
+              <PrimaryButton title="Connexion" className={styles.connexionLink} onClick={() => {onSignIn()}} />
+              <Link href="/register" className={styles.registerLink}>
+                <SecondaryButton title="Créer un compte" />
+              </Link>
+              <a href="" className={styles.forgottenPasswordLink}>Mot de passe oublié ?</a>
             </div>
           </div>
         </div>
