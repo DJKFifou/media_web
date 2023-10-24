@@ -1,10 +1,7 @@
 import React, {useState} from 'react'
+import {Article} from "@prisma/client";
+import Link from "next/link";
 
-type Article = {
-	title: string,
-	content: string,
-	readingDuration: string
-}
 
 export default function CreateArticle(){
 	const [article, setArticle] = useState<Article | null>(null);
@@ -13,8 +10,7 @@ export default function CreateArticle(){
 	}
 	async function createArticle(){
 		try{
-			if(article){
-				console.log(article)
+			if(article && typeof article.reading_duration === "string"){
 				await fetch('/api/articles/createArticle', {
 					method:'POST',
 					headers: {
@@ -23,7 +19,7 @@ export default function CreateArticle(){
 					body: JSON.stringify({
 						title: article.title,
 						content: article.content,
-						reading_duration: parseInt(article.readingDuration, 10)
+						reading_duration: parseInt(article.reading_duration, 10)
 					})
 				})
 			}
@@ -33,6 +29,7 @@ export default function CreateArticle(){
 	}
 	return(
 			<div>
+				<Link href="/admin">Retour</Link>
 				<h1>Votre nouvel article</h1>
 				<form onSubmit={() => createArticle()}>
 					<label>Titre</label>

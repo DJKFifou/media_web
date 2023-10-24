@@ -27,13 +27,15 @@ export default function Admin(){
 						return(
 								<div key={index}>
 									<p>{article.title}</p>
-									<Link href={`/admin/article/${article.id}`}>Voir l'article</Link>
+									<Link href={`/admin/article/${article.id}`}>{"Voir l'article"}</Link>
 									<button>Supprimer</button>
 								</div>
 						)
 					})) : null}
 				</div>
-				<Link href="/admin/createArticle/">Ajouter un article</Link>
+				<Link href="/admin/article/createArticle/">Ajouter un article</Link>
+				<h1>Sujets</h1>
+				<Link href="/admin/topic/createTopic">Ajouter un sujet</Link>
 			</div>
 	)
 }
