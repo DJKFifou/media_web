@@ -94,7 +94,8 @@ model Topic {
   id                String    @id @default(cuid())
   introduction_text String
   articles          Article[]
-  theme             Theme[]
+  theme             Theme     @relation(fields: [theme_id], references: [id])
+  theme_id          String
   is_hot            Boolean
   title             String
   audio             String?
