@@ -1,6 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { Article } from "@prisma/client"
 import { prisma } from "@/lib/prisma"
+import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const body = req.body
@@ -12,5 +11,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       publish_date: new Date(),
     },
   })
+
   return res.status(200).json(newArticle)
 }
