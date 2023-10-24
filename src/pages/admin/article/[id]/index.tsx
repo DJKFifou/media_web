@@ -1,4 +1,4 @@
-import React, {FormEvent, FormEventHandler, useEffect, useState} from 'react'
+import React, {FormEvent, useEffect, useState} from 'react'
 import {useRouter} from "next/router";
 import {Article} from "@prisma/client";
 import useArticle from "@/hooks/useArticle";

@@ -29,5 +29,14 @@ export default function useArticle(){
 		}
 	}
 
-	return {getArticle, updateArticle}
+	async function getArticles(){
+		try {
+			const data = await fetch('/api/articles/getArticles')
+			return await data.json();
+		}catch (e) {
+			console.error(e)
+		}
+	}
+
+	return {getArticle, updateArticle, getArticles}
 }
