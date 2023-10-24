@@ -1,9 +1,10 @@
-import {FormEvent, useState} from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Inter } from 'next/font/google'
-import {Credentials} from "@/types";
+import { Credentials } from "@/types";
 import useAuth from "@/hooks/useAuth";
-import {useRouter} from "next/router";
-import {supabase} from "@/lib/initSupabase";
+import { useRouter } from "next/router";
+import { supabase } from "@/lib/initSupabase";
 import styles from '@/styles/Home.module.scss'
 import { Article_Frequency, Format, Theme } from '@prisma/client'
 import PrimaryButton from '@/components/Buttons/PrimaryButton/PrimaryButton.component'
@@ -13,13 +14,10 @@ import SecondaryCard from '@/components/Cards/SecondaryCard/SecondaryCard.compon
 
 
 export default function Register() {
-  const {signUp} = useAuth()
+  const { signUp } = useAuth()
   const router = useRouter()
   const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
-
-  function handleChange(key: string, value: string){
-    setUserCredentials(prevState => ({...prevState, [key]: value}))
-  const [pseudo, setPseudo] = useState<string|null>(null)
+  const [pseudo, setPseudo] = useState<string | null>(null)
   const [themes, setThemes] = useState<Theme[]>([])
   const [formats, setFormats] = useState<Format[]>([])
   const articleFrequencyList = [
@@ -36,8 +34,8 @@ export default function Register() {
       value: Article_Frequency.MONTH,
     }
   ]
-  const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency|null>(null)
-  const [numberArticle, setNumberArticle] = useState<number|null>(null)
+  const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null)
+  const [numberArticle, setNumberArticle] = useState<number | null>(null)
   const [selectedThemes, setSelectedThemes] = useState([])
   const [selectedFormats, setSelectedFormats] = useState([])
   async function createUser() {
@@ -56,35 +54,39 @@ export default function Register() {
           article_frequency: selectedArticleFrequencies
         }),
       })
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
-  async function onSignUp(event: FormEvent<HTMLFormElement>){
-    try{
+  async function getThemes() {
+    try {
+      const themes = await fetch('/api/themes', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const themesJSON = await themes.json()
+      setThemes(themesJSON)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  async function onSignUp(event: FormEvent<HTMLFormElement>) {
+    try {
       event.preventDefault()
-      if(userCredentials){
+      if (userCredentials) {
         await signUp(userCredentials).then(async () => {
           const { data: { user } } = await supabase.auth.getUser();
-          if(user){
+          if (user) {
             await router.push(`register/onBoarding/${user.id}`)
           }
         })
       }
-    }catch (e) {
+    } catch (e) {
       console.log(e)
     }
   }
-  return (
-      <div>
-        <form onSubmit={onSignUp}>
-          <label>Email</label>
-          <input type="text" onChange={(event) => handleChange('email', event.target.value)}/>
-          <label>Mot de passe</label>
-          <input type="password" onChange={(event) => handleChange('password', event.target.value)}/>
-          <button type="submit">Suivant</button>
-        </form>
-      </div>
   async function getFormats() {
     try {
       const formats = await fetch('/api/formats', {
@@ -95,26 +97,26 @@ export default function Register() {
       })
       const formatsJSON = await formats.json()
       setFormats(formatsJSON)
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
   function handleChangeTheme(themeSelected) {
     console.log(themeSelected)
-    if(selectedThemes.includes(themeSelected)){
-     const updatedSelectedThemes = selectedThemes.filter(theme => theme === themeSelected);
-     setSelectedThemes(updatedSelectedThemes)
-    }else{
+    if (selectedThemes.includes(themeSelected)) {
+      const updatedSelectedThemes = selectedThemes.filter(theme => theme === themeSelected);
+      setSelectedThemes(updatedSelectedThemes)
+    } else {
       setSelectedThemes([...selectedThemes, themeSelected])
     }
     console.log(selectedThemes)
   }
   function handleChangeFormat(formatSelected) {
     console.log(formatSelected)
-    if(selectedFormats.includes(formatSelected)){
-     const updatedSelectedFormats = selectedFormats.filter(format => format === formatSelected);
-     setSelectedFormats(updatedSelectedFormats)
-    }else{
+    if (selectedFormats.includes(formatSelected)) {
+      const updatedSelectedFormats = selectedFormats.filter(format => format === formatSelected);
+      setSelectedFormats(updatedSelectedFormats)
+    } else {
       setSelectedFormats([...selectedFormats, formatSelected])
     }
     console.log(selectedFormats)
@@ -135,17 +137,30 @@ export default function Register() {
     getFormats();
     getThemes();
   }, [])
-  
-    return (
-      <>
-        <div className={`${styles.main} ${inter.className}`}>
-          <div className={styles.sectionConnexion}>
-            <h1 className={styles.titleConnexion}>S'inscrire</h1>
-            <div className={styles.containerConnexion}>
-              <form onSubmit={() => createUser()}>
+
+
+  function handleChange(key: string, value: string) {
+    setUserCredentials(prevState => ({ ...prevState, [key]: value }))
+  }
+  return (
+    <>
+      <div>
+        <form onSubmit={onSignUp}>
+          <label>Email</label>
+          <input type="text" onChange={(event) => handleChange('email', event.target.value)} />
+          <label>Mot de passe</label>
+          <input type="password" onChange={(event) => handleChange('password', event.target.value)} />
+          <button type="submit">Suivant</button>
+        </form>
+      </div>
+      <div className={`${styles.main} ${inter.className}`}>
+        <div className={styles.sectionConnexion}>
+          <h1 className={styles.titleConnexion}>S'inscrire</h1>
+          <div className={styles.containerConnexion}>
+            <form onSubmit={() => createUser()}>
               <div className={styles.contentConnexion}>
                 <label htmlFor="">Pseudo</label>
-                <input type="text" placeholder='Johnny' onChange={(event) => {setPseudo(event.target.value)}}/>
+                <input type="text" placeholder='Johnny' onChange={(event) => { setPseudo(event.target.value) }} />
               </div>
               {/* <div className={styles.contentConnexion}>
                 <label htmlFor="">Email</label>
@@ -158,16 +173,16 @@ export default function Register() {
               <div className={`${styles.contentConnexion} ${styles.flexColumn}`}>
                 {themes.map((theme: Theme, index) => (
                   <div key={theme.id} className={styles.checkboxThemes}>
-                    <input data-theme-id={theme.id} name={theme.slug} className="themeCheckbox" key={index} type="checkbox" onChange={()=>handleChangeTheme(theme.title)}/>
-                    <label>{theme.slug}</label> 
+                    <input data-theme-id={theme.id} name={theme.slug} className="themeCheckbox" key={index} type="checkbox" onChange={() => handleChangeTheme(theme.title)} />
+                    <label>{theme.slug}</label>
                   </div>
                 ))}
               </div>
               <div className={styles.contentConnexion}>
                 {formats.map((format: Format, index) => (
                   <div key={format.id} className={styles.checkboxFormats}>
-                    <input data-format-id={format.id} name={format.slug} className="formatCheckbox" key={index} type="checkbox" onChange={()=>handleChangeFormat(format.title)}/>
-                    <label>{format.slug}</label> 
+                    <input data-format-id={format.id} name={format.slug} className="formatCheckbox" key={index} type="checkbox" onChange={() => handleChangeFormat(format.title)} />
+                    <label>{format.slug}</label>
                   </div>
                 ))}
               </div>
@@ -179,8 +194,8 @@ export default function Register() {
                 </select>
               </div> */}
               <div className={styles.contentConnexion}>
-                <input id='numberArticle' type="number" min="0" onChange={(event) => {setNumberArticle(event.target.value); console.log(event.target.value)}} />
-                <select name="frequency" id="frequency" className={styles.selection} multiple onChange={(event) => {setSelectedArticleFrequencies(event.target.value); console.log(event.target.value)}} >
+                <input id='numberArticle' type="number" min="0" onChange={(event) => { setNumberArticle(event.target.value); console.log(event.target.value) }} />
+                <select name="frequency" id="frequency" className={styles.selection} multiple onChange={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value) }} >
                   {articleFrequencyList.map((frequency) => (
                     <option key={frequency.value} value={frequency.value}>
                       {frequency.label}
@@ -200,10 +215,9 @@ export default function Register() {
                 <PrimaryCard titre="Guerre Israélo-Palestinienne" label="International" />
                 <SecondaryCard titre="Titre long sur 2 lignes" label="Sport" />
               </div>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
-      </>
-    )
+      </div>
+    </>)
 }
