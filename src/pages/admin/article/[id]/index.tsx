@@ -9,9 +9,7 @@ export default function Article(){
 	const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
 	async function getArticle(){
 		try {
-			const response = await fetch('/api/article/getArticle', {
-				body: JSON.stringify({id: articleId})
-			})
+			const response = await fetch(`/api/article/getArticle?id=${articleId}`)
 			const article = await response.json();
 			setCurrentArticle(article)
 		}catch (e) {
