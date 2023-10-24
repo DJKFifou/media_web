@@ -1,55 +1,191 @@
+@import '@/styles/_variables.scss';
 
 .sectionConnexion {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  color: black;
-  gap: 30px;
+  height: 100vh;
+  background-color: $color-bg-1;
+
+  .containerUpper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    height: 45%;
+
+    .titleConnexion {
+      text-align: center;
+      padding: 0 60px;
+      color: $color-primary-1;
+    }
+
+  }
+
+  .containerFirstStep {
+    div {
+      display: flex;
+      position: absolute;
+      margin-top: -30px;
+      left: 20px;
+
+      h4 {
+        padding: 6px 16px;
+        color: $color-bg-2;
+        background-color: $color-primary-2;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+      }
+
+      img {
+        margin-left: -5px;
+      }
+    }
+  }
+
   .containerConnexion {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 55%;
+    background-color: $color-primary-2;
+
     .contentConnexion {
       display: flex;
-      justify-content: space-between;
-      gap: 4px;
-      &.connexionLinks {
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      padding: 28px 20px 36px;
+
+      label {
+        color: $color-bg-1;
+      }
+
+      .contentEmail {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        margin-top: 10px;
-        PrimaryButton {
-          width: 158px;
-        }
-        .registerLink {
-          text-decoration: underline;
-        }
-        .forgottenPasswordLink {
-          margin-top: 2px;
-        }
+        gap: 6px;
       }
-      &.flexColumn {
+
+      .contentPassword {
         display: flex;
         flex-direction: column;
-        height: 190px;
-        overflow-y: scroll;
-        margin: 20px 0;
+        gap: 6px;
       }
-      .selection {
-        width: 100%;
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      // input {
-      //   background-color: white;
-      //   border-radius: 5px;
-      //   text-indent: 5px;
-      //   color: black;
-      // }
     }
+
+    .contentButton {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      button {
+        width: 170px
+      }
+
+      .forgottenPasswordLink {
+        color: $color-bg-1;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+.sectionRegister {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: $color-bg-1;
+
+  .containerBreadcrumb {
+    width: 100%;
+    background-color: $color-bg-2;
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 20px;
+
+      .containerProgress {
+        width: 100%;
+        height: 10px;
+        border-radius: 8px;
+        background-color: $color-bg-1;
+
+        .contentProgress {
+          width: 25%;
+          height: 100%;
+          border-radius: 8px;
+          background-color: $color-primary-1;
+        }
+      }
+    }
+  }
+
+  .titleRegister {
+    text-align: center;
+    color: $color-primary-2;
+    padding: 23px 20px 19px;
+  }
+
+  .contentRegister {
+    .profilePicture {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+
+      .pp {
+        width: 70px;
+        height: 70px;
+      }
+    }
+  }
+
+  .containerInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 15px 20px 40px;
+
+    .containerPseudo,
+    .containerEmail,
+    .containerPassword {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+
+      p {
+        color: $color-text-1;
+      }
+    }
+
+    .containerCheckbox {
+      display: flex;
+      gap: 8px;
+
+      input {}
+
+      p {
+        color: $color-text-1;
+
+        a {
+          color: $color-primary-1;
+          text-transform: lowercase;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .containerContinue {
+    display: flex;
+    justify-content: center;
   }
 }
