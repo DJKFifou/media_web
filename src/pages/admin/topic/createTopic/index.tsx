@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {Article, Theme, Topic} from "@prisma/client";
 import useTheme from "@/hooks/useTheme";
 
@@ -9,8 +9,8 @@ export default function CreateTopic(){
 	const [themesList, setThemesList] = useState<Theme[] | null>(null);
 	const [articlesList, setArticlesList] = useState<Article[] | null>(null);
 
-	function handleChangeTopicValue(key: string, value: string){
-		setNewTopic(prevState => ({...prevState, [key]: value}))
+	function onSubmit(event: FormEvent<HTMLFormElement>){
+		console.log(event)
 	}
 
 	useEffect(() => {
@@ -21,23 +21,23 @@ export default function CreateTopic(){
 			<div>
 				<Link href="/admin">Retour</Link>
 				<h1>Votre nouveau sujet</h1>
-				<form>
+				<form onSubmit={onSubmit}>
 					<label>Titre</label>
-					<input type="text" onChange={(event) => handleChangeTopicValue('title', event.target.value)}/>
+					<input type="text" name="title"/>
 					<label>Résumé</label>
-					<input type="text" onChange={(event) => handleChangeTopicValue('introduction_text', event.target.value)}/>
+					<input type="text" name="introduction_text"/>
 					<label>Themes</label>
 					{themesList && themesList?.length > 0 ? (
-							<select>
+							<select name="theme">
 								{themesList.map((theme, index) => {
 									return (
-											<option key={index}>{theme.slug}</option>
+											<option value={theme.title} key={index}>{theme.slug}</option>
 									)
 								})}
 							</select>
 					) : null}
 					<label>Sujet hot ?</label>
-					<input type="checkbox" onChange={(event) => handleChangeTopicValue('is_hot', event.target.value)}/>
+					<input type="checkbox"/>
 					<label>Articles associé</label>
 					<label>Piste audio</label>
 					<input type="file"/>
