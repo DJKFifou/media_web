@@ -1,6 +1,9 @@
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import {FormEvent, useState} from 'react'
 import { Inter } from 'next/font/google'
+import {Credentials} from "@/types";
+import useAuth from "@/hooks/useAuth";
+import {useRouter} from "next/router";
+import {supabase} from "@/lib/initSupabase";
 import styles from '@/styles/Home.module.scss'
 import { Article_Frequency, Format, Theme } from '@prisma/client'
 import PrimaryButton from '@/components/Buttons/PrimaryButton/PrimaryButton.component'
@@ -8,9 +11,14 @@ import SecondaryButton from '@/components/Buttons/SecondaryButton/SecondaryButto
 import PrimaryCard from '@/components/Cards/PrimaryCard/PrimaryCard.component'
 import SecondaryCard from '@/components/Cards/SecondaryCard/SecondaryCard.component'
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Register() {
+  const {signUp} = useAuth()
+  const router = useRouter()
+  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
+
+  function handleChange(key: string, value: string){
+    setUserCredentials(prevState => ({...prevState, [key]: value}))
   const [pseudo, setPseudo] = useState<string|null>(null)
   const [themes, setThemes] = useState<Theme[]>([])
   const [formats, setFormats] = useState<Format[]>([])
@@ -52,20 +60,31 @@ export default function Register() {
       console.error(e)
     }
   }
-  async function getThemes() {
-    try {
-      const themes = await fetch('/api/themes', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const themesJSON = await themes.json()
-      setThemes(themesJSON)
-    } catch(e) {
-      console.error(e)
+  async function onSignUp(event: FormEvent<HTMLFormElement>){
+    try{
+      event.preventDefault()
+      if(userCredentials){
+        await signUp(userCredentials).then(async () => {
+          const { data: { user } } = await supabase.auth.getUser();
+          if(user){
+            await router.push(`register/onBoarding/${user.id}`)
+          }
+        })
+      }
+    }catch (e) {
+      console.log(e)
     }
   }
+  return (
+      <div>
+        <form onSubmit={onSignUp}>
+          <label>Email</label>
+          <input type="text" onChange={(event) => handleChange('email', event.target.value)}/>
+          <label>Mot de passe</label>
+          <input type="password" onChange={(event) => handleChange('password', event.target.value)}/>
+          <button type="submit">Suivant</button>
+        </form>
+      </div>
   async function getFormats() {
     try {
       const formats = await fetch('/api/formats', {
