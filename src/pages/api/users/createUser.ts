@@ -4,14 +4,19 @@ import {prisma} from "@/lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 	const body: User = req.body;
-	const {user_name, article_frequency, theme, format, article_number} = body
+	const {user_name, article_frequency, theme, format, article_number, id} = body
 	const newUser = await prisma.user.create({
 		data: {
+			id: id,
 			user_name: user_name,
 			article_frequency: article_frequency,
 			article_number: article_number,
-			theme: theme,
-			format: format
+			theme: {
+				connect: theme
+			},
+			format: {
+				connect: format
+			}
 		}
 	})
 	return res.status(200).json(newUser)
