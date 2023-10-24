@@ -4,8 +4,8 @@ import {Topic} from "@prisma/client";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-	const body: Topic = req.body;
-	const id = body.id
+	const query = req.query;
+	const id = query.id
 	const topics = await prisma.topic.delete({
 		where:{
 			id: id

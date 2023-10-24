@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			introduction_text: introduction_text,
 			is_hot: is_hot,
 			theme: {
-				connect: theme
+				connect: {id: theme}
 			},
 			title: title,
 		}
 	})
-	res.status(200).json(newTopic)
+	return res.status(200).json(newTopic)
 }
