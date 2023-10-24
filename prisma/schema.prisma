@@ -54,12 +54,12 @@ model Article {
   reading_duration Int
   recommanded_by   User[]
   media_name       Media?   @relation(fields: [media_id], references: [id])
-  media_id         String
-  image            String
-  link             String
-  audio            String
+  media_id         String?
+  image            String?
+  link             String?
+  audio            String?
   format           Format?  @relation(fields: [format_id], references: [id])
-  format_id        String
+  format_id        String?
 }
 
 model User {
