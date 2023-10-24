@@ -46,13 +46,20 @@ enum Article_Frequency {
 model Article {
   id               String   @id @default(cuid())
   title            String
-  // save_by          User[]
-  Topic            Topic?   @relation(fields: [topicId], references: [id])
-  topicId          String?
   content          String
+  // save_by          User[]
+  topic            Topic?   @relation(fields: [topic_id], references: [id])
+  topic_id         String?
   publish_date     DateTime
   reading_duration Int
   recommanded_by   User[]
+  media_name       Media?   @relation(fields: [media_id], references: [id])
+  media_id         String
+  image            String
+  link             String
+  audio            String
+  format           Format?  @relation(fields: [format_id], references: [id])
+  format_id        String
 }
 
 model User {
@@ -72,13 +79,15 @@ model Theme {
   slug  String
   User  User[]
   topic Topic[]
+  // icon  String
 }
 
 model Format {
-  id    String      @id @default(cuid())
-  title Format_Name
-  slug  String
-  User  User[]
+  id      String      @id @default(cuid())
+  title   Format_Name
+  slug    String
+  User    User[]
+  Article Article[]
 }
 
 model Topic {
@@ -87,9 +96,12 @@ model Topic {
   articles          Article[]
   theme             Theme[]
   is_hot            Boolean
+  title             String
+  audio             String?
 }
 
 model Media {
-  id    String @id @default(cuid())
-  title String
+  id      String    @id @default(cuid())
+  title   String
+  Article Article[]
 }
