@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
 import { Article_Frequency, Format, Theme } from '@prisma/client'
+import PrimaryButton from '@/components/Buttons/PrimaryButton/PrimaryButton.component'
+import SecondaryButton from '@/components/Buttons/SecondaryButton/SecondaryButton.component'
+import PrimaryCard from '@/components/Cards/PrimaryCard/PrimaryCard.component'
+import SecondaryCard from '@/components/Cards/SecondaryCard/SecondaryCard.component'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,8 +33,10 @@ export default function Register() {
   const [selectedThemes, setSelectedThemes] = useState([])
   const [selectedFormats, setSelectedFormats] = useState([])
   async function createUser() {
+    console.log(pseudo)
     try {
       await fetch('/api/users/createUser', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -38,7 +44,7 @@ export default function Register() {
           user_name: pseudo,
           theme: selectedThemes,
           format: selectedFormats,
-          article_number: numberArticle,
+          article_number: parseInt(numberArticle, 10),
           article_frequency: selectedArticleFrequencies
         }),
       })
@@ -116,8 +122,8 @@ export default function Register() {
         <div className={`${styles.main} ${inter.className}`}>
           <div className={styles.sectionConnexion}>
             <h1 className={styles.titleConnexion}>S'inscrire</h1>
-            <div className={styles.containerConnexion} onSubmit={() => createUser()}>
-              <form>
+            <div className={styles.containerConnexion}>
+              <form onSubmit={() => createUser()}>
               <div className={styles.contentConnexion}>
                 <label htmlFor="">Pseudo</label>
                 <input type="text" placeholder='Johnny' onChange={(event) => {setPseudo(event.target.value)}}/>
@@ -165,7 +171,15 @@ export default function Register() {
               </div>
               <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
                 <Link href="/" className={styles.inscriptionLink}>Se connecter</Link>
-                <button type='submit'  className={styles.registerButton}>S'inscrire</button>
+                <button type='submit' className={styles.registerButton}>S'inscrire</button>
+              </div>
+              <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
+                <PrimaryButton text="Se connecter" />
+                <SecondaryButton text="S'inscrire" />
+              </div>
+              <div className={`${styles.contentConnexion} ${styles.connexionLinks}`}>
+                <PrimaryCard titre="Guerre Israélo-Palestinienne" label="International" />
+                <SecondaryCard titre="Titre long sur 2 lignes" label="Sport" />
               </div>
               </form>
             </div>

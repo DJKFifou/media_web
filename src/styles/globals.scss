@@ -73,6 +73,266 @@
   }
 }
 
+/**
+ * --------------------------------------------------------------------------------------------------------------
+ *                                                  DEDICATED VARIABLES 
+/**/
+
+// ------------- * Main Font library * -------------
+
+@font-face {
+  font-family: "Cousine-Regular";
+  src: url('/fonts/cousine-font-family/Cousine-Regular.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cousine-Bold";
+  src: url('/fonts/cousine-font-family/Cousine-Bold.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+// ------------- * Secondary Font library * -------------
+
+@font-face {
+  font-family: "SourceSansPro-Regular";
+  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Regular.otf') format('opentype');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SourceSansPro-SemiBold";
+  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Semibold.otf') format('opentype');
+  font-display: swap;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SourceSansPro-Bold";
+  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Bold.otf') format('opentype');
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+// ------------- * Main Font library * -------------
+
+$font-main-Regular  : "Cousine-Regular";
+$font-main-Bold   : "Cousine-Bold";
+
+// ------------- * Secondary Font library * -------------
+
+$font-secondary-Regular  : "SourceSansPro-Regular";
+$font-secondary-SemiBold   : "SourceSansPro-SemiBold";
+$font-secondary-Bold   : "SourceSansPro-Bold";
+
+/**
+ * --------------------------------------------------------------------------------------------------------------
+ *                                                  DEDICATED FUNCTIONS 
+/**/
+
+// ------------- * Font Sizes * -------------
+
+// Global referent Font Size quotient
+$font-size-quotient: 1;
+
+// Font Size Function 
+@function pixelsCalc($pxSize) {
+  @return ($pxSize * $font-size-quotient) + px; 
+}
+
+// Font Size Function  pixel to Rem
+@function pxToRem($pxSize) {
+  @return $pxSize / 10 + rem; // standard size: 10px
+}
+
+/* Font Size Function to create classes 
+ex :
+.font-size-10 {
+  font-size: 1rem;
+}*/
+@mixin font-size() {
+  $font-size-list: 10 12 14 16 20 24;
+  @each $value in $font-size-list {
+    .font-size-#{$value} {
+      font-size: pxToRem($value);
+    }
+  }
+}
+@include font-size();
+
+$breakpoint-tablet: 768px;
+
+@mixin end-tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+/**
+ * --------------------------------------------------------------------------------------------------------------
+ *                                                  DEDICATED CLASSES & EXTENDS 
+ *                                           Allways create both in order to be forced 
+ *                                       directly on DOM or afterward in SCCS with @extend !
+/**/
+
+.bold,
+%bold {
+  font-weight: bold;
+}
+
+.opacity-90,
+%opacity-80 {
+  opacity: 0.8;
+}
+
+.opacity-80,
+%opacity-80 {
+  opacity: 0.8;
+}
+
+.opacity-70,
+%opacity-70 {
+  opacity: 0.7;
+}
+
+.opacity-50,
+%opacity-50 {
+  opacity: 0.5;
+}
+
+.text-left,
+%text-left {
+  text-align: left;
+}
+
+.text-center,
+%text-center {
+  text-align: center;
+}
+
+.uppercase,
+%uppercase {
+  text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+/**
+ * --------------------------------------------------------------------------------------------------------------
+ *                                                  ELEMENTS APPLICATIONS
+/**/
+
+// -------------- * Primary Font Families * --------------
+
+h1,
+h2,
+a {
+  font-family: $font-main-Bold;
+}
+
+h3,
+h4,
+label {
+  font-family: $font-secondary-SemiBold;
+}
+
+p {
+  font-family: $font-secondary-Regular;
+}
+
+* {
+  font-family: $font-secondary-Regular;
+}
+
+// -------------- * Font Sizes * --------------
+
+h1 {
+  font-size: pixelsCalc(56);
+  line-height: pixelsCalc(64);
+  margin: 0;
+  letter-spacing: -2.24px;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(32);
+    line-height: pixelsCalc(34);
+    letter-spacing: -1.28px;
+  }
+}
+
+h2 {
+  font-size: pixelsCalc(32);
+  line-height: pixelsCalc(36);
+  margin: 0;
+  letter-spacing: -1.28px;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(20);
+    letter-spacing: -0.8px;
+  }
+}
+
+h3 {
+  font-size: pixelsCalc(24);
+  line-height: pixelsCalc(30);
+  margin: 0;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(18);
+    line-height: pixelsCalc(24);
+  }
+}
+
+h4 {
+  font-size: pixelsCalc(18);
+  line-height: pixelsCalc(18);
+  margin: 0;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(16);
+    line-height: pixelsCalc(18);
+  }
+}
+
+p {
+  font-size: pixelsCalc(16);
+  line-height: pixelsCalc(18);
+  margin: 0;
+  @include end-tablet {
+    font-size: pixelsCalc(16);
+    line-height: pixelsCalc(20);
+  }
+}
+
+a {
+  font-size: pixelsCalc(16);
+  margin: 0;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(14);
+  }
+}
+
+label {
+  font-size: pixelsCalc(12);
+  margin: 0;
+  text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(12);
+  }
+}
+
+/*---------------------------------------------------------------*/
+
 * {
   box-sizing: border-box;
   padding: 0;

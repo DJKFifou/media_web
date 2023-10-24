@@ -1,0 +1,14 @@
+@import '@/styles/_variables.scss';
+
+.primaryButton {
+    padding: 6px 15px;
+    border-radius: 32px;
+    background-color: $color-primary-1;
+    color: $color-bg-1;
+    border: none;
+    cursor: pointer;
+    // transform: transition 0.3s ease-out;
+    &:hover {
+        background-color: $color-primary-2;
+    }
+  }
