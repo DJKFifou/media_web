@@ -2,18 +2,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {Theme_Name} from ".prisma/client";
 import {prisma} from "@/lib/prisma";
 
-
-export default async function addData(req: NextApiRequest, res: NextApiResponse){
-	const method = req.method
-	if(method){
-		switch (method){
-			case 'POST': return createThemes(req, res)
-			case 'GET': return getThemes(req, res)
-		}
-	}
-}
-
-async function createThemes(req: NextApiRequest, res: NextApiResponse){
+export default async function handler(req: NextApiRequest, res: NextApiResponse){
 	const data = [
 		{
 			title: Theme_Name.GEOGRAPHY,
@@ -72,9 +61,4 @@ async function createThemes(req: NextApiRequest, res: NextApiResponse){
 		data: data
 	});
 	return res.status(200).json(newUser)
-}
-
-async function getThemes(req: NextApiRequest, res: NextApiResponse){
-	const themes = await prisma.theme.findMany()
-	return res.status(200).json(themes)
 }
