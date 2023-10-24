@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import {User} from ".prisma/client";
-import useUser from "@/hooks/useUser";
+import useUser from "@/hooks/useUser.ts";
 
 
 export default function User(){
@@ -12,7 +12,6 @@ export default function User(){
 
 	useEffect(() => {
 		if(id && typeof id === 'string'){
-			console.log('true')
 			getUser(id).then((user) => {
 				console.log('user', user)
 				setCurrentUser(user)
