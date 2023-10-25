@@ -1,0 +1,79 @@
+@import '@/styles/_variables.scss';
+
+$breakpoint-tablet: 768px;
+
+@mixin end-tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+.sectionFrequency {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: $color-bg-1;
+    
+    .containerBreadcrumb {
+        width: 100%;
+        background-color: $color-bg-2;
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 8px 20px;
+        
+            .containerProgress {
+            width: 100%;
+            height: 10px;
+            border-radius: 8px;
+            background-color: $color-bg-1;
+        
+                .contentProgress {
+                    width: 75%;
+                    height: 100%;
+                    border-radius: 8px;
+                    background-color: $color-primary-1;
+                }
+            }
+        }
+    }
+    
+    .titleFrequency{
+        text-align: center;
+        color: $color-primary-2;
+        padding: 23px 20px 0;
+        }
+
+    .subTitleFrequency{
+    text-align: center;
+    color: $color-primary-2;
+    padding: 8px 60px;
+    }
+    .contentFrequency {
+        padding: 32px 20px 78px;
+        .containerGridFrequency {
+            display: grid;
+            justify-items: center;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 8px;
+            grid-row-gap: 8px;
+        }
+        .containerContinue {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            position: fixed;
+            bottom: 25px;
+            left: 0;
+            button {
+                width: 176px;
+                @include end-tablet {
+                    width: 170px;
+                }
+            }
+        }
+    }
+}
