@@ -3,7 +3,6 @@ import { Article_Frequency, Format, Prisma, User } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // @todo refacto
   const body: {
     id: string;
     user_name: string;

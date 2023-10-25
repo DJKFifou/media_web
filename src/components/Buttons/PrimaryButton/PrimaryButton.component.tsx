@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 const PrimaryButton = (props: any) => {
   return (
-    <button type={props.type} className={styles.primaryButton}>
+    <button type={props.type} className={styles.primaryButton} onClick={() => props.onClick()}>
       {props.title}
     </button>
   );
