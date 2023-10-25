@@ -53,5 +53,14 @@ export default function useTopic() {
     }
   }
 
-  return { createTopic, getTopics, getTopic, updateTopic, deleteTopic };
+  async function getTopicsByThemes(userId: string){
+    try{
+      const topics = await fetch(`/api/topics/getTopicsByThemes?userId=${userId}`)
+      return await topics.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { createTopic, getTopics, getTopic, updateTopic, deleteTopic, getTopicsByThemes };
 }
