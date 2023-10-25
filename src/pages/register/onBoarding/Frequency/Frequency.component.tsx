@@ -35,11 +35,17 @@ const Topics = (props: any) => {
     }
   };
 
+  const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value);
+    if (!isNaN(newValue)) {
+      setNumberArticle(newValue);
+    }
+  };
+
   return (
     <div className={styles.sectionFrequency}>
       <div className={styles.containerBreadcrumb}>
         <div className={styles.breadcrumb}>
-          {/* <BackButton onClick={() => { setCurrentStep("step1"); props.onBack(); }} /> */}
           <div className={styles.containerProgress}>
             <div className={styles.contentProgress}></div>
           </div>
@@ -55,10 +61,8 @@ const Topics = (props: any) => {
               id="numberArticle"
               type="number"
               min="0"
-              onChange={(event) => {
-                setNumberArticle(event.target.value);
-                console.log(event.target.value);
-              }}
+              value={numberArticle || ""}
+              onChange={handleNumberChange}
             />
             <button className={styles.buttonIncrement} onClick={handleIncrement}>+</button>
           </div>
@@ -71,8 +75,8 @@ const Topics = (props: any) => {
           <div className={styles.containerContinue}>
             <h4>
               {numberArticle >= 2
-                ? `${numberArticle ? numberArticle : ""} sujets par ${selectedArticleFrequencies ? selectedArticleFrequencies : ""}`
-                : `${numberArticle ? numberArticle : ""} sujet par ${selectedArticleFrequencies ? selectedArticleFrequencies : ""}`}
+                ? `${numberArticle ? numberArticle : "0"} sujets par ${selectedArticleFrequencies ? selectedArticleFrequencies : "jour"}`
+                : `${numberArticle ? numberArticle : "0"} sujet par ${selectedArticleFrequencies ? selectedArticleFrequencies : "jour"}`}
             </h4>
             <PrimaryButton type="submit" title="Continuer" />
           </div>

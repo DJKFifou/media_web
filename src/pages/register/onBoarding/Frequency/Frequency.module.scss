@@ -51,10 +51,6 @@ $breakpoint-tablet: 768px;
     flex-direction: column;
     align-items: center;
     padding: 32px 20px 78px;
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
     .titleNumberArticle {
       text-align: center;
       color: $color-primary-2;
@@ -63,6 +59,11 @@ $breakpoint-tablet: 768px;
     .containerNumberArticle {
       display: flex;
       gap: 8px;
+      input::-webkit-inner-spin-button,
+      input::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        margin:0;
+      }
       .buttonDecrement,
       .buttonIncrement {
         width: 42px;
@@ -71,6 +72,7 @@ $breakpoint-tablet: 768px;
         border: none;
         outline: none;
         background-color: $color-primary-1;
+        cursor: pointer;
       }
       input[type="number"] {
         display: flex;
