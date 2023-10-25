@@ -1,8 +1,8 @@
-import { prisma } from "@/lib/prisma"
-import { NextApiRequest, NextApiResponse } from "next"
+import { prisma } from "@/lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query
+  const { id } = req.query;
 
   switch (req.method) {
     case "GET":
@@ -10,16 +10,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: {
           id: id as string,
         },
-      })
-      return res.status(200).json(article)
+      });
+      return res.status(200).json(article);
 
     case "DELETE":
       const deletedArticle = await prisma.article.delete({
         where: {
           id: id as string,
         },
-      })
-      return res.status(200).json(deletedArticle)
+      });
+      return res.status(200).json(deletedArticle);
     case "PUT":
       const modifiedArticle = await prisma.article.update({
         where: {
@@ -41,10 +41,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             set: req.body.format,
           },
         },
-      })
-      return res.status(200).json(modifiedArticle)
+      });
+      return res.status(200).json(modifiedArticle);
 
     default:
-      return res.status(404)
+      return res.status(404);
   }
 }

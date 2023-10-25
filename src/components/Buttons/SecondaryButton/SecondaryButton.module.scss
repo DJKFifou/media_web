@@ -1,14 +1,14 @@
-@import '@/styles/_variables.scss';
+@import "@/styles/_variables.scss";
 
 .secondaryButton {
-    padding: 6px 15px;
-    border-radius: 32px;
-    background-color: $color-bg-2;
-    color: $color-primary-2;
-    border: 1px solid $color-primary-2;
-    cursor: pointer;
-    &:hover {
-        background-color: $color-primary-1;
-        border: 1px solid $color-bg-3;
-    }
+  padding: 6px 15px;
+  border-radius: 32px;
+  background-color: $color-bg-2;
+  color: $color-primary-2;
+  border: 1px solid $color-primary-2;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-primary-1;
+    border: 1px solid $color-bg-3;
   }
+}

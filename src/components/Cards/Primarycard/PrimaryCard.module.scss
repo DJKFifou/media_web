@@ -1,29 +1,29 @@
-@import '@/styles/_variables.scss';
+@import "@/styles/_variables.scss";
 
 .primaryCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;    
-    gap: 3px;
-    padding: 8px 4px;
-    border-radius: 6px;
-    background-color: $color-secondary-1;
-    color: $color-secondary-2;
-    width: 156px;
-    border: none;
-    cursor: pointer;
-    // transform: transition 0.3s ease-out;
-    &:hover {
-        color: $color-bg-2;
-        label {
-            border: 1px solid $color-bg-2;
-            cursor: pointer;
-        }
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: 6px;
+  background-color: $color-secondary-1;
+  color: $color-secondary-2;
+  width: 156px;
+  border: none;
+  cursor: pointer;
+  // transform: transition 0.3s ease-out;
+  &:hover {
+    color: $color-bg-2;
     label {
-        padding: 3px 5px;
-        border: 1px solid $color-secondary-2;
-        border-radius: 5px;
+      border: 1px solid $color-bg-2;
+      cursor: pointer;
     }
   }
+  label {
+    padding: 3px 5px;
+    border: 1px solid $color-secondary-2;
+    border-radius: 5px;
+  }
+}

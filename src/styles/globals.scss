@@ -1,9 +1,8 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono",
+    "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
 
@@ -15,22 +14,11 @@
     #0071ff33 160deg,
     transparent 360deg
   );
-  --secondary-glow: radial-gradient(
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0)
-  );
+  --secondary-glow: radial-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 
   --tile-start-rgb: 239, 245, 249;
   --tile-end-rgb: 228, 232, 233;
-  --tile-border: conic-gradient(
-    #00000080,
-    #00000040,
-    #00000030,
-    #00000020,
-    #00000010,
-    #00000010,
-    #00000080
-  );
+  --tile-border: conic-gradient(#00000080, #00000040, #00000030, #00000020, #00000010, #00000010, #00000080);
 
   --callout-rgb: 238, 240, 241;
   --callout-border-rgb: 172, 175, 176;
@@ -45,24 +33,11 @@
     --background-end-rgb: 0, 0, 0;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
+    --secondary-glow: linear-gradient(to bottom right, rgba(1, 65, 255, 0), rgba(1, 65, 255, 0), rgba(1, 65, 255, 0.3));
 
     --tile-start-rgb: 2, 13, 46;
     --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
+    --tile-border: conic-gradient(#ffffff80, #ffffff40, #ffffff30, #ffffff20, #ffffff10, #ffffff10, #ffffff80);
 
     --callout-rgb: 20, 20, 20;
     --callout-border-rgb: 108, 108, 108;
@@ -80,7 +55,7 @@
 
 @font-face {
   font-family: "Cousine-Regular";
-  src: url('/fonts/cousine-font-family/Cousine-Regular.ttf') format('truetype');
+  src: url("/fonts/cousine-font-family/Cousine-Regular.ttf") format("truetype");
   font-display: swap;
   font-weight: 400;
   font-style: normal;
@@ -88,7 +63,7 @@
 
 @font-face {
   font-family: "Cousine-Bold";
-  src: url('/fonts/cousine-font-family/Cousine-Bold.ttf') format('truetype');
+  src: url("/fonts/cousine-font-family/Cousine-Bold.ttf") format("truetype");
   font-display: swap;
   font-weight: 700;
   font-style: normal;
@@ -98,7 +73,7 @@
 
 @font-face {
   font-family: "SourceSansPro-Regular";
-  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Regular.otf') format('opentype');
+  src: url("/fonts/sourceSansPro-font-family/SourceSansPro-Regular.otf") format("opentype");
   font-display: swap;
   font-weight: 400;
   font-style: normal;
@@ -106,7 +81,7 @@
 
 @font-face {
   font-family: "SourceSansPro-SemiBold";
-  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Semibold.otf') format('opentype');
+  src: url("/fonts/sourceSansPro-font-family/SourceSansPro-Semibold.otf") format("opentype");
   font-display: swap;
   font-weight: 600;
   font-style: normal;
@@ -114,7 +89,7 @@
 
 @font-face {
   font-family: "SourceSansPro-Bold";
-  src: url('/fonts/sourceSansPro-font-family/SourceSansPro-Bold.otf') format('opentype');
+  src: url("/fonts/sourceSansPro-font-family/SourceSansPro-Bold.otf") format("opentype");
   font-display: swap;
   font-weight: 700;
   font-style: normal;
@@ -122,14 +97,14 @@
 
 // ------------- * Main Font library * -------------
 
-$font-main-Regular  : "Cousine-Regular";
-$font-main-Bold   : "Cousine-Bold";
+$font-main-Regular: "Cousine-Regular";
+$font-main-Bold: "Cousine-Bold";
 
 // ------------- * Secondary Font library * -------------
 
-$font-secondary-Regular  : "SourceSansPro-Regular";
-$font-secondary-SemiBold   : "SourceSansPro-SemiBold";
-$font-secondary-Bold   : "SourceSansPro-Bold";
+$font-secondary-Regular: "SourceSansPro-Regular";
+$font-secondary-SemiBold: "SourceSansPro-SemiBold";
+$font-secondary-Bold: "SourceSansPro-Bold";
 
 /**
  * --------------------------------------------------------------------------------------------------------------
@@ -141,9 +116,9 @@ $font-secondary-Bold   : "SourceSansPro-Bold";
 // Global referent Font Size quotient
 $font-size-quotient: 1;
 
-// Font Size Function 
+// Font Size Function
 @function pixelsCalc($pxSize) {
-  @return ($pxSize * $font-size-quotient) + px; 
+  @return ($pxSize * $font-size-quotient) + px;
 }
 
 // Font Size Function  pixel to Rem
@@ -357,12 +332,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 a {

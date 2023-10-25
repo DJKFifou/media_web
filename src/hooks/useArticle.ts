@@ -1,4 +1,4 @@
-import { Article } from "@prisma/client"
+import { Article } from "@prisma/client";
 
 export default function useArticle() {
   async function getArticle(id: string) {
@@ -8,10 +8,10 @@ export default function useArticle() {
         headers: {
           "Content-Type": "application/json",
         },
-      })
-      return await response.json()
+      });
+      return await response.json();
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
@@ -38,29 +38,29 @@ export default function useArticle() {
           link: article.link,
           format: article.format,
         }),
-      })
+      });
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   async function getArticles() {
     try {
-      const data = await fetch("/api/articles")
-      return await data.json()
+      const data = await fetch("/api/articles");
+      return await data.json();
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   async function getArticlesByTopicId(topicId: string) {
     try {
-      const articles = await fetch(`/api/articles/getArticlesByTopic?topicId=${topicId}`)
-      return await articles.json()
+      const articles = await fetch(`/api/articles/getArticlesByTopic?topicId=${topicId}`);
+      return await articles.json();
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
-  return { getArticle, updateArticle, getArticles, getArticlesByTopicId }
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId };
 }

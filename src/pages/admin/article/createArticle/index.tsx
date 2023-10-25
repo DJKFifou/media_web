@@ -1,27 +1,27 @@
-import { Article, Format, Media, Topic } from "@prisma/client"
-import Link from "next/link"
-import { FormEvent, useEffect, useState } from "react"
-import useTopic from "@/hooks/useTopic"
-import { useRouter } from "next/router"
-import useMedia from "@/hooks/useMedia"
+import { Article, Format, Media, Topic } from "@prisma/client";
+import Link from "next/link";
+import { FormEvent, useEffect, useState } from "react";
+import useTopic from "@/hooks/useTopic";
+import { useRouter } from "next/router";
+import useMedia from "@/hooks/useMedia";
 
 export default function CreateArticle() {
-  const { getTopics } = useTopic()
-  const { getMedias } = useMedia()
-  const router = useRouter()
-  const [article, setArticle] = useState<any>(null)
-  const [topicsList, setTopicsList] = useState<Topic[] | null>(null)
-  const [mediasList, setMediasList] = useState<Media[] | null>(null)
-  const [formatsList, setFormatsList] = useState<Format[] | null>(null)
+  const { getTopics } = useTopic();
+  const { getMedias } = useMedia();
+  const router = useRouter();
+  const [article, setArticle] = useState<any>(null);
+  const [topicsList, setTopicsList] = useState<Topic[] | null>(null);
+  const [mediasList, setMediasList] = useState<Media[] | null>(null);
+  const [formatsList, setFormatsList] = useState<Format[] | null>(null);
 
   function handleArticleChange(key: string, value: string) {
-    setArticle((prevState) => ({ ...prevState, [key]: value }))
+    setArticle((prevState) => ({ ...prevState, [key]: value }));
   }
   async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       if (article && typeof article.reading_duration === "string") {
-        console.log(article)
+        console.log(article);
         await fetch("/api/articles/create", {
           method: "POST",
           headers: {
@@ -38,18 +38,18 @@ export default function CreateArticle() {
             format: article.format_id,
             link: article.link,
           }),
-        })
-        await router.replace("/admin")
+        });
+        await router.replace("/admin");
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   useEffect(() => {
-    getTopics().then((topics) => setTopicsList(topics))
-    getMedias().then((medias) => setMediasList(medias))
-  }, [])
+    getTopics().then((topics) => setTopicsList(topics));
+    getMedias().then((medias) => setMediasList(medias));
+  }, []);
 
   return (
     <div>
@@ -72,7 +72,7 @@ export default function CreateArticle() {
                   <option key={index} value={topic.id}>
                     {topic.title}
                   </option>
-                )
+                );
               })
             : null}
         </select>
@@ -84,7 +84,7 @@ export default function CreateArticle() {
                   <option value={media.id} key={index}>
                     {media.title}
                   </option>
-                )
+                );
               })
             : null}
         </select>
@@ -101,12 +101,12 @@ export default function CreateArticle() {
                   <option key={index} value={format}>
                     {format}
                   </option>
-                )
+                );
               })
             : null}
         </select>
         <button type="submit">Créer</button>
       </form>
     </div>
-  )
+  );
 }

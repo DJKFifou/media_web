@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Inter } from 'next/font/google';
-import styles from './BackButton.module.scss';
-import Link from 'next/link';
+import { useState } from "react";
+import { Inter } from "next/font/google";
+import styles from "./BackButton.module.scss";
+import Link from "next/link";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 const BackButton = (props: any) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -17,8 +17,13 @@ const BackButton = (props: any) => {
   };
 
   return (
-    <button className={styles.backButton} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={props.onClick}>
-        <img src={isHovered ? '/assets/backArrowWhite.svg' : '/assets/backArrowBlack.svg'} alt="Flèche retour arrière"/>
+    <button
+      className={styles.backButton}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={props.onClick}
+    >
+      <img src={isHovered ? "/assets/backArrowWhite.svg" : "/assets/backArrowBlack.svg"} alt="Flèche retour arrière" />
     </button>
   );
 };

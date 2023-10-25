@@ -1,32 +1,32 @@
-import Link from "next/link"
-import { FormEvent, useEffect, useState } from "react"
-import { Article, Theme, Topic } from "@prisma/client"
-import useTheme from "@/hooks/useTheme"
-import useTopic from "@/hooks/useTopic"
-import { useRouter } from "next/router"
+import Link from "next/link";
+import { FormEvent, useEffect, useState } from "react";
+import { Article, Theme, Topic } from "@prisma/client";
+import useTheme from "@/hooks/useTheme";
+import useTopic from "@/hooks/useTopic";
+import { useRouter } from "next/router";
 
 export default function CreateTopic() {
-  const { getThemes } = useTheme()
-  const { createTopic } = useTopic()
-  const router = useRouter()
-  const [themesList, setThemesList] = useState<Theme[] | null>(null)
+  const { getThemes } = useTheme();
+  const { createTopic } = useTopic();
+  const router = useRouter();
+  const [themesList, setThemesList] = useState<Theme[] | null>(null);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
     const newTopic = {
       title: event.currentTarget.title.value,
       introduction_text: event.currentTarget.introduction_text.value,
       theme_id: event.currentTarget.theme.value,
       is_hot: event.currentTarget.is_hot.checked,
-    }
+    };
     createTopic(newTopic).then(() => {
-      router.push("/admin")
-    })
+      router.push("/admin");
+    });
   }
 
   useEffect(() => {
-    getThemes().then((themes) => setThemesList(themes))
-  }, [])
+    getThemes().then((themes) => setThemesList(themes));
+  }, []);
 
   return (
     <div>
@@ -45,7 +45,7 @@ export default function CreateTopic() {
                 <option value={theme.id} key={index}>
                   {theme.slug}
                 </option>
-              )
+              );
             })}
           </select>
         ) : null}
@@ -56,5 +56,5 @@ export default function CreateTopic() {
         <button type="submit">Ajouter le sujet</button>
       </form>
     </div>
-  )
+  );
 }

@@ -1,37 +1,38 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.scss'
+import Head from "next/head";
+import Link from "next/link";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.scss";
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { Credentials } from "@/types";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import { supabase } from "@/lib/initSupabase";
-import PrimaryButton from '@/components/Buttons/PrimaryButton/PrimaryButton.component'
-import SecondaryButton from '@/components/Buttons/SecondaryButton/SecondaryButton.component'
-import InputButton from '@/components/Buttons/InputButton/InputButton.component';
+import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
+import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButton.component";
+import InputButton from "@/components/Buttons/InputButton/InputButton.component";
 
-
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { signIn } = useAuth()
-  const router = useRouter()
+  const { signIn } = useAuth();
+  const router = useRouter();
   const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
   function onUpdateUserCredentials(key: string, value: string) {
-    setUserCredentials(prevState => ({ ...prevState, [key]: value }))
+    setUserCredentials((prevState) => ({ ...prevState, [key]: value }));
   }
 
   function onSignIn() {
     if (!userCredentials) {
-      console.log('NO USER CREDENTIALS')
+      console.log("NO USER CREDENTIALS");
     } else {
       signIn(userCredentials).then(async () => {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
-          await router.push(`/users/${user.id}`)
+          await router.push(`/users/${user.id}`);
         }
-      })
+      });
     }
   }
 
@@ -59,23 +60,42 @@ export default function Home() {
             <div className={styles.contentConnexion}>
               <div className={styles.contentEmail}>
                 <label htmlFor="">Identifiant</label>
-                <InputButton type="email" placeholder="Adresse mail" onChange={(event) => { onUpdateUserCredentials('email', event.target.value) }} />
+                <InputButton
+                  type="email"
+                  placeholder="Adresse mail"
+                  onChange={(event) => {
+                    onUpdateUserCredentials("email", event.target.value);
+                  }}
+                />
               </div>
               <div className={styles.contentPassword}>
                 <label htmlFor="">Mot de passe</label>
-                <InputButton type="password" placeholder="Mot de passe" onChange={(event) => { onUpdateUserCredentials('password', event.target.value) }} />
+                <InputButton
+                  type="password"
+                  placeholder="Mot de passe"
+                  onChange={(event) => {
+                    onUpdateUserCredentials("password", event.target.value);
+                  }}
+                />
               </div>
             </div>
             <div className={styles.contentButton}>
-              <PrimaryButton title="Connexion" onClick={() => { onSignIn() }} />
+              <PrimaryButton
+                title="Connexion"
+                onClick={() => {
+                  onSignIn();
+                }}
+              />
               <Link href="/register">
                 <SecondaryButton title="Créer un compte" />
               </Link>
-              <a href="" className={styles.forgottenPasswordLink}>Mot de passe oublié ?</a>
+              <a href="" className={styles.forgottenPasswordLink}>
+                Mot de passe oublié ?
+              </a>
             </div>
           </div>
         </section>
       </main>
     </>
-  )
+  );
 }

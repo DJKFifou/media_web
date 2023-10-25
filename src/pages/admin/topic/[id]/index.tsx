@@ -1,70 +1,70 @@
-import { useRouter } from "next/router"
-import useTopic from "@/hooks/useTopic"
-import { FormEvent, useEffect, useState } from "react"
-import { Article, Theme, Topic } from "@prisma/client"
-import Link from "next/link"
-import useTheme from "@/hooks/useTheme"
-import useArticle from "@/hooks/useArticle"
+import { useRouter } from "next/router";
+import useTopic from "@/hooks/useTopic";
+import { FormEvent, useEffect, useState } from "react";
+import { Article, Theme, Topic } from "@prisma/client";
+import Link from "next/link";
+import useTheme from "@/hooks/useTheme";
+import useArticle from "@/hooks/useArticle";
 
 export default function Topic() {
-  const router = useRouter()
-  const { getTopic, updateTopic, deleteTopic } = useTopic()
-  const { getTheme, getThemes } = useTheme()
-  const topicId = router.query.id
-  const [currentTopic, setCurrentTopic] = useState<Topic | null>(null)
-  const [currentTopicTheme, setCurrentTopicTheme] = useState<Theme | null>(null)
-  const [themesList, setThemesList] = useState<Theme[] | null>(null)
-  const [isModify, setIsModify] = useState<boolean>(false)
+  const router = useRouter();
+  const { getTopic, updateTopic, deleteTopic } = useTopic();
+  const { getTheme, getThemes } = useTheme();
+  const topicId = router.query.id;
+  const [currentTopic, setCurrentTopic] = useState<Topic | null>(null);
+  const [currentTopicTheme, setCurrentTopicTheme] = useState<Theme | null>(null);
+  const [themesList, setThemesList] = useState<Theme[] | null>(null);
+  const [isModify, setIsModify] = useState<boolean>(false);
 
   function handleShowModifyView() {
-    setIsModify(!isModify)
+    setIsModify(!isModify);
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
     const updatedTopic = {
       title: event.currentTarget.title.value as string,
       introduction_text: event.currentTarget.introduction_text.value,
       theme: event.currentTarget.theme.value,
       is_hot: event.currentTarget.is_hot.checked,
-    }
+    };
     if (currentTopic) {
       updateTopic(currentTopic?.id, updatedTopic).then(() => {
-        router.push("/admin")
-      })
+        router.push("/admin");
+      });
     }
   }
 
   function onDelete() {
     if (currentTopic) {
       deleteTopic(currentTopic.id).then(() => {
-        router.replace("/admin")
-      })
+        router.replace("/admin");
+      });
     }
   }
 
   useEffect(() => {
     if (topicId && typeof topicId === "string") {
       getTopic(topicId).then((topic) => {
-        setCurrentTopic(topic)
-      })
+        setCurrentTopic(topic);
+      });
     }
-  }, [topicId])
+  }, [topicId]);
 
   useEffect(() => {
-    const themeId = currentTopic?.theme_id
+    const themeId = currentTopic?.theme_id;
     if (themeId !== undefined) {
       getTheme(themeId).then((theme) => {
-        setCurrentTopicTheme(theme)
-      })
+        setCurrentTopicTheme(theme);
+      });
     }
-  }, [currentTopic])
+  }, [currentTopic]);
 
   useEffect(() => {
     getThemes().then((themes) => {
-      setThemesList(themes)
-    })
-  }, [])
+      setThemesList(themes);
+    });
+  }, []);
 
   return (
     <div>
@@ -88,7 +88,7 @@ export default function Topic() {
                 <option key={index} value={theme.id} selected={theme.id === currentTopicTheme.id}>
                   {theme.slug}
                 </option>
-              )
+              );
             })}
           </select>
         ) : null}
@@ -101,5 +101,5 @@ export default function Topic() {
       <button onClick={() => handleShowModifyView()}>{isModify ? "mode visualisation" : "mode edition"}</button>
       <button onClick={() => onDelete()}>Supprimer</button>
     </div>
-  )
+  );
 }

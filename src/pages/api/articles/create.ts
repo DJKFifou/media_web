@@ -1,9 +1,9 @@
-import { prisma } from "@/lib/prisma"
-import { NextApiRequest, NextApiResponse } from "next"
+import { prisma } from "@/lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const body = req.body
-  console.log("/api/articles/create request", body)
+  const body = req.body;
+  console.log("/api/articles/create request", body);
   const newArticle = await prisma.article.create({
     data: {
       title: body.title,
@@ -19,7 +19,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       format: body.format,
       link: body.link,
     },
-  })
+  });
 
-  return res.status(200).json(newArticle)
+  return res.status(200).json(newArticle);
 }

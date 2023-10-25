@@ -1,20 +1,20 @@
-import useTheme from "@/hooks/useTheme"
-import useUser from "@/hooks/useUser"
-import styles from "@/styles/Home.module.scss"
-import { Article_Frequency, Format, Theme } from "@prisma/client"
-import { Inter } from "next/font/google"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-const inter = Inter({ subsets: ["latin"] })
+import useTheme from "@/hooks/useTheme";
+import useUser from "@/hooks/useUser";
+import styles from "@/styles/Home.module.scss";
+import { Article_Frequency, Format, Theme } from "@prisma/client";
+import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+const inter = Inter({ subsets: ["latin"] });
 
 export default function OnBoarding() {
-  const { createUser } = useUser()
-  const { getThemes } = useTheme()
-  const router = useRouter()
-  const userId = router.query.id
-  const [pseudo, setPseudo] = useState<string | null>(null)
-  const [themes, setThemes] = useState<Theme[]>([])
-  const [formats, setFormats] = useState<Format[]>([])
+  const { createUser } = useUser();
+  const { getThemes } = useTheme();
+  const router = useRouter();
+  const userId = router.query.id;
+  const [pseudo, setPseudo] = useState<string | null>(null);
+  const [themes, setThemes] = useState<Theme[]>([]);
+  const [formats, setFormats] = useState<Format[]>([]);
   const articleFrequencyList = [
     {
       label: "jours",
@@ -28,11 +28,11 @@ export default function OnBoarding() {
       label: "mois",
       value: Article_Frequency.MONTH,
     },
-  ]
-  const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null)
-  const [numberArticle, setNumberArticle] = useState<string | null>(null)
-  const [selectedThemes, setSelectedThemes] = useState<{ id: string }[]>([])
-  const [selectedFormats, setSelectedFormats] = useState<{ id: string }[]>([])
+  ];
+  const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
+  const [numberArticle, setNumberArticle] = useState<string | null>(null);
+  const [selectedThemes, setSelectedThemes] = useState<{ id: string }[]>([]);
+  const [selectedFormats, setSelectedFormats] = useState<{ id: string }[]>([]);
 
   const userInformation = () => {
     if (numberArticle != null) {
@@ -43,38 +43,38 @@ export default function OnBoarding() {
         format: selectedFormats,
         article_number: parseInt(numberArticle, 10),
         article_frequency: selectedArticleFrequencies,
-      }
+      };
     }
-  }
+  };
 
   function handleChangeTheme(themeSelectedId: string) {
-    const isInclude = selectedThemes.some((theme) => theme.id === themeSelectedId)
+    const isInclude = selectedThemes.some((theme) => theme.id === themeSelectedId);
     if (isInclude) {
-      const updatedSelectedThemes = selectedThemes.filter((theme) => theme.id !== themeSelectedId)
-      setSelectedThemes(updatedSelectedThemes)
+      const updatedSelectedThemes = selectedThemes.filter((theme) => theme.id !== themeSelectedId);
+      setSelectedThemes(updatedSelectedThemes);
     } else {
-      setSelectedThemes([...selectedThemes, { id: themeSelectedId }])
+      setSelectedThemes([...selectedThemes, { id: themeSelectedId }]);
     }
   }
   function handleChangeFormat(formatSelectedId: string) {
-    const isInclude = selectedFormats.some((format) => format.id === formatSelectedId)
+    const isInclude = selectedFormats.some((format) => format.id === formatSelectedId);
     if (isInclude) {
-      const updatedSelectedFormats = selectedFormats.filter((format) => format.id !== formatSelectedId)
-      setSelectedFormats(updatedSelectedFormats)
+      const updatedSelectedFormats = selectedFormats.filter((format) => format.id !== formatSelectedId);
+      setSelectedFormats(updatedSelectedFormats);
     } else {
-      setSelectedFormats([...selectedFormats, { id: formatSelectedId }])
+      setSelectedFormats([...selectedFormats, { id: formatSelectedId }]);
     }
   }
 
   async function onSignUp() {
     createUser(userInformation()).then(() => {
-      router.replace(`/users/${userId}`)
-    })
+      router.replace(`/users/${userId}`);
+    });
   }
 
   useEffect(() => {
-    getThemes().then((themes) => setThemes(themes))
-  }, [])
+    getThemes().then((themes) => setThemes(themes));
+  }, []);
 
   return (
     <div className={`${styles.main} ${inter.className}`}>
@@ -87,7 +87,7 @@ export default function OnBoarding() {
               type="text"
               placeholder="Johnny"
               onChange={(event) => {
-                setPseudo(event.target.value)
+                setPseudo(event.target.value);
               }}
             />
           </div>
@@ -126,7 +126,7 @@ export default function OnBoarding() {
               type="number"
               min="0"
               onChange={(event) => {
-                setNumberArticle(event.target.value)
+                setNumberArticle(event.target.value);
               }}
             />
             <select
@@ -135,7 +135,7 @@ export default function OnBoarding() {
               className={styles.selection}
               multiple
               onChange={(event) => {
-                setSelectedArticleFrequencies(event.target.value)
+                setSelectedArticleFrequencies(event.target.value);
               }}
             >
               {articleFrequencyList.map((frequency) => (
@@ -153,5 +153,5 @@ export default function OnBoarding() {
         </div>
       </div>
     </div>
-  )
+  );
 }

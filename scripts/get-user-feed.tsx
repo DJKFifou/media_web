@@ -1,12 +1,12 @@
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/prisma";
 
 async function main() {
   const user = await prisma.user.findUnique({
     where: {
       user_name: "Matt",
     },
-  })
-  if (!user) return
+  });
+  if (!user) return;
 
   const topics = await prisma.topic.findMany({
     where: {
@@ -31,9 +31,9 @@ async function main() {
       },
       theme: true,
     },
-  })
+  });
 
-  console.log(topics)
+  console.log(topics);
 }
 
-main()
+main();

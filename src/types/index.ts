@@ -1,5 +1,4 @@
-
 export type Credentials = {
-	email: string;
-	password: string;
-}
+  email: string;
+  password: string;
+};
