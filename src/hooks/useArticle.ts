@@ -48,5 +48,14 @@ export default function useArticle() {
     }
   }
 
-  return { getArticle, updateArticle, getArticles }
+  async function getArticlesByTopicId(topicId: string){
+    try{
+      const articles = await fetch(`/api/articles/getArticlesByTopic?topicId=${topicId}`)
+      return await articles.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId }
 }
