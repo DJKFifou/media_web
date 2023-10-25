@@ -87,6 +87,13 @@ $breakpoint-tablet: 768px;
           width: 100%;
           label {
             color: $color-text-1;
+            &::before {
+              display: none;
+              content: "";
+              height: 10px;
+              width: 10px;
+              background-color: black;
+            }
           }
         }
       }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
-import { Credentials } from "@/types";
 import styles from "./Topics.module.scss";
 import { Theme } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";

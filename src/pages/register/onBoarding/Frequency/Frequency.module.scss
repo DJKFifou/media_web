@@ -46,28 +46,67 @@ $breakpoint-tablet: 768px;
     color: $color-primary-2;
     padding: 23px 20px 0;
   }
-
-  .subTitleFrequency {
-    text-align: center;
-    color: $color-primary-2;
-    padding: 8px 60px;
-  }
   .contentFrequency {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 32px 20px 78px;
-    .containerGridFrequency {
-      display: grid;
-      justify-items: center;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column-gap: 8px;
-      grid-row-gap: 8px;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    .titleNumberArticle {
+      text-align: center;
+      color: $color-primary-2;
+      padding: 8px 60px 12px;
+    }
+    .containerNumberArticle {
+      display: flex;
+      gap: 8px;
+      .buttonDecrement,
+      .buttonIncrement {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background-color: $color-primary-1;
+      }
+      input[type="number"] {
+        display: flex;
+        width: 80px;
+        height: 42px;
+        background-color: $color-bg-2;
+        border: 1px solid $color-primary-1;
+        border-radius: 8px;
+        margin-bottom: 62px;
+        outline: none;
+        text-align: center;
+        color: $color-text-1;
+      }
+    }
+    .titleFrequency {
+      color: $color-primary-2;
+    }
+    .ButtonFrequencies {
+      display: flex;
+      flex-direction: column;
+      gap: 21px;
+      width: 170px;
+      margin-top: 12px;
     }
     .containerContinue {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
-      justify-content: center;
       position: fixed;
       bottom: 25px;
       left: 0;
+      h4 {
+        margin-bottom: 13px;
+        color: $color-primary-2;
+      }
       button {
         width: 176px;
         @include end-tablet {

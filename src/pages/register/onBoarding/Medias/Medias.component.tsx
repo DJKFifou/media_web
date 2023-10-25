@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
-import { Credentials } from "@/types";
-import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { supabase } from "@/lib/initSupabase";
 import styles from "./Medias.module.scss";
 import { Media } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
 import BackButton from "@/components/Buttons/BackButton/BackButton.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Medias = (props: any) => {
-  const { signUp } = useAuth();
-  const router = useRouter();
   const [medias, setMedias] = useState<Media[]>([]);
-  const [selectedMedias, setSelectedMedias] = useState([]);
-  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
+  const [selectedMedias, setSelectedMedias] = useState<string[]>([]);
 
   async function getMedias() {
     try {
@@ -33,7 +25,7 @@ const Medias = (props: any) => {
       console.error(e);
     }
   }
-  function handleChangeMedia(mediaSelected) {
+  function handleChangeMedia(mediaSelected: string) {
     console.log(mediaSelected);
     if (selectedMedias.includes(mediaSelected)) {
       const updatedSelectedMedias = selectedMedias.filter((media) => media === mediaSelected);
@@ -69,12 +61,10 @@ const Medias = (props: any) => {
             <div key={media.id} className={styles.checkboxMedias}>
               <img src="/assets/media.svg" alt="Média Le Monde" />
               <div>
-                <label>{media.slug}</label>
+                <label>{media.title}</label>
                 <input
-                  data-media-id={media.id}
                   name={media.slug}
                   className="mediaCheckbox"
-                  key={index}
                   type="checkbox"
                   onChange={() => handleChangeMedia(media.title)}
                 />

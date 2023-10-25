@@ -1,36 +1,39 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Inter } from "next/font/google";
-import { Credentials } from "@/types";
-import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { supabase } from "@/lib/initSupabase";
 import styles from "./Frequency.module.scss";
+import { Article_Frequency } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
+import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButton.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Topics = (props: any) => {
-  const { signUp } = useAuth();
-  const router = useRouter();
-  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
-  async function onSignUp(event: FormEvent<HTMLFormElement>) {
-    props.onSuccess();
-    try {
-      event.preventDefault();
-      if (userCredentials) {
-        await signUp(userCredentials).then(async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (user) {
-            // await router.push(`register/onBoarding/${user.id}`);
-          }
-        });
-      }
-    } catch (e) {
-      console.log(e);
+  const articleFrequencyList = [
+    {
+      label: "jours",
+      value: Article_Frequency.DAY,
+    },
+    {
+      label: "semaines",
+      value: Article_Frequency.WEEK,
+    },
+    {
+      label: "mois",
+      value: Article_Frequency.MONTH,
+    },
+  ];
+  const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
+  const [numberArticle, setNumberArticle] = useState<number | null>(null);
+
+  const handleIncrement = () => {
+    setNumberArticle(numberArticle + 1);
+  };
+
+  const handleDecrement = () => {
+    if (numberArticle > 0) {
+      setNumberArticle(numberArticle - 1);
     }
-  }
+  };
 
   return (
     <div className={styles.sectionFrequency}>
@@ -43,14 +46,37 @@ const Topics = (props: any) => {
         </div>
       </div>
       <div className={styles.containerFrequency}>
-        <h2 className={styles.titleFrequency}>Sélectionnez
-         la quantité et la fréquence</h2>
-        <h5 className={styles.subTitleFrequency}>Quantité de sujets</h5>
-        <form className={styles.contentFrequency} onSubmit={onSignUp}>
+        <h2 className={styles.titleFrequency}>Sélectionnez la quantité et la fréquence</h2>
+        <div className={styles.contentFrequency}>
+          <h5 className={styles.titleNumberArticle}>Quantité de sujets</h5>
+          <div className={styles.containerNumberArticle}>
+            <button className={styles.buttonDecrement} onClick={handleDecrement}>-</button>
+            <input
+              id="numberArticle"
+              type="number"
+              min="0"
+              onChange={(event) => {
+                setNumberArticle(event.target.value);
+                console.log(event.target.value);
+              }}
+            />
+            <button className={styles.buttonIncrement} onClick={handleIncrement}>+</button>
+          </div>
+          <h5 className={styles.titleFrequency}>Choisis ta fréquence</h5>
+          <div className={styles.ButtonFrequencies}>
+            <SecondaryButton title="par jour" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
+            <SecondaryButton title="par semaine" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
+            <SecondaryButton title="par mois" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
+          </div>
           <div className={styles.containerContinue}>
+            <h4>
+              {numberArticle >= 2
+                ? `${numberArticle ? numberArticle : ""} sujets par ${selectedArticleFrequencies ? selectedArticleFrequencies : ""}`
+                : `${numberArticle ? numberArticle : ""} sujet par ${selectedArticleFrequencies ? selectedArticleFrequencies : ""}`}
+            </h4>
             <PrimaryButton type="submit" title="Continuer" />
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
