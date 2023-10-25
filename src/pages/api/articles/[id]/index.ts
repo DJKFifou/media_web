@@ -29,6 +29,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           title: req.body.title,
           content: req.body.content,
           reading_duration: Number(req.body.reading_duration),
+          topic: {
+            connect: {id: req.body.topic}
+          },
+          media_name: {
+            connect: {id: req.body.media_name}
+          },
+          image: req.body.image,
+          link: req.body.link,
+          audio: req.body.audio,
+          format: {
+            connect: {id: req.body.format}
+          }
         },
       })
       return res.status(200).json(modifiedArticle)
