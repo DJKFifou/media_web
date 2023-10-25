@@ -4,6 +4,7 @@ import styles from '@/styles/Home.module.scss';
 import Register from './onBoarding/Register/Register.component';
 import Topics from './onBoarding/Topics/Topics.component';
 import Frequency from './onBoarding/Frequency/Frequency.component';
+import Medias from './onBoarding/Medias/Medias.component';
 
 const inter = Inter({ subsets: ['latin'] })
 
