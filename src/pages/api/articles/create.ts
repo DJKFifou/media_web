@@ -9,6 +9,18 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       content: body.content,
       reading_duration: body.reading_duration,
       publish_date: new Date(),
+      topic: {
+        connect: {id: body.topic}
+      },
+      media_name: {
+        connect: {id: body.media_name}
+      },
+      image: body.image,
+      audio: body.audio,
+      format: {
+        connect: {id: body.format}
+      },
+      link: body.link
     },
   })
 

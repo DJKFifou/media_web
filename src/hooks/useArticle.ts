@@ -15,9 +15,9 @@ export default function useArticle() {
     }
   }
 
-  async function updateArticle(id: string, article: Pick<Article, "title" | "content" | "reading_duration">) {
+  async function updateArticle(id: string, article: Pick<Article, "title" | "content" | "reading_duration" | "topic" | "media_name" | "image" | "link" | "audio" | "format">) {
     try {
-      const response = await fetch(`/api/articles/${id}`, {
+      await fetch(`/api/articles/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -26,6 +26,12 @@ export default function useArticle() {
           title: article.title,
           content: article.content,
           reading_duration: article.reading_duration,
+          topic: article.topic,
+          media_name: article.media_name,
+          image: article.image,
+          link: article.link,
+          audio: article.audio,
+          format: article.format
         }),
       })
     } catch (e) {
