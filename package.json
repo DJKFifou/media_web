@@ -7,12 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- prisma"
+    "prisma": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- prisma",
+    "tsx": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- tsx"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.0.4",
     "@prisma/client": "^5.4.2",
     "@supabase/supabase-js": "^2.38.2",
+    "dayjs": "^1.11.10",
     "next": "13.5.6",
     "next-auth": "^4.24.3",
     "prisma": "^5.4.2",
@@ -29,6 +34,7 @@
     "dotenv-flow-cli": "^1.0.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
+    "tsx": "^3.14.0",
     "typescript": "^5"
   }
 }

@@ -18,5 +18,13 @@ export default function useAuth(){
 		}
 	}
 
-	return {signUp, signIn}
+	async function logOut(){
+		try{
+			await supabase.auth.signOut()
+		}catch (e) {
+			console.log(e)
+		}
+	}
+
+	return {signUp, signIn, logOut}
 }

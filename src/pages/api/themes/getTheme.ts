@@ -2,12 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "@/lib/prisma"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const data = req.query
-  const id = data.id
-  const user = await prisma.user.findUnique({
+  const query = req.query
+  const id = query.id as string
+  const theme = await prisma.theme.findUnique({
     where: {
-      id: id as string,
+      id: id,
     },
   })
-  return res.status(200).json(user)
+  return res.status(200).json(theme)
 }

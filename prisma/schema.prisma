@@ -29,9 +29,10 @@ enum Theme_Name {
   TRAVEL
   INTERNATIONAL
   NATIONAL
+  REGIONAL
 }
 
-enum Format_Name {
+enum Format {
   VIDEO
   ARTICLE
   PODCAST
@@ -44,52 +45,92 @@ enum Article_Frequency {
 }
 
 model Article {
-  id               String   @id @default(cuid())
-  title            String
-  // save_by          User[]
-  Topic            Topic?   @relation(fields: [topicId], references: [id])
-  topicId          String?
-  content          String
-  publish_date     DateTime
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title   String
+  content String?
+  link    String  @unique
+
+  // Image URL
+  image            String?
   reading_duration Int
-  recommanded_by   User[]
+
+  liked_by       User[] @relation("UserLikedArticles")
+  recommended_by User[] @relation("UserRecommendedArticles")
+
+  topic    Topic?  @relation(fields: [topic_id], references: [id])
+  topic_id String?
+
+  media    Media?  @relation(fields: [media_id], references: [id])
+  media_id String?
+
+  format Format @default(ARTICLE)
 }
 
 model User {
-  id                String             @id @default(cuid())
-  user_name         String?
-  type              Role               @default(USER)
-  liked_articles    Article[]
-  theme             Theme[]
-  format            Format[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user_name String? @unique
+  type      Role    @default(USER)
+
   article_number    Int?
   article_frequency Article_Frequency?
+
+  liked_articles       Article[] @relation("UserLikedArticles")
+  recommended_articles Article[] @relation("UserRecommendedArticles")
+
+  subscribed_themes  Theme[]
+  subscribed_formats Format[]
+
+  followedBy User[] @relation("UserFollows")
+  following  User[] @relation("UserFollows")
 }
 
 model Theme {
-  id    String     @id @default(cuid())
-  title Theme_Name
-  slug  String
-  User  User[]
-  topic Topic[]
-}
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Format {
-  id    String      @id @default(cuid())
-  title Format_Name
-  slug  String
-  User  User[]
+  type        Theme_Name
+  title       String
+  description String?
+  slug        String     @unique
+
+  subscribers User[]
+  topic       Topic[]
 }
 
 model Topic {
-  id                String    @id @default(cuid())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title             String
+  slug              String @unique
+  publish_date      String
   introduction_text String
-  articles          Article[]
-  theme             Theme[]
-  is_hot            Boolean
+
+  is_hot Boolean @default(false)
+  audio  String?
+
+  articles Article[]
+  theme    Theme     @relation(fields: [theme_id], references: [id])
+  theme_id String
 }
 
 model Media {
-  id    String @id @default(cuid())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   title String
+  slug  String @unique
+
+  link String
+
+  articles Article[]
 }
