@@ -32,7 +32,7 @@ enum Theme_Name {
   REGIONAL
 }
 
-enum Format_Name {
+enum Format {
   VIDEO
   ARTICLE
   PODCAST
@@ -66,7 +66,7 @@ model Article {
   media    Media?  @relation(fields: [media_id], references: [id])
   media_id String?
 
-  format Format_Name @default(ARTICLE)
+  format Format @default(ARTICLE)
 }
 
 model User {
@@ -84,7 +84,7 @@ model User {
   recommended_articles Article[] @relation("UserRecommendedArticles")
 
   subscribed_themes  Theme[]
-  subscribed_formats Format_Name[]
+  subscribed_formats Format[]
 
   followedBy User[] @relation("UserFollows")
   following  User[] @relation("UserFollows")
