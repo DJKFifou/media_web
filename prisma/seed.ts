@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma"
-import { Prisma } from "@prisma/client"
+import { Format, Prisma } from "@prisma/client"
 
 // DD-MM-YYYY
-const publish_date: `${number}-${number}-${number}` = "01-01-2023"
+const publish_date: `${number}-${number}-${number}` = "01-10-2023"
 
 async function main() {
   const themesSlug = [
@@ -252,6 +252,7 @@ async function main() {
           slug: "france-tv-info",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "L'Europe remporte la 44e édition de la Ryder Cup",
@@ -262,6 +263,7 @@ async function main() {
           slug: "lequipe",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Golf : le palmarès complet de la Ryder Cup",
@@ -272,6 +274,7 @@ async function main() {
           slug: "cnews",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Peter Sagan, la rock star du cyclisme, fait ses adieux à la route et vise Paris 2024 en VTT",
@@ -282,6 +285,7 @@ async function main() {
           slug: "le-monde",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Cyclisme : Peter Sagan, le bouquet final",
@@ -292,6 +296,7 @@ async function main() {
           slug: "le-figaro",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Power of Sport : Peter Sagan raconte son amour du VTT, quelle liberté !",
@@ -302,6 +307,7 @@ async function main() {
           slug: "eurosport",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Le Haut-Karabakh se vide et l'Arménie tremble",
@@ -312,6 +318,7 @@ async function main() {
           slug: "les-echos",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Haut-Karabakh : « La haine contre les Arméniens a atteint son paroxysme dans mon pays »",
@@ -322,6 +329,7 @@ async function main() {
           slug: "le-figaro",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Haut-Karabakh : l'exode des réfugiés vers l'Arménie s'accélère",
@@ -332,6 +340,7 @@ async function main() {
           slug: "france-24",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title:
@@ -343,6 +352,7 @@ async function main() {
           slug: "le-monde",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Le Sahel, la France et la fabrique de l'hystérie",
@@ -353,6 +363,7 @@ async function main() {
           slug: "rfi",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Violences faites aux femmes en Outre-Mer : après la Guadeloupe, Justine Benin en Martinique",
@@ -363,6 +374,7 @@ async function main() {
           slug: "rci",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Violences faites aux femmes : Justine Benin consciente de l'ampleur de la tâche qui lui incombe",
@@ -373,6 +385,7 @@ async function main() {
           slug: "la-1ere",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title:
@@ -384,6 +397,7 @@ async function main() {
           slug: "la-1ere",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Covid-19 : la campagne de vaccination avancée",
@@ -394,6 +408,7 @@ async function main() {
           slug: "france-tv-info",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Covid-19 : la campagne de vaccination avancée",
@@ -404,6 +419,7 @@ async function main() {
           slug: "numerama",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Covid-19 : la campagne de vaccination avancée",
@@ -414,6 +430,7 @@ async function main() {
           slug: "service-public",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "La France connaît son mois de septembre le plus chaud jamais enregistré, selon Météo-France",
@@ -424,6 +441,7 @@ async function main() {
           slug: "liberation",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Météo : des températures anormalement élevées pour un mois d'octobre",
@@ -434,6 +452,7 @@ async function main() {
           slug: "france-tv-info",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Météo : à quoi sert le nouvel épisode de chaleur automnale ?",
@@ -444,6 +463,7 @@ async function main() {
           slug: "20minutes",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title: "Reconnaissance faciale : l'Europe sacrifie la vie privée",
@@ -454,6 +474,7 @@ async function main() {
           slug: "journalducoin",
         },
       },
+      format: Format.ARTICLE,
     },
     {
       title:
@@ -465,6 +486,185 @@ async function main() {
           slug: "france-tv-info",
         },
       },
+      format: Format.ARTICLE,
+    },
+    {
+      title: "Gérard Larcher en passe d'être élu président du Sénat pour la cinquième fois",
+      link: "https://www.publicsenat.fr/actualites/politique/gerard-larcher-en-passe-detre-elu-president-du-senat-pour-la-cinquieme-fois",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "public-senat",
+        },
+      },
+    },
+    {
+      title: "Sénat : Gérard Larcher en passe de rempiler au plateau",
+      link: "https://www.courrier-picard.fr/id453782/article/2023-10-01/senat-gerard-larcher-en-passe-de-rempiler-au-plateau",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "courrier-picard",
+        },
+      },
+    },
+    {
+      title: "Politique : Gérard Larcher en passe de devenir président du Sénat pour la 5e fois",
+      link: "https://www.francetvinfo.fr/politique/parlement-francais/senat/politique-gerard-larcher-en-passe-de-devenir-president-du-senat-pour-la-5-fois_6095607.html",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "france-tv-info",
+        },
+      },
+    },
+    {
+      title: "La Teste-de-Buch : Vermilion voudrait forer des puits de pétrole supplémentaires en forêt usagère",
+      link: "https://www.francebleu.fr/infos/environnement/la-teste-de-buch-vermilion-voudrait-forer-des-puits-de-petrole-supplementaires-en-foret-usagere-6583576",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "france-bleu",
+        },
+      },
+    },
+    {
+      title: "Forages pétroliers à Cazaux : les écologistes dénoncent « le cynisme des bénéfices à court terme »",
+      link: "https://www.sudouest.fr/environnement/forages-petroliers-a-cazaux-les-ecologistes-denoncent-le-cynisme-des-benefices-a-court-terme-16838239.php",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "sud-ouest",
+        },
+      },
+    },
+    {
+      title: "Culture : à Bordeaux, une 8ᵉ édition du FAB sous le signe de la lune",
+      link: "https://www.airzen.fr/culture-a-bordeaux-une-8%E1%B5%89-edition-du-fab-sous-le-signe-de-la-lune/",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "air-zen",
+        },
+      },
+    },
+    {
+      title:
+        "Bordeaux : l'ouverture du FAB cartonne avec le récital de piano suspendu à une grue du chantier Bastide Niel",
+      link: "https://www.sudouest.fr/culture/bordeaux-l-ouverture-du-fab-cartonne-avec-le-recital-de-piano-suspendu-a-une-grue-du-chantier-bastide-niel-16881756.php",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "sud-ouest",
+        },
+      },
+    },
+    {
+      title: "Festival international des arts de Bordeaux : 8ème édition",
+      link: "https://aquitaineonline.com/actualites-en-aquitaine/gironde/6683-festival-international-des-arts-de-bordeaux.html",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "aquitaine-online",
+        },
+      },
+    },
+    {
+      title: "Dali avant Dali",
+      link: "https://www.francetvinfo.fr/replay-radio/bd-bande-dessinee/dali-avant-dali_6066375.html",
+      reading_duration: 5,
+      media: {
+        connect: {
+          slug: "france-tv-info",
+        },
+      },
+      format: Format.ARTICLE,
+    },
+    {
+      title: "Dans la tête de Salvador Dalí",
+      link: "https://lequotidien.lu/a-la-une/dans-la-tete-de-salvador-dali/",
+      reading_duration: 5,
+      media: {
+        connect: {
+          slug: "le-quotidien",
+        },
+      },
+      format: Format.ARTICLE,
+    },
+    {
+      title: "BD : Dali",
+      link: "https://www.unidivers.fr/bd-dali-birmant-oubrerie/",
+      reading_duration: 5,
+      media: {
+        connect: {
+          slug: "unidivers",
+        },
+      },
+      format: Format.ARTICLE,
+    },
+    {
+      title: "Bernadette, avec la réalisatrice Léa Domenach et sa directrice de production et sa compositrice",
+      link: "https://www.francebleu.fr/emissions/terre-de-tournage/bernadette-avec-la-realisatrice-lea-domenach-et-sa-directrice-de-production-et-sa-compositrice-7224310",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "france-bleu",
+        },
+      },
+    },
+    {
+      title: "La vie de Bernadette Chirac racontée dans un film",
+      link: "https://rmc.bfmtv.com/actualites/politique/la-vie-de-bernadette-chirac-racontee-dans-un-film_AN-202309300242.html",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "rmc",
+        },
+      },
+    },
+    {
+      title:
+        "Bernadette : Catherine Deneuve devient Madame Chirac dans un biopic inattendu vu du petit bout de la lorgnette",
+      link: "https://www.francetvinfo.fr/culture/cinema/sorties-de-films/bernadette-catherine-deneuve-devient-madame-chirac-dans-un-biopic-inattendu-vu-du-petit-bout-de-la-lorgnette_6089799.html",
+      reading_duration: 5,
+      format: Format.ARTICLE,
+      media: {
+        connect: {
+          slug: "france-tv-info",
+        },
+      },
+    },
+    {
+      title: "À Las Vegas, U2 inaugure la Sphere, une salle de concert immersive entièrement constituée d'écrans",
+      link: "https://www.huffingtonpost.fr/culture/video/a-las-vegas-u2-inaugure-la-sphere-une-salle-de-concert-immersive-entierement-constituee-d-ecrans_223824.html",
+      reading_duration: 5,
+      media: {
+        connect: {
+          slug: "huffington-post",
+        },
+      },
+      format: Format.ARTICLE,
+    },
+    {
+      title: "Concert de U2 : plus d'un million de LED, trois choses à savoir sur la salle The Sphere à Las Vegas",
+      link: "https://www.ouest-france.fr/monde/etats-unis/concert-de-u2-plus-dun-million-de-led-trois-choses-a-savoir-sur-la-salle-the-sphere-a-las-vegas-b9f1c9a6-6115-11ee-a34c-eb9c49c0487f",
+      reading_duration: 5,
+      media: {
+        connect: {
+          slug: "ouest-france",
+        },
+      },
+      format: Format.ARTICLE,
     },
   ]
 
@@ -725,25 +925,17 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title: "Gérard Larcher en passe d'être élu président du Sénat pour la cinquième fois",
-              link: "https://www.publicsenat.fr/actualites/politique/gerard-larcher-en-passe-detre-elu-president-du-senat-pour-la-cinquieme-fois",
-              reading_duration: 5,
-            },
-            {
-              title: "Sénat : Gérard Larcher en passe de rempiler au plateau",
-              link: "https://www.courrier-picard.fr/id453782/article/2023-10-01/senat-gerard-larcher-en-passe-de-rempiler-au-plateau",
-              reading_duration: 5,
-            },
-            {
-              title: "Politique : Gérard Larcher en passe de devenir président du Sénat pour la 5e fois",
-              link: "https://www.francetvinfo.fr/politique/parlement-francais/senat/politique-gerard-larcher-en-passe-de-devenir-president-du-senat-pour-la-5-fois_6095607.html",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.publicsenat.fr/actualites/politique/gerard-larcher-en-passe-detre-elu-president-du-senat-pour-la-cinquieme-fois",
+          },
+          {
+            link: "https://www.courrier-picard.fr/id453782/article/2023-10-01/senat-gerard-larcher-en-passe-de-rempiler-au-plateau",
+          },
+          {
+            link: "https://www.francetvinfo.fr/politique/parlement-francais/senat/politique-gerard-larcher-en-passe-de-devenir-president-du-senat-pour-la-5-fois_6095607.html",
+          },
+        ],
       },
     },
     {
@@ -760,22 +952,14 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title:
-                "La Teste-de-Buch : Vermilion voudrait forer des puits de pétrole supplémentaires en forêt usagère",
-              link: "https://www.francebleu.fr/infos/environnement/la-teste-de-buch-vermilion-voudrait-forer-des-puits-de-petrole-supplementaires-en-foret-usagere-6583576",
-              reading_duration: 5,
-            },
-            {
-              title:
-                "Forages pétroliers à Cazaux : les écologistes dénoncent « le cynisme des bénéfices à court terme »",
-              link: "https://www.sudouest.fr/environnement/forages-petroliers-a-cazaux-les-ecologistes-denoncent-le-cynisme-des-benefices-a-court-terme-16838239.php",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.francebleu.fr/infos/environnement/la-teste-de-buch-vermilion-voudrait-forer-des-puits-de-petrole-supplementaires-en-foret-usagere-6583576",
+          },
+          {
+            link: "https://www.sudouest.fr/environnement/forages-petroliers-a-cazaux-les-ecologistes-denoncent-le-cynisme-des-benefices-a-court-terme-16838239.php",
+          },
+        ],
       },
     },
     {
@@ -792,26 +976,17 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title: "Culture : à Bordeaux, une 8ᵉ édition du FAB sous le signe de la lune",
-              link: "https://www.airzen.fr/culture-a-bordeaux-une-8%E1%B5%89-edition-du-fab-sous-le-signe-de-la-lune/",
-              reading_duration: 5,
-            },
-            {
-              title:
-                "Bordeaux : l'ouverture du FAB cartonne avec le récital de piano suspendu à une grue du chantier Bastide Niel",
-              link: "https://www.sudouest.fr/culture/bordeaux-l-ouverture-du-fab-cartonne-avec-le-recital-de-piano-suspendu-a-une-grue-du-chantier-bastide-niel-16881756.php",
-              reading_duration: 5,
-            },
-            {
-              title: "Festival international des arts de Bordeaux : 8ème édition",
-              link: "https://aquitaineonline.com/actualites-en-aquitaine/gironde/6683-festival-international-des-arts-de-bordeaux.html",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.airzen.fr/culture-a-bordeaux-une-8%E1%B5%89-edition-du-fab-sous-le-signe-de-la-lune/",
+          },
+          {
+            link: "https://www.sudouest.fr/culture/bordeaux-l-ouverture-du-fab-cartonne-avec-le-recital-de-piano-suspendu-a-une-grue-du-chantier-bastide-niel-16881756.php",
+          },
+          {
+            link: "https://aquitaineonline.com/actualites-en-aquitaine/gironde/6683-festival-international-des-arts-de-bordeaux.html",
+          },
+        ],
       },
     },
     {
@@ -828,25 +1003,17 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title: "Dali avant Dali",
-              link: "https://www.francetvinfo.fr/replay-radio/bd-bande-dessinee/dali-avant-dali_6066375.html",
-              reading_duration: 5,
-            },
-            {
-              title: "Dans la tête de Salvador Dalí",
-              link: "https://lequotidien.lu/a-la-une/dans-la-tete-de-salvador-dali/",
-              reading_duration: 5,
-            },
-            {
-              title: "BD : Dali",
-              link: "https://www.unidivers.fr/bd-dali-birmant-oubrerie/",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.francetvinfo.fr/replay-radio/bd-bande-dessinee/dali-avant-dali_6066375.html",
+          },
+          {
+            link: "https://lequotidien.lu/a-la-une/dans-la-tete-de-salvador-dali/",
+          },
+          {
+            link: "https://www.unidivers.fr/bd-dali-birmant-oubrerie/",
+          },
+        ],
       },
     },
     {
@@ -863,26 +1030,17 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title: "Bernadette, avec la réalisatrice Léa Domenach et sa directrice de production et sa compositrice",
-              link: "https://www.francebleu.fr/emissions/terre-de-tournage/bernadette-avec-la-realisatrice-lea-domenach-et-sa-directrice-de-production-et-sa-compositrice-7224310",
-              reading_duration: 5,
-            },
-            {
-              title: "La vie de Bernadette Chirac racontée dans un film",
-              link: "https://rmc.bfmtv.com/actualites/politique/la-vie-de-bernadette-chirac-racontee-dans-un-film_AN-202309300242.html",
-              reading_duration: 5,
-            },
-            {
-              title:
-                "Bernadette : Catherine Deneuve devient Madame Chirac dans un biopic inattendu vu du petit bout de la lorgnette",
-              link: "https://www.francetvinfo.fr/culture/cinema/sorties-de-films/bernadette-catherine-deneuve-devient-madame-chirac-dans-un-biopic-inattendu-vu-du-petit-bout-de-la-lorgnette_6089799.html",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.francebleu.fr/emissions/terre-de-tournage/bernadette-avec-la-realisatrice-lea-domenach-et-sa-directrice-de-production-et-sa-compositrice-7224310",
+          },
+          {
+            link: "https://rmc.bfmtv.com/actualites/politique/la-vie-de-bernadette-chirac-racontee-dans-un-film_AN-202309300242.html",
+          },
+          {
+            link: "https://www.francetvinfo.fr/culture/cinema/sorties-de-films/bernadette-catherine-deneuve-devient-madame-chirac-dans-un-biopic-inattendu-vu-du-petit-bout-de-la-lorgnette_6089799.html",
+          },
+        ],
       },
     },
     {
@@ -899,22 +1057,14 @@ async function main() {
         },
       },
       articles: {
-        createMany: {
-          data: [
-            {
-              title:
-                "À Las Vegas, U2 inaugure la Sphere, une salle de concert immersive entièrement constituée d'écrans",
-              link: "https://www.huffingtonpost.fr/culture/video/a-las-vegas-u2-inaugure-la-sphere-une-salle-de-concert-immersive-entierement-constituee-d-ecrans_223824.html",
-              reading_duration: 5,
-            },
-            {
-              title:
-                "Concert de U2 : plus d'un million de LED, trois choses à savoir sur la salle The Sphere à Las Vegas",
-              link: "https://www.ouest-france.fr/monde/etats-unis/concert-de-u2-plus-dun-million-de-led-trois-choses-a-savoir-sur-la-salle-the-sphere-a-las-vegas-b9f1c9a6-6115-11ee-a34c-eb9c49c0487f",
-              reading_duration: 5,
-            },
-          ],
-        },
+        connect: [
+          {
+            link: "https://www.huffingtonpost.fr/culture/video/a-las-vegas-u2-inaugure-la-sphere-une-salle-de-concert-immersive-entierement-constituee-d-ecrans_223824.html",
+          },
+          {
+            link: "https://www.ouest-france.fr/monde/etats-unis/concert-de-u2-plus-dun-million-de-led-trois-choses-a-savoir-sur-la-salle-the-sphere-a-las-vegas-b9f1c9a6-6115-11ee-a34c-eb9c49c0487f",
+          },
+        ],
       },
     },
   ]

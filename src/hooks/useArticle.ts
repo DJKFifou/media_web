@@ -15,7 +15,13 @@ export default function useArticle() {
     }
   }
 
-  async function updateArticle(id: string, article: Pick<Article, "title" | "content" | "reading_duration" | "topic" | "media_name" | "image" | "link" | "audio" | "format">) {
+  async function updateArticle(
+    id: string,
+    article: Pick<
+      Article,
+      "title" | "content" | "reading_duration" | "topic_id" | "media_id" | "image" | "link" | "format"
+    >
+  ) {
     try {
       await fetch(`/api/articles/${id}`, {
         method: "PUT",
@@ -26,12 +32,11 @@ export default function useArticle() {
           title: article.title,
           content: article.content,
           reading_duration: article.reading_duration,
-          topic: article.topic,
-          media_name: article.media_name,
+          topic: article.topic_id,
+          media_name: article.media_id,
           image: article.image,
           link: article.link,
-          audio: article.audio,
-          format: article.format
+          format: article.format,
         }),
       })
     } catch (e) {
@@ -48,11 +53,11 @@ export default function useArticle() {
     }
   }
 
-  async function getArticlesByTopicId(topicId: string){
-    try{
+  async function getArticlesByTopicId(topicId: string) {
+    try {
       const articles = await fetch(`/api/articles/getArticlesByTopic?topicId=${topicId}`)
       return await articles.json()
-    }catch (e) {
+    } catch (e) {
       console.error(e)
     }
   }

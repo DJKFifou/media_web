@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- prisma"
+    "prisma": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- prisma",
+    "tsx": "cross-env NODE_ENV=${NODE_ENV:-development} dotenv-flow -- tsx"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -22,8 +23,7 @@
     "prisma": "^5.4.2",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.69.4",
-    "tsx": "^3.14.0"
+    "sass": "^1.69.4"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -34,6 +34,7 @@
     "dotenv-flow-cli": "^1.0.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
+    "tsx": "^3.14.0",
     "typescript": "^5"
   }
 }
