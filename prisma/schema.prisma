@@ -66,8 +66,7 @@ model Article {
   media    Media?  @relation(fields: [media_id], references: [id])
   media_id String?
 
-  format    Format? @relation(fields: [format_id], references: [id])
-  format_id String?
+  format Format_Name @default(ARTICLE)
 }
 
 model User {
@@ -85,7 +84,7 @@ model User {
   recommended_articles Article[] @relation("UserRecommendedArticles")
 
   subscribed_themes  Theme[]
-  subscribed_formats Format[]
+  subscribed_formats Format_Name[]
 
   followedBy User[] @relation("UserFollows")
   following  User[] @relation("UserFollows")
@@ -103,18 +102,6 @@ model Theme {
 
   subscribers User[]
   topic       Topic[]
-}
-
-model Format {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  title Format_Name
-  slug  String      @unique
-
-  subscribers User[]
-  articles    Article[]
 }
 
 model Topic {
