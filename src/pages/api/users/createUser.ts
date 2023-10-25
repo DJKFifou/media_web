@@ -11,10 +11,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			user_name: user_name,
 			article_frequency: article_frequency,
 			article_number: article_number,
-			theme: {
+			subscribed_themes: {
 				connect: theme
 			},
-			format: {
+			subscribed_formats: {
 				connect: format
 			}
 		}
