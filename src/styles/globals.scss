@@ -242,6 +242,7 @@ button {
 
 h3,
 h4,
+h5,
 label {
   font-family: $font-secondary-SemiBold;
 }
@@ -297,6 +298,16 @@ h4 {
   line-height: pixelsCalc(18);
   margin: 0;
   text-transform: uppercase;
+  @include end-tablet {
+    font-size: pixelsCalc(16);
+    line-height: pixelsCalc(18);
+  }
+}
+
+h4 {
+  font-size: pixelsCalc(16);
+  line-height: pixelsCalc(18);
+  margin: 0;
   @include end-tablet {
     font-size: pixelsCalc(16);
     line-height: pixelsCalc(18);

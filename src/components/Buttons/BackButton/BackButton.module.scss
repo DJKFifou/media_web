@@ -8,10 +8,14 @@
     padding: 8px;
     border-radius: 30px;
     background-color: $color-bg-2;
-    border: 2px solid $color-secondary-1;
+    border: 2px solid $color-primary-1;
     cursor: pointer;
     // transform: transition 0.3s ease-out;
     &:hover {
-        background-color: $color-secondary-1;
+        background-color: $color-primary-1;
+    }
+    a {
+        height: 24px;
+        width: 24px;
     }
   }
