@@ -1,9 +1,10 @@
 import {useRouter} from "next/router";
 import useTopic from "@/hooks/useTopic";
 import {FormEvent, useEffect, useState} from "react";
-import {Theme, Topic} from '@prisma/client'
+import {Article, Theme, Topic} from '@prisma/client'
 import Link from "next/link";
 import useTheme from "@/hooks/useTheme";
+import useArticle from "@/hooks/useArticle";
 
 export default function Topic() {
 	const router = useRouter()
@@ -62,7 +63,7 @@ export default function Topic() {
 	useEffect(() => {
 		getThemes().then((themes) => {
 			setThemesList(themes)
-		})
+		});
 	}, []);
 
 
@@ -86,8 +87,6 @@ export default function Topic() {
 					) : null}
 					<label>Sujet hot ?</label>
 					<input type='checkbox' name="is_hot" id="is_hot" disabled={!isModify}/>
-					<label>Article</label>
-					{/*TODO: get articles per theme*/}
 					<label>Piste audio</label>
 					<input type="file" name="audio" id="audio"/>
 					{isModify ? (

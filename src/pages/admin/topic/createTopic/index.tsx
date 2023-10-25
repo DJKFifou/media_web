@@ -10,7 +10,6 @@ export default function CreateTopic(){
 	const {createTopic} = useTopic();
 	const router = useRouter()
 	const [themesList, setThemesList] = useState<Theme[] | null>(null);
-	const [articlesList, setArticlesList] = useState<Article[] | null>(null);
 
 	function onSubmit(event: FormEvent<HTMLFormElement>){
 		event.preventDefault()
@@ -50,8 +49,6 @@ export default function CreateTopic(){
 					) : null}
 					<label>Sujet hot ?</label>
 					<input type="checkbox" name="is_hot" id="is_hot"/>
-					<label>Articles associé</label>
-					{/*//TODO: get article per theme*/}
 					<label>Piste audio</label>
 					<input type="file" name="audio" id="audio"/>
 					<button type="submit">Ajouter le sujet</button>
