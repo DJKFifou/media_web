@@ -7,12 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const body: {
     id: string;
     user_name: string;
-    theme: {
-      id: string;
-    }[];
-    format: {
-      id: string;
-    }[];
+    themes: string[];
+    formats: Format[];
     article_number: number;
     article_frequency: Article_Frequency;
   } = req.body;
@@ -23,10 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       article_frequency: body.article_frequency,
       article_number: body.article_number,
       subscribed_themes: {
-        connect: body.theme,
+        connect: body.themes.map((e) => ({ id: e })),
       },
       subscribed_formats: {
-        set: body.format.map((e) => e.id as Format),
+        set: body.formats,
       },
     },
   });
