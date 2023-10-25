@@ -1,15 +1,39 @@
 import { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
+import { Credentials } from "@/types";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { supabase } from "@/lib/initSupabase";
 import styles from "./Frequency.module.scss";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
-import BackButton from "@/components/Buttons/BackButton/BackButton.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const Frequency = (props: any) => {
+const Topics = (props: any) => {
+  const { signUp } = useAuth();
+  const router = useRouter();
+  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
+  async function onSignUp(event: FormEvent<HTMLFormElement>) {
+    props.onSuccess();
+    try {
+      event.preventDefault();
+      if (userCredentials) {
+        await signUp(userCredentials).then(async () => {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (user) {
+            // await router.push(`register/onBoarding/${user.id}`);
+          }
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
-    <section className={styles.sectionFrequency}>
+    <div className={styles.sectionFrequency}>
       <div className={styles.containerBreadcrumb}>
         <div className={styles.breadcrumb}>
           {/* <BackButton onClick={() => { setCurrentStep("step1"); props.onBack(); }} /> */}
@@ -18,11 +42,18 @@ const Frequency = (props: any) => {
           </div>
         </div>
       </div>
-      <h2 className={styles.titleFrequency}>Sélectionnez les médias</h2>
-      <h5 className={styles.subTitleFrequency}>Personnalisez votre expérience médiatique grâce à nos filtres</h5>
-      <form className={styles.contentFrequency} onSubmit={() => {}}></form>
-    </section>
+      <div className={styles.containerFrequency}>
+        <h2 className={styles.titleFrequency}>Sélectionnez
+         la quantité et la fréquence</h2>
+        <h5 className={styles.subTitleFrequency}>Quantité de sujets</h5>
+        <form className={styles.contentFrequency} onSubmit={onSignUp}>
+          <div className={styles.containerContinue}>
+            <PrimaryButton type="submit" title="Continuer" />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
-export default Frequency;
+export default Topics;

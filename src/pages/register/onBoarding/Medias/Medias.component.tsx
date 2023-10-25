@@ -4,7 +4,8 @@ import { Credentials } from "@/types";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { supabase } from "@/lib/initSupabase";
-import styles from "./Topics.module.scss";
+import styles from "./Medias.module.scss";
+import { Media } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
 import BackButton from "@/components/Buttons/BackButton/BackButton.component";
@@ -14,66 +15,37 @@ const inter = Inter({ subsets: ["latin"] });
 const Medias = (props: any) => {
   const { signUp } = useAuth();
   const router = useRouter();
-  const [formats, setFormats] = useState<Format[]>([]);
-  const [selectedFormats, setSelectedFormats] = useState([]);
+  const [medias, setMedias] = useState<Media[]>([]);
+  const [selectedMedias, setSelectedMedias] = useState([]);
   const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
 
-  async function getFormats() {
+  async function getMedias() {
     try {
-      const formats = await fetch("/api/formats", {
+      const medias = await fetch("/api/medias/getMedias", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const formatsJSON = await formats.json();
-      setFormats(formatsJSON);
+      const mediasJSON = await medias.json();
+      setMedias(mediasJSON);
     } catch (e) {
       console.error(e);
     }
   }
-  function handleChangeFormat(formatSelected) {
-    console.log(formatSelected);
-    if (selectedFormats.includes(formatSelected)) {
-      const updatedSelectedFormats = selectedFormats.filter((format) => format === formatSelected);
-      setSelectedFormats(updatedSelectedFormats);
+  function handleChangeMedia(mediaSelected) {
+    console.log(mediaSelected);
+    if (selectedMedias.includes(mediaSelected)) {
+      const updatedSelectedMedias = selectedMedias.filter((media) => media === mediaSelected);
+      setSelectedMedias(updatedSelectedMedias);
     } else {
-      setSelectedFormats([...selectedFormats, formatSelected]);
+      setSelectedMedias([...selectedMedias, mediaSelected]);
     }
-    console.log(selectedFormats);
+    console.log(selectedMedias);
   }
-  async function onSignUp(event: FormEvent<HTMLFormElement>) {
-    props.onSuccess();
-    try {
-      event.preventDefault();
-      if (userCredentials) {
-        await signUp(userCredentials).then(async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (user) {
-            await router.push(`register/onBoarding/${user.id}`);
-          }
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  function handleChangeTheme(themeSelected) {
-    console.log(themeSelected);
-    if (selectedThemes.includes(themeSelected)) {
-      const updatedSelectedThemes = selectedThemes.filter((theme) => theme === themeSelected);
-      setSelectedThemes(updatedSelectedThemes);
-    } else {
-      setSelectedThemes([...selectedThemes, themeSelected]);
-    }
-    console.log(selectedThemes);
-  }
-  // type Step = "step1" | "step2" | "step3";
-  // const [currentStep, setCurrentStep] = useState<Step>('step2');
+
   useEffect(() => {
-    getFormats();
+    getMedias();
   }, []);
 
   return (
@@ -86,28 +58,33 @@ const Medias = (props: any) => {
           </div>
         </div>
       </div>
+      <h2 className={styles.titleMedias}>Sélectionnez les médias</h2>
+      <div className={styles.researchMedias}>
+        <img src="/assets/search.svg" alt="Loupe" />
+        <input type="search" />
+      </div>
       <div className={styles.containerMedias}>
-        <h2 className={styles.titleMedias}>Sélectionnez les thèmes</h2>
-        <form className={styles.contentMedias} onSubmit={onSignUp}>
-          <div className={styles.containerGridMedias}>
-            {formats.map((format: Format, index) => (
-              <div key={format.id} className={styles.checkboxFormats}>
+        <div className={styles.contentMedias}>
+          {medias.map((media: Media, index) => (
+            <div key={media.id} className={styles.checkboxMedias}>
+              <img src="/assets/media.svg" alt="Média Le Monde" />
+              <div>
+                <label>{media.slug}</label>
                 <input
-                  data-format-id={format.id}
-                  name={format.slug}
-                  className="formatCheckbox"
+                  data-media-id={media.id}
+                  name={media.slug}
+                  className="mediaCheckbox"
                   key={index}
                   type="checkbox"
-                  onChange={() => handleChangeFormat(format.title)}
+                  onChange={() => handleChangeMedia(media.title)}
                 />
-                <label>{format.slug}</label>
               </div>
-            ))}
-          </div>
-          <div className={styles.containerContinue}>
-            <PrimaryButton type="submit" title="Terminer" />
-          </div>
-        </form>
+            </div>
+          ))}
+        </div>
+        <div className={styles.containerContinue}>
+          <PrimaryButton type="submit" title="Terminer" />
+        </div>
       </div>
     </div>
   );

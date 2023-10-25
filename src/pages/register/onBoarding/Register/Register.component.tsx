@@ -44,7 +44,7 @@ const Register = (props: Props) => {
             data: { user },
           } = await supabase.auth.getUser();
           if (user) {
-            await router.push(`register/onBoarding/${user.id}`);
+            // await router.push(`register/onBoarding/${user.id}`);
           }
         });
       }
@@ -60,7 +60,7 @@ const Register = (props: Props) => {
       <section className={styles.sectionRegister}>
         <div className={styles.containerBreadcrumb}>
           <div className={styles.breadcrumb}>
-            <BackButton link="/" />
+            <BackButton />
             <div className={styles.containerProgress}>
               <div className={styles.contentProgress}></div>
             </div>
