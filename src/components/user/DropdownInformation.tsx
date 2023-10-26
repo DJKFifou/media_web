@@ -2,9 +2,12 @@ import React, { ReactNode, Dispatch, SetStateAction } from "react";
 
 type DropdownType = {
   isOpen: boolean;
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
   title: string;
+<<<<<<< HEAD
   onClick: () => void
+=======
+>>>>>>> master
 };
 
 export default function DropdownInformation({ isOpen, children, title, onClick }: DropdownType) {

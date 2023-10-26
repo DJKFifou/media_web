@@ -10,14 +10,18 @@ const inter = Inter({ subsets: ["latin"] });
 const Topics = (props: any) => {
 
   const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
+  // @todo Add better default value or check for falsy value here #1
   const [numberArticle, setNumberArticle] = useState<number | null>(null);
 
   const handleIncrement = () => {
+    // #1
     setNumberArticle(numberArticle + 1);
   };
 
   const handleDecrement = () => {
+    // #1
     if (numberArticle > 0) {
+      // #1
       setNumberArticle(numberArticle - 1);
     }
   };
@@ -43,27 +47,47 @@ const Topics = (props: any) => {
         <div className={styles.contentFrequency}>
           <h5 className={styles.titleNumberArticle}>Quantité de sujets</h5>
           <div className={styles.containerNumberArticle}>
-            <button className={styles.buttonDecrement} onClick={handleDecrement}>-</button>
-            <input
-              id="numberArticle"
-              type="number"
-              min="0"
-              value={numberArticle || ""}
-              onChange={handleNumberChange}
-            />
-            <button className={styles.buttonIncrement} onClick={handleIncrement}>+</button>
+            <button className={styles.buttonDecrement} onClick={handleDecrement}>
+              -
+            </button>
+            <input id="numberArticle" type="number" min="0" value={numberArticle || ""} onChange={handleNumberChange} />
+            <button className={styles.buttonIncrement} onClick={handleIncrement}>
+              +
+            </button>
           </div>
           <h5 className={styles.titleFrequency}>Choisis ta fréquence</h5>
           <div className={styles.ButtonFrequencies}>
-            <SecondaryButton title="par jour" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
-            <SecondaryButton title="par semaine" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
-            <SecondaryButton title="par mois" onClick={(event) => { setSelectedArticleFrequencies(event.target.value); console.log(event.target.value); }}/>
+            <SecondaryButton
+              title="par jour"
+              onClick={(event) => {
+                setSelectedArticleFrequencies(event.target.value);
+                console.log(event.target.value);
+              }}
+            />
+            <SecondaryButton
+              title="par semaine"
+              onClick={(event) => {
+                setSelectedArticleFrequencies(event.target.value);
+                console.log(event.target.value);
+              }}
+            />
+            <SecondaryButton
+              title="par mois"
+              onClick={(event) => {
+                setSelectedArticleFrequencies(event.target.value);
+                console.log(event.target.value);
+              }}
+            />
           </div>
           <div className={styles.containerContinue}>
             <h4>
               {numberArticle >= 2
-                ? `${numberArticle ? numberArticle : "0"} sujets par ${selectedArticleFrequencies ? selectedArticleFrequencies : "jour"}`
-                : `${numberArticle ? numberArticle : "0"} sujet par ${selectedArticleFrequencies ? selectedArticleFrequencies : "jour"}`}
+                ? `${numberArticle ? numberArticle : "0"} sujets par ${
+                    selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
+                  }`
+                : `${numberArticle ? numberArticle : "0"} sujet par ${
+                    selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
+                  }`}
             </h4>
             <PrimaryButton type="submit" title="Continuer" />
           </div>

@@ -54,8 +54,9 @@ export default function Parameters() {
 
   useEffect(() => {
     getUser(userId).then((user) => {
-      setCurrentUser(user);
+      user && setCurrentUser(user);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   return (
     <div>

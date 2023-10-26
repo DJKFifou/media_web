@@ -1,9 +1,9 @@
-import { Article, Format, Media, Topic } from "@prisma/client";
-import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
-import useTopic from "@/hooks/useTopic";
-import { useRouter } from "next/router";
 import useMedia from "@/hooks/useMedia";
+import useTopic from "@/hooks/useTopic";
+import { Format, Media, Topic } from "@prisma/client";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function CreateArticle() {
   const { getTopics } = useTopic();
@@ -12,10 +12,10 @@ export default function CreateArticle() {
   const [article, setArticle] = useState<any>(null);
   const [topicsList, setTopicsList] = useState<Topic[] | null>(null);
   const [mediasList, setMediasList] = useState<Media[] | null>(null);
-  const [formatsList, setFormatsList] = useState<Format[] | null>(null);
 
   function handleArticleChange(key: string, value: string) {
-    setArticle((prevState) => ({ ...prevState, [key]: value }));
+    // @todo better type this ⬇️
+    setArticle((prevState: any) => ({ ...prevState, [key]: value }));
   }
   async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

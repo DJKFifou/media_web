@@ -135,7 +135,8 @@ export default function OnBoarding() {
               className={styles.selection}
               multiple
               onChange={(event) => {
-                setSelectedArticleFrequencies(event.target.value);
+                event.target.value in Article_Frequency &&
+                  setSelectedArticleFrequencies(event.target.value as Article_Frequency);
               }}
             >
               {articleFrequencyList.map((frequency) => (
