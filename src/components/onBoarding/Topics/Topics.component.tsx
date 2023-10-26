@@ -1,16 +1,11 @@
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
-import useAuth from "@/hooks/useAuth";
 import useTheme from "@/hooks/useTheme";
 import { Theme } from "@prisma/client";
-import { Inter } from "next/font/google";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "./Topics.module.scss";
 
-const Topics = (props: any) => {
-  const { signUp } = useAuth();
-  const router = useRouter();
+const Topics = (props: { onSuccess: () => void }) => {
   const { themes } = useTheme();
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
 
@@ -20,6 +15,11 @@ const Topics = (props: any) => {
     } else {
       setSelectedThemes([...selectedThemes, id]);
     }
+  };
+
+  const handleSubmit = () => {
+    // @todo Save Topics choice on the API
+    props.onSuccess();
   };
 
   return (
@@ -50,7 +50,7 @@ const Topics = (props: any) => {
             ))}
           </div>
           <div className={styles.containerContinue}>
-            <PrimaryButton type="submit" title={`Continuer (${selectedThemes.length})`} />
+            <PrimaryButton onClick={handleSubmit} title={`Continuer (${selectedThemes.length})`} />
           </div>
         </div>
       </div>

@@ -1,79 +1,26 @@
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import useAuth from "@/hooks/useAuth";
-import { supabase } from "@/lib/initSupabase";
-import { Credentials } from "@/types";
-import { Format } from "@prisma/client";
-import { Inter } from "next/font/google";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import useMedia from "@/hooks/useMedia";
+import { FormEvent, useState } from "react";
 import styles from "./Medias.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
 const Medias = (props: any) => {
-  const { signUp } = useAuth();
-  const router = useRouter();
-  const [formats, setFormats] = useState<Format[]>([]);
-  const [selectedFormats, setSelectedFormats] = useState([]);
-  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
+  const { medias } = useMedia();
+  const [checkedState, setCheckedState] = useState<string[]>([]);
 
-  async function getFormats() {
-    try {
-      const formats = await fetch("/api/formats", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const formatsJSON = await formats.json();
-      setFormats(formatsJSON);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  function handleChangeFormat(formatSelected) {
-    console.log(formatSelected);
-    if (selectedFormats.includes(formatSelected)) {
-      const updatedSelectedFormats = selectedFormats.filter((format) => format === formatSelected);
-      setSelectedFormats(updatedSelectedFormats);
+  const handleCheckboxChange = (id: string) => {
+    if (checkedState.includes(id)) {
+      setCheckedState(checkedState.filter((theme) => theme !== id));
     } else {
-      setSelectedFormats([...selectedFormats, formatSelected]);
+      setCheckedState([...checkedState, id]);
     }
-    console.log(selectedFormats);
-  }
-  async function onSignUp(event: FormEvent<HTMLFormElement>) {
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(checkedState);
+    // @todo Save Topics choice on the API
     props.onSuccess();
-    try {
-      event.preventDefault();
-      if (userCredentials) {
-        await signUp(userCredentials).then(async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (user) {
-            await router.push(`register/onBoarding/${user.id}`);
-          }
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  function handleChangeTheme(themeSelected) {
-    console.log(themeSelected);
-    if (selectedThemes.includes(themeSelected)) {
-      const updatedSelectedThemes = selectedThemes.filter((theme) => theme === themeSelected);
-      setSelectedThemes(updatedSelectedThemes);
-    } else {
-      setSelectedThemes([...selectedThemes, themeSelected]);
-    }
-    console.log(selectedThemes);
-  }
-  // type Step = "step1" | "step2" | "step3";
-  // const [currentStep, setCurrentStep] = useState<Step>('step2');
-  useEffect(() => {
-    getFormats();
-  }, []);
+  };
 
   return (
     <div className={styles.sectionMedias}>
@@ -87,21 +34,21 @@ const Medias = (props: any) => {
       </div>
       <div className={styles.containerMedias}>
         <h2 className={styles.titleMedias}>Sélectionnez les thèmes</h2>
-        <form className={styles.contentMedias} onSubmit={onSignUp}>
+        <form className={styles.contentMedias} onSubmit={handleSubmit}>
           <div className={styles.containerGridMedias}>
-            {formats.map((format: Format, index) => (
-              <div key={format.id} className={styles.checkboxFormats}>
-                <input
-                  data-format-id={format.id}
-                  name={format.slug}
-                  className="formatCheckbox"
-                  key={index}
-                  type="checkbox"
-                  onChange={() => handleChangeFormat(format.title)}
-                />
-                <label>{format.slug}</label>
-              </div>
-            ))}
+            {medias &&
+              medias.map((media) => (
+                <label htmlFor="" key={media.id} className={styles.checkboxFormats}>
+                  <input
+                    id={`custom-checkbox-${media.id}`}
+                    name={media.id}
+                    checked={checkedState.includes(media.id)}
+                    onChange={() => handleCheckboxChange(media.id)}
+                    type="checkbox"
+                  />
+                  <span>{media.title}</span>
+                </label>
+              ))}
           </div>
           <div className={styles.containerContinue}>
             <PrimaryButton type="submit" title="Terminer" />

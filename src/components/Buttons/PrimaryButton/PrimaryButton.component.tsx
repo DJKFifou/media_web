@@ -1,8 +1,13 @@
+import { ComponentProps } from "react";
 import styles from "./PrimaryButton.module.scss";
 
-const PrimaryButton = (props: any) => {
+const PrimaryButton = (
+  props: ComponentProps<"button"> & {
+    title: string;
+  }
+) => {
   return (
-    <button type={props.type} className={styles.primaryButton}>
+    <button className={styles.primaryButton} {...props}>
       {props.title}
     </button>
   );
