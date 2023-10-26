@@ -1,12 +1,8 @@
-import { Inter } from "next/font/google";
+import { ComponentProps } from "react";
 import styles from "./InputButton.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const InputButton = (props: any) => {
-  return (
-    <input className={styles.inputButton} type={props.type} placeholder={props.placeholder} onChange={props.onChange} />
-  );
+const InputButton = (props: ComponentProps<"input">) => {
+  return <input className={styles.inputButton} {...props} />;
 };
 
 export default InputButton;
