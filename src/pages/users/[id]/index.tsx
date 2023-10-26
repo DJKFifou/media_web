@@ -5,19 +5,22 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {Topic} from "@prisma/client";
+import { Article, Topic } from "@prisma/client";
 import useTopic from "@/hooks/useTopic";
-import useTheme from "@/hooks/useTheme";
 import TopicCard from "@/components/Cards/TopicCard/TopicCard";
+import ModalBurger from "@/components/Modal/ModalBurger";
+import { TopicThemeArticlePayload } from "@/types";
+
 
 export default function User() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [topicsList, setTopicsList] = useState<Topic[] | null>(null);
+  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
+  const [saveArticles, setSaveArticles] = useState<Article[] | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const router = useRouter();
   const id = router.query.id as string;
-  const { getUser } = useUser();
+  const { getUser, getSaveArticle } = useUser();
   const {getTopicsByThemes} = useTopic()
-  const {getTheme} = useTheme()
 
   const title = () => {
     const article_frequency = currentUser?.article_frequency
@@ -39,10 +42,13 @@ export default function User() {
       setCurrentUser(user);
     });
     getTopicsByThemes(id).then((topics) => setTopicsList(topics));
+    getSaveArticle(id).then((saveArticles) => setSaveArticles(saveArticles))
   }, [id]);
+
 
   return (
     <Layout userId={id}>
+      <button onClick={() => setIsModalOpen(true)}>Menu burger</button>
       <h1>{`Bienvenue ${currentUser?.user_name}`}</h1>
       <p>{title()}</p>
       <Link href={`/users/${id}/parameters`}>Mes Parametres</Link>
@@ -55,6 +61,13 @@ export default function User() {
           )
         })
       ) : null}
+      <ModalBurger
+        isModalOpen={isModalOpen}
+        topics={topicsList}
+        onCloseModal={() => setIsModalOpen(false)}
+        saveArticlesLength={saveArticles ? saveArticles.length : 0}
+        userId={id}
+      />
     </Layout>
   );
 }

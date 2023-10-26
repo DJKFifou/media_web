@@ -1,8 +1,9 @@
 import { Article, Topic } from "@prisma/client";
 import Link from "next/link";
 import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
+import { TopicThemeArticlePayload } from "@/types";
 
-export default function TopicCard({ topic }: { topic: Topic }){
+export default function TopicCard({ topic }: { topic: TopicThemeArticlePayload }){
   return (
     <div>
       <h2>{topic.theme.title}</h2>
