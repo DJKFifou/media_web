@@ -1,7 +1,11 @@
 import { supabase } from "@/lib/initSupabase";
 import { Credentials } from "@/types";
+import { useEffect, useState } from "react";
+import { User } from "@prisma/client";
 
 export default function useAuth() {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
   async function signUp(credentials: Credentials) {
     try {
       const result = await supabase.auth.signUp({ email: credentials.email, password: credentials.password });
@@ -28,5 +32,18 @@ export default function useAuth() {
     }
   }
 
-  return { signUp, signIn, logOut };
+  async function getCurrentUser(){
+    try{
+      return await supabase.auth.getUser()
+    }catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    getCurrentUser().then((user) => setCurrentUser(user.data.user))
+  }, []);
+
+
+  return { signUp, signIn, logOut, currentUser };
 }
