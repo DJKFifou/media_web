@@ -1,4 +1,5 @@
 import { Article } from "@prisma/client";
+import { fetcher } from "@/lib/fetcher";
 
 export default function useArticle() {
   async function getArticle(id: string) {
@@ -62,5 +63,13 @@ export default function useArticle() {
     }
   }
 
-  return { getArticle, updateArticle, getArticles, getArticlesByTopicId };
+  async function saveArticle(articleId: string, userId: string){
+    try{
+      await fetcher({url: `/api/articles/${articleId}/saveArticle`, method: 'POST', body:{userId: userId}})
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle };
 }
