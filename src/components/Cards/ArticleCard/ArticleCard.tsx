@@ -5,21 +5,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function ArticleCard({ article }: { article: Article }) {
-  const { saveArticle, isArticleSave } = useArticle();
+  const { saveArticle, checkIsArticleSaved } = useArticle();
   const router = useRouter();
   const userId = router.query.id as string;
   const [isSave, setIsSave] = useState<boolean>(false);
-  async function test(){
 
-    const test = await isArticleSave(article.id, userId);
-    console.log(test)
-    setIsSave(test)
+  async function getArticleStatus() {
+    const status = await checkIsArticleSaved(article.id, userId);
+    setIsSave(status);
   }
 
   useEffect(() => {
-    test()
+    getArticleStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

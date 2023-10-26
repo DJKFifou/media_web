@@ -1,19 +1,29 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
 
-export default async function handler (req: NextApiRequest, res: NextApiResponse){
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const articleId = req.query.id as string;
-  const userId = req.body.userId
-  const article = await prisma.article.findUnique({
+  const userId = req.body.userId;
+
+  if (!userId || !articleId) {
+    return res.status(400).json({ message: "Missing userId or articleId" });
+  }
+
+  const article = await prisma.article.findFirst({
     where: {
-      id: articleId,
+      id: {
+        equals: articleId,
+      },
       liked_by: {
         some: {
-          id: userId
-        }
-      }
+          id: userId,
+        },
+      },
     },
-  })
-  const isSave = article ? true : false;
-  return res.status(200).json({isSave: isSave})
+    include: {
+      _count: true,
+    },
+  });
+
+  return res.status(200).json({ isSave: !!article });
 }

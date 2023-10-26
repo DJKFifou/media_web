@@ -63,27 +63,27 @@ export default function useArticle() {
     }
   }
 
-  async function saveArticle(articleId: string, userId: string){
-    try{
-      await fetcher({url: `/api/articles/${articleId}/saveArticle`, method: 'POST', body:{userId: userId}})
-    }catch (e) {
-      console.error(e)
+  async function saveArticle(articleId: string, userId: string) {
+    try {
+      await fetcher({ url: `/api/articles/${articleId}/saveArticle`, method: "POST", body: { userId: userId } });
+    } catch (e) {
+      console.error(e);
     }
   }
 
-  async function isArticleSave(articleId: string, userId: string){
-    try{
+  async function checkIsArticleSaved(articleId: string, userId: string) {
+    try {
       const response = await fetch(`/api/articles/${articleId}/isArticleSave`, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({userId: userId})
-      })
-      return await response.json()
-    }catch (e) {
-      console.error(e)
+        body: JSON.stringify({ userId: userId }),
+      });
+      return await response.json();
+    } catch (e) {
+      console.error(e);
     }
   }
 
-  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle, isArticleSave };
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle, checkIsArticleSaved };
 }
