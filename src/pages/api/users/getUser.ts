@@ -8,6 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: {
       id: id as string,
     },
+    include: {
+      subscribed_themes: true,
+    },
   });
   return res.status(200).json(user);
 }

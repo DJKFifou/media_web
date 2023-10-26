@@ -80,5 +80,14 @@ export default function useUser() {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return { getUser, createUser, registerUser, updateUserSubscribedThemes, currentUser, getCurrentUser };
+  async function getSaveArticle(userId: string) {
+    const saveArticles = await fetch(`/api/users/getSaveArticles?id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await saveArticles.json();
+  }
+  return { getUser, createUser, registerUser, updateUserSubscribedThemes, currentUser, getCurrentUser, getSaveArticle };
 }

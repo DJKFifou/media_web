@@ -14,6 +14,7 @@ export default function CreateTopic() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const newTopic = {
+      // @todo Fix TS error
       title: event.currentTarget.title.value,
       introduction_text: event.currentTarget.introduction_text.value,
       theme_id: event.currentTarget.theme.value,

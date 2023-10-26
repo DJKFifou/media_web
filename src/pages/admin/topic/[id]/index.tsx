@@ -22,6 +22,7 @@ export default function Topic() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const updatedTopic = {
+      // @todo Fix TS error
       title: event.currentTarget.title.value as string,
       introduction_text: event.currentTarget.introduction_text.value,
       theme: event.currentTarget.theme.value,

@@ -12,10 +12,10 @@ export default function CreateArticle() {
   const [article, setArticle] = useState<any>(null);
   const [topicsList, setTopicsList] = useState<Topic[] | null>(null);
   const [mediasList, setMediasList] = useState<Media[] | null>(null);
-  const [formatsList, setFormatsList] = useState<Format[] | null>(null);
 
   function handleArticleChange(key: string, value: string) {
-    setArticle((prevState) => ({ ...prevState, [key]: value }));
+    // @todo better type this ⬇️
+    setArticle((prevState: any) => ({ ...prevState, [key]: value }));
   }
   async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
