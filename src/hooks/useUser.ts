@@ -37,5 +37,15 @@ export default function useUser() {
       body: payload,
     });
   }
-  return { getUser, createUser, registerUser };
+
+  async function getSaveArticle(userId: string){
+    const saveArticles = await fetch(`/api/users/getSaveArticles?id=${userId}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    return await saveArticles.json();
+  }
+  return { getUser, createUser, registerUser, getSaveArticle };
 }
