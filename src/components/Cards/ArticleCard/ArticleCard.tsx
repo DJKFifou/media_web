@@ -4,25 +4,33 @@ import useArticle from "@/hooks/useArticle";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function ArticleCard({article} : {article: Article}){
-  const {saveArticle, isArticleSave} = useArticle();
-  const router = useRouter()
+export default function ArticleCard({ article }: { article: Article }) {
+  const { saveArticle, isArticleSave } = useArticle();
+  const router = useRouter();
   const userId = router.query.id as string;
   const [isSave, setIsSave] = useState<boolean>(false);
+  async function test(){
+
+    const test = await isArticleSave(article.id, userId);
+    console.log(test)
+    setIsSave(test)
+  }
+
   useEffect(() => {
-    //TODO: this is not working isSave: undefined
-    isArticleSave(article.id, userId).then((isSave) => {setIsSave(isSave); console.log(isSave)})
+    test()
   }, []);
 
+
   return (
-    <div style={{display: "flex", flexDirection: "column"}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       {article.image ? (
         //TODO: import article image's into BDD
         <image href={article.image} />
       ) : null}
       <Link href={article.link}>{article.title}</Link>
-
-      <button onClick={() => saveArticle(article.id, userId)}>{isSave ? "Retirer l'article" : "Enregistrer l'article"}</button>
+      <button onClick={() => saveArticle(article.id, userId)}>
+        {isSave ? "Retirer l'article" : "Enregistrer l'article"}
+      </button>
     </div>
-  )
+  );
 }
