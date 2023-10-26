@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { Prisma } from "@prisma/client";
+type Theme = Prisma.ThemeGetPayload<{include: {subscribers: true}}>
 
 export default function useTheme() {
-  const [themes, setThemes] = useState([]);
+  const [themes, setThemes] = useState<Theme[]>([]);
 
   async function getThemes() {
     try {
@@ -27,7 +29,7 @@ export default function useTheme() {
 
   useEffect(() => {
     getThemes()
-      .then((themes) => setThemes(themes))
+      .then((themes: Theme[]) => setThemes(themes))
       .catch((e) => console.error(e));
   }, []);
 

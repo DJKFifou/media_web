@@ -1,5 +1,14 @@
 import { fetcher } from "@/lib/fetcher";
 import { RegisterUserPayload } from "@/types";
+import { Article_Frequency } from "@prisma/client";
+
+type UpdateUserPayload = {
+  id: string,
+  user_name?: string,
+  themes?: string[],
+  article_number?: number,
+  article_frequency?: Article_Frequency
+}
 
 export default function useUser() {
   async function getUser(id: string) {
@@ -37,5 +46,26 @@ export default function useUser() {
       body: payload,
     });
   }
-  return { getUser, createUser, registerUser };
+
+  async function getUserThemes(userId: string){
+    try{
+      const response = await fetch(`/api/users/getUserThemes?userId=${userId}`)
+      return await response.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  async function updateUser(payload: UpdateUserPayload){
+    try{
+      await fetcher({
+        url: "/api/users/updateUser",
+        method: 'PUT',
+        body: payload
+      })
+    }catch (e) {
+      console.error(e)
+    }
+  }
+  return { getUser, createUser, registerUser, getUserThemes, updateUser };
 }

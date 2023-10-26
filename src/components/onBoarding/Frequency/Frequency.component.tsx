@@ -8,20 +8,7 @@ import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButto
 const inter = Inter({ subsets: ["latin"] });
 
 const Topics = (props: any) => {
-  const articleFrequencyList = [
-    {
-      label: "jours",
-      value: Article_Frequency.DAY,
-    },
-    {
-      label: "semaines",
-      value: Article_Frequency.WEEK,
-    },
-    {
-      label: "mois",
-      value: Article_Frequency.MONTH,
-    },
-  ];
+
   const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
   const [numberArticle, setNumberArticle] = useState<number | null>(null);
 
