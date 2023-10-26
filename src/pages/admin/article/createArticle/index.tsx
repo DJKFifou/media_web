@@ -1,9 +1,9 @@
-import { Article, Format, Media, Topic } from "@prisma/client";
-import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
-import useTopic from "@/hooks/useTopic";
-import { useRouter } from "next/router";
 import useMedia from "@/hooks/useMedia";
+import useTopic from "@/hooks/useTopic";
+import { Format, Media, Topic } from "@prisma/client";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function CreateArticle() {
   const { getTopics } = useTopic();

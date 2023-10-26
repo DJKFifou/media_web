@@ -72,7 +72,7 @@ export default function User() {
 
   useEffect(() => {
     getUser(id).then((user) => {
-      setCurrentUser(user);
+      if (user) setCurrentUser(user);
     });
     getTopicsByThemes(id).then((topics) => setTopicsList(topics));
     // eslint-disable-next-line react-hooks/exhaustive-deps

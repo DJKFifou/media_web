@@ -1,41 +1,34 @@
-import Head from "next/head";
-import Link from "next/link";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.scss";
-import { useState } from "react";
-import useAuth from "@/hooks/useAuth";
-import { Credentials } from "@/types";
-import { useRouter } from "next/router";
-import { supabase } from "@/lib/initSupabase";
-import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButton.component";
-import InputButton from "@/components/Buttons/InputButton/InputButton.component";
+import Head from "next/head";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  const { signIn } = useAuth();
-  const router = useRouter();
-  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
-  function onUpdateUserCredentials(key: string, value: string) {
-    setUserCredentials((prevState) => ({ ...prevState, [key]: value }));
-  }
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // Create authenticated Supabase Client
+  const supabase = createPagesServerClient(ctx);
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  function onSignIn() {
-    if (!userCredentials) {
-      console.log("NO USER CREDENTIALS");
-    } else {
-      signIn(userCredentials).then(async () => {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (user) {
-          await router.push(`/users/${user.id}`);
-        }
-      });
-    }
-  }
+  if (!session)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
 
+  return {
+    redirect: {
+      destination: "/feed",
+      permanent: false,
+    },
+  };
+};
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -44,58 +37,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <section className={styles.sectionConnexion}>
-          <div className={styles.containerUpper}>
-            <img src="/assets/logoTallSize.svg" alt="Logo Application" />
-            <h2 className={styles.titleConnexion}>Quand choisir devient son petit plaisir</h2>
-          </div>
-          <div className={styles.containerFirstStep}>
-            <div>
-              <h4>Faites le premier pas</h4>
-              <img src="/assets/loopedArrow.svg" alt="" />
-            </div>
-          </div>
-          <div className={styles.containerConnexion}>
-            <div className={styles.contentConnexion}>
-              <div className={styles.contentEmail}>
-                <label htmlFor="">Identifiant</label>
-                <InputButton
-                  type="email"
-                  placeholder="Adresse mail"
-                  onChange={(event) => {
-                    onUpdateUserCredentials("email", event.target.value);
-                  }}
-                />
-              </div>
-              <div className={styles.contentPassword}>
-                <label htmlFor="">Mot de passe</label>
-                <InputButton
-                  type="password"
-                  placeholder="Mot de passe"
-                  onChange={(event) => {
-                    onUpdateUserCredentials("password", event.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={styles.contentButton}>
-              <PrimaryButton
-                title="Connexion"
-                onClick={() => {
-                  onSignIn();
-                }}
-              />
-              <Link href="/register">
-                <SecondaryButton title="Créer un compte" />
-              </Link>
-              <a href="" className={styles.forgottenPasswordLink}>
-                Mot de passe oublié ?
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
+      <main className={`${inter.className}`}></main>
     </>
   );
 }
