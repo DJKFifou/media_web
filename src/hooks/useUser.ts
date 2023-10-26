@@ -1,7 +1,7 @@
 import { fetcher } from "@/lib/fetcher";
 import { supabase } from "@/lib/initSupabase";
-import { EnhancedUser, RegisterUserPayload, UpdateUserSubscribedThemesPayload } from "@/types";
-import { User } from "@prisma/client";
+import { EnhancedUser, RegisterUserPayload, SavedArticlePayload, UpdateUserSubscribedThemesPayload } from "@/types";
+import { Prisma, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function useUser() {
@@ -74,20 +74,32 @@ export default function useUser() {
     });
   }
 
+  async function getSavedArticles(userId: string) {
+    const saveArticles = await fetch(`/api/users/getSavedArticles?id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = (await saveArticles.json()) as SavedArticlePayload[];
+    return result;
+  }
+
   useEffect(() => {
     (async () => {
       await getCurrentUser();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  async function getSaveArticle(userId: string) {
-    const saveArticles = await fetch(`/api/users/getSaveArticles?id=${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return await saveArticles.json();
-  }
-  return { getUser, createUser, registerUser, updateUserSubscribedThemes, currentUser, getCurrentUser, getSaveArticle };
+
+  return {
+    getUser,
+    createUser,
+    registerUser,
+    updateUserSubscribedThemes,
+    currentUser,
+    getCurrentUser,
+    getSavedArticles,
+  };
 }

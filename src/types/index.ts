@@ -24,7 +24,17 @@ export type EnhancedUser = {
 
 export type TopicThemeArticlePayload = Prisma.TopicGetPayload<{
   include: {
-    theme: true,
-    articles: true
-  }
+    theme: true;
+    articles: true;
+  };
+}>;
+
+export type SavedArticlePayload = Prisma.ArticleGetPayload<{
+  include: {
+    topic: {
+      include: {
+        theme: true;
+      };
+    };
+  };
 }>;

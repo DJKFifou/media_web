@@ -4,7 +4,7 @@ import styles from "@/components/feed/feed.module.scss";
 import useTheme from "@/hooks/useTheme";
 import useTopic from "@/hooks/useTopic";
 import useUser from "@/hooks/useUser";
-import { TopicThemeArticlePayload } from "@/types";
+import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
 import { Article, Prisma, User } from "@prisma/client";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -13,14 +13,14 @@ import { useEffect, useState } from "react";
 
 type Topics = Prisma.TopicGetPayload<{ include: { articles: true; theme: true } }>[];
 export default function User() {
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
+  const [timeRemaining, setTimeRemaining] = useState("...");
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
-  const [saveArticles, setSaveArticles] = useState<Article[] | null>(null);
+  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const router = useRouter();
   const id = router.query.id as string;
-  const { getSaveArticle, currentUser } = useUser();
+  const { getSavedArticles, currentUser } = useUser();
   const { getTopicsByThemes } = useTopic();
 
   const title = () => {
@@ -64,6 +64,10 @@ export default function User() {
   }
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
+
     getTopicsByThemes(id)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
@@ -72,7 +76,14 @@ export default function User() {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
 
-    getSaveArticle(id).then((saveArticles) => setSaveArticles(saveArticles));
+    getSavedArticles(id)
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
+        }
+      })
+      .catch((err) => console.log(err));
+
     return () => {
       clearInterval(interval);
     };
@@ -93,7 +104,9 @@ export default function User() {
       <div className={styles.main}>
         {/* <h1>{`Bienvenue ${currentUser?.user_name}`}</h1> */}
         <div className={styles.containerEmptyNav}></div>
-        <h1 className={styles.title}>sélection du {getCurrentDay()}</h1>
+        <h1 className={styles.title}>
+          sélection du <span>{getCurrentDay()}</span>
+        </h1>
         <label className={styles.labelTitle}>Nouveaux sujets dans {timeRemaining} </label>
         <p>{title()}</p>
         <div className={styles.containerTopicsList}>
@@ -101,7 +114,6 @@ export default function User() {
             ? topicsList.map((topic, index) => {
                 return (
                   <div style={{ paddingBottom: 20 }} key={index}>
-                    {/* @todo */}
                     <TopicCard topic={topic} />
                   </div>
                 );
@@ -113,7 +125,7 @@ export default function User() {
             isModalOpen={isModalOpen}
             topics={topicsList}
             onCloseModal={() => setIsModalOpen(false)}
-            saveArticlesLength={saveArticles ? saveArticles.length : 0}
+            savedArticlesLength={savedArticles ? savedArticles.length : 0}
             userId={id}
           />
         )}
