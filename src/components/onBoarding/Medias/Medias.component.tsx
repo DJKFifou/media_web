@@ -1,43 +1,27 @@
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
+import useMedia from "@/hooks/useMedia";
 import { Media } from "@prisma/client";
-import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./Medias.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
 const Medias = (props: any) => {
-  const [medias, setMedias] = useState<Media[]>([]);
-  const [selectedMedias, setSelectedMedias] = useState<string[]>([]);
+  const { medias } = useMedia();
+  const [checkedState, setCheckedState] = useState<string[]>([]);
 
-  async function getMedias() {
-    try {
-      const medias = await fetch("/api/medias/getMedias", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const mediasJSON = await medias.json();
-      setMedias(mediasJSON);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  function handleChangeMedia(mediaSelected: string) {
-    console.log(mediaSelected);
-    if (selectedMedias.includes(mediaSelected)) {
-      const updatedSelectedMedias = selectedMedias.filter((media) => media === mediaSelected);
-      setSelectedMedias(updatedSelectedMedias);
+  const handleCheckboxChange = (id: string) => {
+    if (checkedState.includes(id)) {
+      setCheckedState(checkedState.filter((theme) => theme !== id));
     } else {
-      setSelectedMedias([...selectedMedias, mediaSelected]);
+      setCheckedState([...checkedState, id]);
     }
-    console.log(selectedMedias);
-  }
+  };
 
-  useEffect(() => {
-    getMedias();
-  }, []);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(checkedState);
+    // @todo Save Topics choice on the API
+    props.onSuccess();
+  };
 
   return (
     <div className={styles.sectionMedias}>
