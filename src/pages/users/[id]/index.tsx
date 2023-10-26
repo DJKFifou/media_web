@@ -5,9 +5,10 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {Article, Theme, Topic} from "@prisma/client";
+import {Topic} from "@prisma/client";
 import useTopic from "@/hooks/useTopic";
 import useTheme from "@/hooks/useTheme";
+import TopicCard from "@/components/Cards/TopicCard/TopicCard";
 
 export default function User() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -20,9 +21,9 @@ export default function User() {
 
   const title = () => {
     const article_frequency = currentUser?.article_frequency
-    const today = dayjs();
+    const today = dayjs(); //TODO: dayjs in french
     const dayString = today.format("dddd");
-    const monthString = today.format("MMMM");
+    const monthString = today.format("MMMM")
     switch (article_frequency) {
       case "DAY":
         return `Selection du ${dayString}`;
@@ -48,20 +49,8 @@ export default function User() {
       {topicsList && topicsList.length > 0 ? (
         topicsList.map( (topic, index) => {
           return (
-            <div key={index}>
-              <h2>{topic.theme.title}</h2>
-              <h3>{topic.title}</h3>
-              <p>{topic.introduction_text}</p>
-              <p>DERNIER ARTICLES</p>
-              {topic.articles.length > 0 ? (
-                topic.articles.map((article: Article, index: number) => {
-                  return (
-                    <div key={index}>
-                      <Link href={article.link}>{article.title}</Link>
-                    </div>
-                  )
-                })
-              ) : null}
+            <div style={{paddingBottom: 20}} key={index}>
+              <TopicCard topic={topic}/>
             </div>
           )
         })
