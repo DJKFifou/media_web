@@ -71,5 +71,19 @@ export default function useArticle() {
     }
   }
 
-  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle };
+  async function isArticleSave(articleId: string, userId: string){
+    try{
+      const response = await fetch(`/api/articles/${articleId}/isArticleSave`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({userId: userId})
+      })
+      return await response.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle, isArticleSave };
 }
