@@ -5,9 +5,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const body = req.body as UpdateUserSubscribedThemesPayload;
   try {
-    const newUser = await prisma.user.create({
-      data: {
+    const newUser = await prisma.user.update({
+      where: {
         id: body.id,
+      },
+      data: {
         subscribed_themes: { connect: body.themes.map((theme) => ({ id: theme })) },
       },
     });

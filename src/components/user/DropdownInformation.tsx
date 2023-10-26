@@ -4,17 +4,14 @@ type DropdownType = {
   isOpen: boolean;
   children: ReactNode | ReactNode[];
   title: string;
-<<<<<<< HEAD
-  onClick: () => void
-=======
->>>>>>> master
+  onClick: () => void;
 };
 
 export default function DropdownInformation({ isOpen, children, title, onClick }: DropdownType) {
-  const buttonTitle = isOpen ? '-' : '+'
+  const buttonTitle = isOpen ? "-" : "+";
   return (
     <div>
-      <div style={{display: 'flex'}}>
+      <div style={{ display: "flex" }}>
         <p>{title}</p>
         <button onClick={() => onClick()}>{buttonTitle}</button>
       </div>

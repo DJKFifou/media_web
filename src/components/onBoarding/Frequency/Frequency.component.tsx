@@ -8,10 +8,9 @@ import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButto
 const inter = Inter({ subsets: ["latin"] });
 
 const Topics = (props: any) => {
-
   const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
   // @todo Add better default value or check for falsy value here #1
-  const [numberArticle, setNumberArticle] = useState<number | null>(null);
+  const [numberArticle, setNumberArticle] = useState<number>(0);
 
   const handleIncrement = () => {
     // #1
@@ -42,7 +41,8 @@ const Topics = (props: any) => {
           </div>
         </div>
       </div>
-      <div className={styles.containerFrequency}>
+      {/* @todo API COnnect */}
+      <form className={styles.containerFrequency}>
         <h2 className={styles.titleFrequency}>Sélectionnez la quantité et la fréquence</h2>
         <div className={styles.contentFrequency}>
           <h5 className={styles.titleNumberArticle}>Quantité de sujets</h5>
@@ -57,25 +57,25 @@ const Topics = (props: any) => {
           </div>
           <h5 className={styles.titleFrequency}>Choisis ta fréquence</h5>
           <div className={styles.ButtonFrequencies}>
+            {/* @todo Add active state */}
             <SecondaryButton
               title="par jour"
               onClick={(event) => {
-                setSelectedArticleFrequencies(event.target.value);
-                console.log(event.target.value);
+                setSelectedArticleFrequencies(Article_Frequency.DAY);
               }}
             />
+            {/* @todo Add active state */}
             <SecondaryButton
               title="par semaine"
               onClick={(event) => {
-                setSelectedArticleFrequencies(event.target.value);
-                console.log(event.target.value);
+                setSelectedArticleFrequencies(Article_Frequency.WEEK);
               }}
             />
+            {/* @todo Add active state */}
             <SecondaryButton
               title="par mois"
               onClick={(event) => {
-                setSelectedArticleFrequencies(event.target.value);
-                console.log(event.target.value);
+                setSelectedArticleFrequencies(Article_Frequency.MONTH);
               }}
             />
           </div>
@@ -92,7 +92,7 @@ const Topics = (props: any) => {
             <PrimaryButton type="submit" title="Continuer" />
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

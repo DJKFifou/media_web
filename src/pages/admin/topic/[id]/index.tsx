@@ -23,7 +23,7 @@ export default function Topic() {
     event.preventDefault();
     const updatedTopic = {
       // @todo Fix TS error
-      title: event.currentTarget.title.value as string,
+      title: event.currentTarget.title_name.value as string,
       introduction_text: event.currentTarget.introduction_text.value,
       theme: event.currentTarget.theme.value,
       is_hot: event.currentTarget.is_hot.checked,
@@ -43,12 +43,14 @@ export default function Topic() {
     }
   }
 
+  // @todo Remove the 3 useEffect to 1
   useEffect(() => {
     if (topicId && typeof topicId === "string") {
       getTopic(topicId).then((topic) => {
         setCurrentTopic(topic);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topicId]);
 
   useEffect(() => {
@@ -58,12 +60,14 @@ export default function Topic() {
         setCurrentTopicTheme(theme);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTopic]);
 
   useEffect(() => {
     getThemes().then((themes) => {
       setThemesList(themes);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -71,7 +75,7 @@ export default function Topic() {
       <Link href="/admin">Retour</Link>
       <form onSubmit={onSubmit}>
         <label>Titre</label>
-        <input type="text" name="title" id="title" defaultValue={currentTopic?.title} disabled={!isModify} />
+        <input type="text" name="title_name" id="title_name" defaultValue={currentTopic?.title} disabled={!isModify} />
         <label>{"Text d'introduction"}</label>
         <input
           type="text"
