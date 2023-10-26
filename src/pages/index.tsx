@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session) {
-      router.replace("/feed");
+      router.replace(`/users/${session.user.id}`);
     } else {
       router.replace("/login");
     }
