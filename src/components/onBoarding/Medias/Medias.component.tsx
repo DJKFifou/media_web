@@ -41,18 +41,19 @@ const Medias = (props: any) => {
       <form onSubmit={handleSubmit} className={styles.containerMedias}>
         <div className={styles.contentMedias}>
           {medias.map((media: Media) => (
-            <div key={media.id} className={styles.checkboxMedias}>
+            <label htmlFor={media.slug} key={media.id} className={styles.checkboxMedias}>
               <img src="/assets/media.svg" alt="Média Le Monde" />
-              <label htmlFor={media.slug}>
+              <div className={styles.inputContainer}>
                 <span>{media.title}</span>
                 <input
                   name={media.slug}
+                  id={media.slug}
                   type="checkbox"
                   checked={checkedState.includes(media.id)}
                   onChange={() => handleCheckboxChange(media.id)}
                 />
-              </label>
-            </div>
+              </div>
+            </label>
           ))}
         </div>
         <div className={styles.containerContinue}>

@@ -76,12 +76,13 @@ $breakpoint-tablet: 768px;
       gap: 8px;
       justify-items: center;
       .checkboxMedias {
+        cursor: pointer;
         display: flex;
         gap: 6px;
         height: 65px;
         background-color: $color-bg-1;
         padding: 0 20px;
-        label {
+        .inputContainer {
           display: flex;
           align-items: center;
           justify-content: space-between;
