@@ -1,3 +1,6 @@
+import { fetcher } from "@/lib/fetcher";
+import { RegisterUserPayload } from "@/types";
+
 export default function useUser() {
   async function getUser(id: string) {
     try {
@@ -26,5 +29,13 @@ export default function useUser() {
       console.error(e);
     }
   }
-  return { getUser, createUser };
+
+  async function registerUser(payload: RegisterUserPayload) {
+    await fetcher({
+      url: "/api/users/registerUser",
+      method: "POST",
+      body: payload,
+    });
+  }
+  return { getUser, createUser, registerUser };
 }
