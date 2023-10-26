@@ -1,45 +1,26 @@
-import { useEffect, useState } from "react";
-import { Inter } from "next/font/google";
-import styles from "./Topics.module.scss";
-import { Theme } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
-import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import useTheme from "@/hooks/useTheme";
+import { Theme } from "@prisma/client";
+import { useState } from "react";
+import styles from "./Topics.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const Topics = (props: any) => {
-  const [themes, setThemes] = useState<Theme[]>([]);
+const Topics = (props: { onSuccess: () => void }) => {
+  const { themes } = useTheme();
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
-  async function getThemes() {
-    try {
-      const themes = await fetch("/api/themes/getThemes", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const themesJSON = await themes.json();
-      setThemes(themesJSON);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  function handleChangeTheme(themeSelected: string) {
-    console.log(themeSelected);
-    if (selectedThemes.includes(themeSelected)) {
-      const updatedSelectedThemes = selectedThemes.filter((theme) => theme === themeSelected);
-      setSelectedThemes(updatedSelectedThemes);
+
+  const handleChangeTheme = (id: string) => {
+    if (selectedThemes.includes(id)) {
+      setSelectedThemes(selectedThemes.filter((theme) => theme !== id));
     } else {
-      setSelectedThemes([...selectedThemes, themeSelected]);
+      setSelectedThemes([...selectedThemes, id]);
     }
-    console.log(selectedThemes);
-  }
-  // type Step = "step1" | "step2" | "step3";
-  // const [currentStep, setCurrentStep] = useState<Step>('step2');
-  useEffect(() => {
-    getThemes();
-  }, []);
+  };
+
+  const handleSubmit = () => {
+    // @todo Save Topics choice on the API
+    props.onSuccess();
+  };
 
   return (
     <div className={styles.sectionTopics}>
@@ -62,13 +43,14 @@ const Topics = (props: any) => {
                   label={theme.slug}
                   img="/assets/geopolitic.svg"
                   alt="Géopolitique"
-                  onChange={() => handleChangeTheme(theme.title)}
+                  active={selectedThemes.includes(theme.id)}
+                  onClick={() => handleChangeTheme(theme.id)}
                 />
               </div>
             ))}
           </div>
           <div className={styles.containerContinue}>
-            <PrimaryButton type="submit" title={`Continuer (${selectedThemes.length})`} />
+            <PrimaryButton onClick={handleSubmit} title={`Continuer (${selectedThemes.length})`} />
           </div>
         </div>
       </div>

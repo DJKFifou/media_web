@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
-import Register from "./onBoarding/Register/Register.component";
-import Topics from "./onBoarding/Topics/Topics.component";
-import Frequency from "./onBoarding/Frequency/Frequency.component";
-import Medias from "./onBoarding/Medias/Medias.component";
+import Register from "../../components/onBoarding/Register/Register.component";
+import Topics from "../../components/onBoarding/Topics/Topics.component";
+import Frequency from "../../components/onBoarding/Frequency/Frequency.component";
+import Medias from "../../components/onBoarding/Medias/Medias.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RegisterPage() {
   type Step = "step1" | "step2" | "step3" | "step4" | "step5";
-  const [currentStep, setCurrentStep] = useState<Step>("step3");
+  const [currentStep, setCurrentStep] = useState<Step>("step4");
   return (
     <>
       <div className={`${styles.main} ${inter.className}`}>

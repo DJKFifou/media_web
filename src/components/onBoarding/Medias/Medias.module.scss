@@ -63,6 +63,7 @@ $breakpoint-tablet: 768px;
       outline: none;
       border-radius: 41px;
       height: 39px;
+      padding-left: 40px;
     }
   }
   .containerMedias {
@@ -75,17 +76,18 @@ $breakpoint-tablet: 768px;
       gap: 8px;
       justify-items: center;
       .checkboxMedias {
+        cursor: pointer;
         display: flex;
         gap: 6px;
         height: 65px;
         background-color: $color-bg-1;
         padding: 0 20px;
-        div {
+        .inputContainer {
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          label {
+          span {
             color: $color-text-1;
             &::before {
               display: none;
