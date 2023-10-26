@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-import useTopic from "@/hooks/useTopic";
-import { FormEvent, useEffect, useState } from "react";
-import { Article, Theme, Topic } from "@prisma/client";
-import Link from "next/link";
 import useTheme from "@/hooks/useTheme";
-import useArticle from "@/hooks/useArticle";
+import useTopic from "@/hooks/useTopic";
+import { Theme, Topic } from "@prisma/client";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function Topic() {
   const router = useRouter();

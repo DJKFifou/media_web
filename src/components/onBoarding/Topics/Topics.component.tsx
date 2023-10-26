@@ -1,12 +1,14 @@
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
 import useTheme from "@/hooks/useTheme";
-import { Theme } from "@prisma/client";
+import { $Enums, Theme } from "@prisma/client";
 import { useState } from "react";
 import styles from "./Topics.module.scss";
+import useUser from "@/hooks/useUser";
 
 const Topics = (props: { onSuccess: () => void }) => {
   const { themes } = useTheme();
+  const { updateUserSubscribedThemes, currentUser } = useUser();
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
 
   const handleChangeTheme = (id: string) => {
@@ -17,9 +19,22 @@ const Topics = (props: { onSuccess: () => void }) => {
     }
   };
 
-  const handleSubmit = () => {
-    // @todo Save Topics choice on the API
-    props.onSuccess();
+  const handleSubmit = async () => {
+    if (selectedThemes.length <= 1 || !currentUser) {
+      // @todo Display error message
+      return;
+    }
+
+    try {
+      await updateUserSubscribedThemes({
+        id: currentUser?.db.id,
+        themes: selectedThemes,
+      });
+
+      props.onSuccess();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

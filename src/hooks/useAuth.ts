@@ -14,7 +14,7 @@ export default function useAuth() {
 
   async function signIn(credentials: Credentials) {
     try {
-      await supabase.auth.signInWithPassword({ email: credentials.email, password: credentials.password });
+      return await supabase.auth.signInWithPassword({ email: credentials.email, password: credentials.password });
     } catch (e) {
       console.error(e);
     }
