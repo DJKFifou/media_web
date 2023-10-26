@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 
 export default function SaveArticles() {
   const router = useRouter();
-  const { currentUser } = useAuth();
   const userId = router.query.id as string;
 
+  // @todo @todo
   const savedArticles = ["hey"];
 
   return (

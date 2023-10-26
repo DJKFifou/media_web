@@ -4,6 +4,7 @@ import styles from "@/components/feed/feed.module.scss";
 import useTheme from "@/hooks/useTheme";
 import useTopic from "@/hooks/useTopic";
 import useUser from "@/hooks/useUser";
+import { TopicThemeArticlePayload } from "@/types";
 import { Article, Prisma, User } from "@prisma/client";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -13,19 +14,17 @@ import { useEffect, useState } from "react";
 type Topics = Prisma.TopicGetPayload<{ include: { articles: true; theme: true } }>[];
 export default function User() {
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
-  const { getTheme } = useTheme();
-
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [topicsList, setTopicsList] = useState<Topics[] | null>(null);
+  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
   const [saveArticles, setSaveArticles] = useState<Article[] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const router = useRouter();
   const id = router.query.id as string;
-  const { getUser, getSaveArticle } = useUser();
+  const { getSaveArticle, currentUser } = useUser();
   const { getTopicsByThemes } = useTopic();
 
   const title = () => {
-    const article_frequency = currentUser?.article_frequency;
+    const article_frequency = currentUser?.db.article_frequency;
     const today = dayjs();
     const dayString = today.format("dddd");
     const monthString = today.format("MMMM");
@@ -51,7 +50,7 @@ export default function User() {
     nextDay.setDate(now.getDate() + 1);
     nextDay.setHours(0, 0, 0, 0);
 
-    const timeDifference = nextDay - now;
+    const timeDifference = nextDay.getTime() - now.getTime();
 
     const hours = Math.floor(timeDifference / 3600000);
     const minutes = Math.floor((timeDifference % 3600000) / 60000);
@@ -60,15 +59,14 @@ export default function User() {
     return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
   }
 
-  function padZero(number) {
+  function padZero(number: number) {
     return number.toString().padStart(2, "0");
   }
 
   useEffect(() => {
-    getUser(id).then((user) => {
-      if (user) setCurrentUser(user);
-    });
-    getTopicsByThemes(id).then((topics) => setTopicsList(topics));
+    getTopicsByThemes(id)
+      .then((topics) => topics && setTopicsList(topics))
+      .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const interval = setInterval(() => {
       setTimeRemaining(getTimeRemainingUntilNextDay());
@@ -78,6 +76,7 @@ export default function User() {
     return () => {
       clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
@@ -109,13 +108,15 @@ export default function User() {
               })
             : null}
         </div>
-        <ModalBurger
-          isModalOpen={isModalOpen}
-          topics={topicsList}
-          onCloseModal={() => setIsModalOpen(false)}
-          saveArticlesLength={saveArticles ? saveArticles.length : 0}
-          userId={id}
-        />
+        {topicsList && topicsList.length > 0 && (
+          <ModalBurger
+            isModalOpen={isModalOpen}
+            topics={topicsList}
+            onCloseModal={() => setIsModalOpen(false)}
+            saveArticlesLength={saveArticles ? saveArticles.length : 0}
+            userId={id}
+          />
+        )}
       </div>
     </>
   );
