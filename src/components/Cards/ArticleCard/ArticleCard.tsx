@@ -2,11 +2,17 @@ import { Article } from "@prisma/client";
 import Link from "next/link";
 import useArticle from "@/hooks/useArticle";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function ArticleCard({article} : {article: Article}){
-  const {saveArticle} = useArticle();
+  const {saveArticle, isArticleSave} = useArticle();
   const router = useRouter()
   const userId = router.query.id as string;
+  const [isSave, setIsSave] = useState<boolean>(false);
+  useEffect(() => {
+    //TODO: this is not working isSave: undefined
+    isArticleSave(article.id, userId).then((isSave) => {setIsSave(isSave); console.log(isSave)})
+  }, []);
 
   return (
     <div style={{display: "flex", flexDirection: "column"}}>
@@ -15,7 +21,8 @@ export default function ArticleCard({article} : {article: Article}){
         <image href={article.image} />
       ) : null}
       <Link href={article.link}>{article.title}</Link>
-      <button onClick={() => saveArticle(article.id, userId)}>{'Enregistrer l\'article'}</button>
+
+      <button onClick={() => saveArticle(article.id, userId)}>{isSave ? "Retirer l'article" : "Enregistrer l'article"}</button>
     </div>
   )
 }

@@ -1,26 +1,28 @@
 import TopicCard from "@/components/Cards/TopicCard/TopicCard";
-import Layout from "@/components/user/layout";
+import ModalBurger from "@/components/Modal/ModalBurger";
+import styles from "@/components/feed/feed.module.scss";
 import useTheme from "@/hooks/useTheme";
 import useTopic from "@/hooks/useTopic";
 import useUser from "@/hooks/useUser";
-import { Prisma, User } from "@prisma/client";
+import { Article, Prisma, User } from "@prisma/client";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import styles from "@/components/feed/feed.module.scss";
 
 type Topics = Prisma.TopicGetPayload<{ include: { articles: true; theme: true } }>[];
-
 export default function User() {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [topicsList, setTopicsList] = useState<Topics>([]);
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
+  const { getTheme } = useTheme();
+
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [topicsList, setTopicsList] = useState<Topics[] | null>(null);
+  const [saveArticles, setSaveArticles] = useState<Article[] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const router = useRouter();
   const id = router.query.id as string;
-  const { getUser } = useUser();
+  const { getUser, getSaveArticle } = useUser();
   const { getTopicsByThemes } = useTopic();
-  const { getTheme } = useTheme();
 
   const title = () => {
     const article_frequency = currentUser?.article_frequency;
@@ -37,15 +39,7 @@ export default function User() {
     }
   };
   function getCurrentDay() {
-    const daysOfWeek = [
-      "Dimanche",
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi"
-    ];
+    const daysOfWeek = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
     const currentDate = new Date();
     const currentDay = currentDate.getDay();
     return daysOfWeek[currentDay];
@@ -67,7 +61,7 @@ export default function User() {
   }
 
   function padZero(number) {
-    return number.toString().padStart(2, '0');
+    return number.toString().padStart(2, "0");
   }
 
   useEffect(() => {
@@ -80,6 +74,7 @@ export default function User() {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
 
+    getSaveArticle(id).then((saveArticles) => setSaveArticles(saveArticles));
     return () => {
       clearInterval(interval);
     };
@@ -103,17 +98,24 @@ export default function User() {
         <label className={styles.labelTitle}>Nouveaux sujets dans {timeRemaining} </label>
         <p>{title()}</p>
         <div className={styles.containerTopicsList}>
-          {topicsList && topicsList.length > 0 ? (
-            topicsList.map( (topic, index) => {
-              return (
-                <div style={{paddingBottom: 20}} key={index}>
-                  <TopicCard topic={topic}/>
-                </div>
-              )
-            })
-          ) : null}
+          {topicsList && topicsList.length > 0
+            ? topicsList.map((topic, index) => {
+                return (
+                  <div style={{ paddingBottom: 20 }} key={index}>
+                    {/* @todo */}
+                    <TopicCard topic={topic} />
+                  </div>
+                );
+              })
+            : null}
         </div>
-        <Layout userId={id} />
+        <ModalBurger
+          isModalOpen={isModalOpen}
+          topics={topicsList}
+          onCloseModal={() => setIsModalOpen(false)}
+          saveArticlesLength={saveArticles ? saveArticles.length : 0}
+          userId={id}
+        />
       </div>
     </>
   );
