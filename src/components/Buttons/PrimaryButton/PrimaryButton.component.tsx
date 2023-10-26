@@ -1,11 +1,13 @@
-import { Inter } from "next/font/google";
+import { ComponentProps } from "react";
 import styles from "./PrimaryButton.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const PrimaryButton = (props: any) => {
+const PrimaryButton = (
+  props: ComponentProps<"button"> & {
+    title: string;
+  }
+) => {
   return (
-    <button type={props.type} className={styles.primaryButton} onClick={() => props.onClick()}>
+    <button className={styles.primaryButton} {...props}>
       {props.title}
     </button>
   );

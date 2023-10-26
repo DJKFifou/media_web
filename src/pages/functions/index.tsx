@@ -86,20 +86,7 @@ export default function Register() {
       console.log(e);
     }
   }
-  async function getFormats() {
-    try {
-      const formats = await fetch("/api/formats", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const formatsJSON = await formats.json();
-      setFormats(formatsJSON);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+
   function handleChangeTheme(themeSelected) {
     console.log(themeSelected);
     if (selectedThemes.includes(themeSelected)) {
@@ -169,10 +156,9 @@ export default function Register() {
                 ))}
               </div>
               <div className={styles.contentConnexion}>
-                {formats.map((format: Format, index) => (
-                  <div key={format.id} className={styles.checkboxFormats}>
+                {Object.keys(Format).map((format, index) => (
+                  <div key={format} className={styles.checkboxFormats}>
                     <input
-                      data-format-id={format.id}
                       name={format.slug}
                       className="formatCheckbox"
                       key={index}

@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
+
 export default function useTheme() {
+  const [themes, setThemes] = useState([]);
+
   async function getThemes() {
     try {
       const themes = await fetch("/api/themes/getThemes", {
@@ -20,5 +24,12 @@ export default function useTheme() {
       console.error(e);
     }
   }
-  return { getThemes, getTheme };
+
+  useEffect(() => {
+    getThemes()
+      .then((themes) => setThemes(themes))
+      .catch((e) => console.error(e));
+  }, []);
+
+  return { getThemes, getTheme, themes };
 }

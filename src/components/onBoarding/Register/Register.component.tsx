@@ -10,8 +10,20 @@ import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.comp
 import OneButton from "@/components/Buttons/OneButton/OneButton.component";
 import InputButton from "@/components/Buttons/InputButton/InputButton.component";
 import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import useUser from "@/hooks/useUser";
 
 const inter = Inter({ subsets: ["latin"] });
+
+interface CustomElements extends HTMLFormControlsCollection {
+  username: HTMLInputElement;
+  email: HTMLInputElement;
+  password: HTMLInputElement;
+  accept_cgu: HTMLInputElement;
+}
+
+interface CustomForm extends HTMLFormElement {
+  readonly elements: CustomElements;
+}
 
 type Props = {
   onSuccess: () => void;
@@ -19,42 +31,43 @@ type Props = {
 
 const Register = (props: Props) => {
   const { signUp } = useAuth();
+  const { registerUser } = useUser();
   const router = useRouter();
-  const [userCredentials, setUserCredentials] = useState<Credentials | null>(null);
-  const [pseudo, setPseudo] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState("");
-  const handleImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
 
-      reader.onload = function (e) {
-        setSelectedImage(e.target.result);
-      };
+  const handleSubmitRegisterForm = async (event: FormEvent<CustomForm>) => {
+    event.preventDefault();
+    const target = event.currentTarget.elements;
 
-      reader.readAsDataURL(event.target.files[0]);
+    const payload = {
+      username: target.username.value,
+      email: target.email.value,
+      password: target.password.value,
+      accept_cgu: target.accept_cgu.checked,
+    };
+
+    if (!payload.accept_cgu) {
+      return null;
     }
-  };
-  async function onSignUp(event: FormEvent<HTMLFormElement>) {
+
+    const result = await signUp(payload);
+
+    if (!result || !result.user) {
+      // @todo Handle error
+      console.log("Error");
+      return;
+    }
+
+    const user = result.user;
+
+    await registerUser({
+      email: payload.email,
+      id: user.id,
+      username: payload.username,
+    });
+
     props.onSuccess();
-    try {
-      event.preventDefault();
-      if (userCredentials) {
-        await signUp(userCredentials).then(async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (user) {
-            // await router.push(`register/onBoarding/${user.id}`);
-          }
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  function handleChange(key: string, value: string) {
-    setUserCredentials((prevState) => ({ ...prevState, [key]: value }));
-  }
+  };
+
   return (
     <>
       <section className={styles.sectionRegister}>
@@ -69,51 +82,41 @@ const Register = (props: Props) => {
         <div className={styles.containerRegister}>
           <h2 className={styles.titleRegister}>Créer un compte</h2>
           <div className={styles.contentRegister}>
-            <form onSubmit={onSignUp}>
+            <form onSubmit={handleSubmitRegisterForm}>
               <div className={styles.profilePicture}>
-                {/* <img src={selectedImage} alt="" />
-                    <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ display: 'none' }}
-                    id="imageInput"
-                    /> */}
+                {/* @todo Make upload interactive */}
+                {/* @todo Save image in S3 */}
                 <img src="/assets/profilePicture.png" alt="" className={styles.pp} />
                 <OneButton title="Sélectionner une photo" />
-                {/* <label htmlFor="imageInput">
-                    <button>Sélectionner une photo</button>
-                    </label> */}
               </div>
               <div className={styles.containerInput}>
                 <div className={styles.containerPseudo}>
                   <p>Pseudo</p>
                   <InputButton
                     type="text"
+                    autoComplete="username"
+                    id="username"
+                    required
                     placeholder="Pseudo"
-                    onChange={(event) => {
-                      setPseudo(event.target.value);
-                    }}
+                    name="username"
                   />
                 </div>
                 <div className={styles.containerEmail}>
                   <p>Adresse mail</p>
-                  <InputButton
-                    type="email"
-                    placeholder="Adresse mail"
-                    onChange={(event) => handleChange("email", event.target.value)}
-                  />
+                  <InputButton type="email" autoComplete="email" required placeholder="Adresse mail" name="email" />
                 </div>
                 <div className={styles.containerPassword}>
                   <p>Mot de passe</p>
                   <InputButton
                     type="password"
+                    autoComplete="new-password"
+                    required
                     placeholder="Mot de passe"
-                    onChange={(event) => handleChange("password", event.target.value)}
+                    name="password"
                   />
                 </div>
                 <div className={styles.containerCheckbox}>
-                  <input type="checkbox" />
+                  <input name="accept_cgu" required type="checkbox" />
                   <p>
                     Je confirme avoir lu et être en accord avec les{" "}
                     <Link href="/">conditions générales d’utilisation</Link>.
