@@ -15,5 +15,5 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     },
   })
   const isSave = article ? true : false;
-  return res.status(200).json(JSON.stringify({isSave: isSave}))
+  return res.status(200).json({isSave: isSave})
 }
