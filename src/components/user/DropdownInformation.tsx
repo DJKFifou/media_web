@@ -2,9 +2,8 @@ import React, { ReactNode, Dispatch, SetStateAction } from "react";
 
 type DropdownType = {
   isOpen: boolean;
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
   title: string;
-  setFunction: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function DropdownInformation({ isOpen, children, title }: DropdownType) {

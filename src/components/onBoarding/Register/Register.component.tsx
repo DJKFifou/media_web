@@ -1,18 +1,13 @@
-import { FormEvent, useState } from "react";
-import Link from "next/link";
-import { Inter } from "next/font/google";
-import { Credentials } from "@/types";
-import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { supabase } from "@/lib/initSupabase";
-import styles from "./Register.module.scss";
-import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import OneButton from "@/components/Buttons/OneButton/OneButton.component";
-import InputButton from "@/components/Buttons/InputButton/InputButton.component";
 import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import InputButton from "@/components/Buttons/InputButton/InputButton.component";
+import OneButton from "@/components/Buttons/OneButton/OneButton.component";
+import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
+import useAuth from "@/hooks/useAuth";
 import useUser from "@/hooks/useUser";
-
-const inter = Inter({ subsets: ["latin"] });
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent } from "react";
+import styles from "./Register.module.scss";
 
 interface CustomElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
@@ -32,7 +27,6 @@ type Props = {
 const Register = (props: Props) => {
   const { signUp } = useAuth();
   const { registerUser } = useUser();
-  const router = useRouter();
 
   const handleSubmitRegisterForm = async (event: FormEvent<CustomForm>) => {
     event.preventDefault();
