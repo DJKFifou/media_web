@@ -39,7 +39,6 @@ export default function Login() {
       // @todo Handle error (toast ?)
 
       console.log("Error, failed to sign in");
-      // router.replace("/feed");
     } catch (error) {
       console.log(error);
     }
