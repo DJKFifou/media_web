@@ -7,7 +7,7 @@ const PrimaryButton = (
   }
 ) => {
   return (
-    <button className={styles.primaryButton} {...props}>
+    <button type="button" className={styles.primaryButton} {...props}>
       {props.title}
     </button>
   );

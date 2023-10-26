@@ -27,7 +27,7 @@ export default function ArticleCard({ article }: { article: Article }) {
         <image href={article.image} />
       ) : null}
       <Link href={article.link}>{article.title}</Link>
-      <button onClick={() => saveArticle(article.id, userId)}>
+      <button type="button" onClick={() => saveArticle(article.id, userId)}>
         {isSave ? "Retirer l'article" : "Enregistrer l'article"}
       </button>
     </div>

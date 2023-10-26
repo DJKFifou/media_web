@@ -7,7 +7,7 @@ const SecondaryButton = (
   }
 ) => {
   return (
-    <button className={styles.secondaryButton} {...props}>
+    <button type="button" className={styles.secondaryButton} {...props}>
       {props.title}
     </button>
   );

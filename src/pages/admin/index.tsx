@@ -44,7 +44,9 @@ export default function Admin() {
                 <div key={index}>
                   <p>{article.title}</p>
                   <Link href={`/admin/article/${article.id}`}>{"Voir l'article"}</Link>
-                  <button onClick={() => handleDeleteArticle(article.id)}>Supprimer</button>
+                  <button type="button" onClick={() => handleDeleteArticle(article.id)}>
+                    Supprimer
+                  </button>
                 </div>
               );
             })
@@ -58,7 +60,9 @@ export default function Admin() {
               <div key={index}>
                 <p>{topic.title}</p>
                 <Link href={`/admin/topic/${topic.id}`}>{"Voir le sujet"}</Link>
-                <button onClick={() => onDeleteTopic(topic.id)}>supprimer</button>
+                <button type="button" onClick={() => onDeleteTopic(topic.id)}>
+                  supprimer
+                </button>
               </div>
             );
           })

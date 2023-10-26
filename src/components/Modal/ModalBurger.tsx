@@ -29,7 +29,9 @@ export default function ModalBurger({
             );
           })
         : null}
-      <button onClick={() => onCloseModal()}>Fermer</button>
+      <button type="button" onClick={() => onCloseModal()}>
+        Fermer
+      </button>
     </dialog>
   );
 }

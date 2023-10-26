@@ -22,6 +22,7 @@ const BackButton = (props: any) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={props.onClick}
+      type="button"
     >
       <img src={isHovered ? "/assets/backArrowWhite.svg" : "/assets/backArrowBlack.svg"} alt="Flèche retour arrière" />
     </button>

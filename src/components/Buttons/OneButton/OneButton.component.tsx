@@ -7,7 +7,7 @@ const OneButton = (
   }
 ) => {
   return (
-    <button className={styles.oneButton} {...props}>
+    <button type="button" className={styles.oneButton} {...props}>
       <h3>{props.title}</h3>
     </button>
   );

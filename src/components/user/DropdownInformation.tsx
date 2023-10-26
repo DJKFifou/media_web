@@ -13,7 +13,9 @@ export default function DropdownInformation({ isOpen, children, title, onClick }
     <div>
       <div style={{ display: "flex" }}>
         <p>{title}</p>
-        <button onClick={() => onClick()}>{buttonTitle}</button>
+        <button type="button" onClick={() => onClick()}>
+          {buttonTitle}
+        </button>
       </div>
       {isOpen ? <div>{children}</div> : null}
     </div>

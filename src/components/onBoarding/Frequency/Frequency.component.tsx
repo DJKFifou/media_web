@@ -1,11 +1,8 @@
-import { useState } from "react";
-import { Inter } from "next/font/google";
-import styles from "./Frequency.module.scss";
-import { Article_Frequency } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButton.component";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Article_Frequency } from "@prisma/client";
+import { useState } from "react";
+import styles from "./Frequency.module.scss";
 
 const Topics = (props: any) => {
   const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
@@ -47,11 +44,11 @@ const Topics = (props: any) => {
         <div className={styles.contentFrequency}>
           <h5 className={styles.titleNumberArticle}>Quantité de sujets</h5>
           <div className={styles.containerNumberArticle}>
-            <button className={styles.buttonDecrement} onClick={handleDecrement}>
+            <button type="button" className={styles.buttonDecrement} onClick={handleDecrement}>
               -
             </button>
             <input id="numberArticle" type="number" min="0" value={numberArticle || ""} onChange={handleNumberChange} />
-            <button className={styles.buttonIncrement} onClick={handleIncrement}>
+            <button type="button" className={styles.buttonIncrement} onClick={handleIncrement}>
               +
             </button>
           </div>

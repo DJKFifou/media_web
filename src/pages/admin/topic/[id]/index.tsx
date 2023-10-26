@@ -102,8 +102,12 @@ export default function Topic() {
         <input type="file" name="audio" id="audio" />
         {isModify ? <button type="submit">Enregistrer les modifications</button> : null}
       </form>
-      <button onClick={() => handleShowModifyView()}>{isModify ? "mode visualisation" : "mode edition"}</button>
-      <button onClick={() => onDelete()}>Supprimer</button>
+      <button type="button" onClick={() => handleShowModifyView()}>
+        {isModify ? "mode visualisation" : "mode edition"}
+      </button>
+      <button type="button" onClick={() => onDelete()}>
+        Supprimer
+      </button>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import { RegisterUserPayload } from "@/types";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // @todo check method
+  
   const body = req.body as RegisterUserPayload;
   const newUser = await prisma.user.create({
     data: {
