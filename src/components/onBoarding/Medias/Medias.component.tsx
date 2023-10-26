@@ -38,27 +38,27 @@ const Medias = (props: any) => {
         <img src="/assets/search.svg" alt="Loupe" />
         <input type="search" />
       </div>
-      <div className={styles.containerMedias}>
+      <form onSubmit={handleSubmit} className={styles.containerMedias}>
         <div className={styles.contentMedias}>
-          {medias.map((media: Media, index) => (
+          {medias.map((media: Media) => (
             <div key={media.id} className={styles.checkboxMedias}>
               <img src="/assets/media.svg" alt="Média Le Monde" />
-              <div>
-                <label>{media.title}</label>
+              <label htmlFor={media.slug}>
+                <span>{media.title}</span>
                 <input
                   name={media.slug}
-                  className="mediaCheckbox"
                   type="checkbox"
-                  onChange={() => handleChangeMedia(media.title)}
+                  checked={checkedState.includes(media.id)}
+                  onChange={() => handleCheckboxChange(media.id)}
                 />
-              </div>
+              </label>
             </div>
           ))}
         </div>
         <div className={styles.containerContinue}>
           <PrimaryButton type="submit" title="Terminer" />
         </div>
-      </div>
+      </form>
     </div>
   );
 };

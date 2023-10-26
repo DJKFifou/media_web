@@ -63,6 +63,7 @@ $breakpoint-tablet: 768px;
       outline: none;
       border-radius: 41px;
       height: 39px;
+      padding-left: 40px;
     }
   }
   .containerMedias {
@@ -80,12 +81,12 @@ $breakpoint-tablet: 768px;
         height: 65px;
         background-color: $color-bg-1;
         padding: 0 20px;
-        div {
+        label {
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          label {
+          span {
             color: $color-text-1;
             &::before {
               display: none;
