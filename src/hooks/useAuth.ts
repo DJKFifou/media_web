@@ -4,7 +4,9 @@ import { Credentials } from "@/types";
 export default function useAuth() {
   async function signUp(credentials: Credentials) {
     try {
-      await supabase.auth.signUp({ email: credentials.email, password: credentials.password });
+      const result = await supabase.auth.signUp({ email: credentials.email, password: credentials.password });
+      if (result.error) throw result.error;
+      return result.data;
     } catch (e) {
       console.error(e);
     }

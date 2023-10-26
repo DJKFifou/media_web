@@ -1,13 +1,14 @@
-import { Inter } from "next/font/google";
+import { ComponentProps } from "react";
 import styles from "./OneButton.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const OneButton = (props: any) => {
+const OneButton = (
+  props: ComponentProps<"button"> & {
+    title: string;
+  }
+) => {
   return (
-    <button className={styles.oneButton}>
+    <button className={styles.oneButton} {...props}>
       <h3>{props.title}</h3>
-      <img src={props.img} alt={props.alt} />
     </button>
   );
 };
