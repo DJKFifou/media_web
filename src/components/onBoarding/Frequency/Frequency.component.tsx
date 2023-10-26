@@ -86,7 +86,7 @@ const Topics = (props: any) => {
                     selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
                   }`}
             </h4>
-            <PrimaryButton type="submit" title="Continuer" />
+            <PrimaryButton title="Continuer" />
           </div>
         </div>
       </form>
