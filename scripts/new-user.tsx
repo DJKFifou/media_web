@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma"
-import { Format, Prisma } from "@prisma/client"
+import { prisma } from "@/lib/prisma";
+import { Format } from "@prisma/client";
 
 async function main() {
   const newUser = await prisma.user.create({
@@ -15,9 +15,9 @@ async function main() {
         set: [Format.ARTICLE],
       },
     },
-  })
+  });
 
-  console.log(newUser)
+  console.log(newUser);
 }
 
-main()
+main();
