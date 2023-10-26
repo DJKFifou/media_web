@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { Inter } from "next/font/google";
-import { Credentials } from "@/types";
-import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { supabase } from "@/lib/initSupabase";
-import styles from "./Topics.module.scss";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import ThemeCard from "@/components/Cards/ThemeCard/ThemeCard.component";
-import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import useAuth from "@/hooks/useAuth";
+import { supabase } from "@/lib/initSupabase";
+import { Credentials } from "@/types";
+import { Format } from "@prisma/client";
+import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import styles from "./Medias.module.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
