@@ -1,34 +1,23 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import useAuth from "@/hooks/useAuth";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  // Create authenticated Supabase Client
-  const supabase = createPagesServerClient(ctx);
-  // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+export default function Home() {
+  const { session } = useAuth();
+  const router = useRouter();
 
-  if (!session)
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+  useEffect(() => {
+    if (session) {
+      router.replace("/feed");
+    } else {
+      router.replace("/login");
+    }
+  }, [router, session]);
 
-  return {
-    redirect: {
-      destination: "/feed",
-      permanent: false,
-    },
-  };
-};
-export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
