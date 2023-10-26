@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
+import { Prisma } from "@prisma/client";
 
 export type Credentials = {
   email: string;
@@ -20,3 +21,10 @@ export type EnhancedUser = {
   supabase: SupabaseUser;
   db: User;
 };
+
+export type TopicThemeArticlePayload = Prisma.TopicGetPayload<{
+  include: {
+    theme: true,
+    articles: true
+  }
+}>;
