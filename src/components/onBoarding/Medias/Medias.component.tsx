@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { Inter } from "next/font/google";
-import styles from "./Medias.module.scss";
-import { Media } from "@prisma/client";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import { Media } from "@prisma/client";
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+import styles from "./Medias.module.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
