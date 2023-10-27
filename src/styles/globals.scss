@@ -251,6 +251,7 @@ h2 {
   text-transform: uppercase;
   @include end-tablet {
     font-size: pixelsCalc(20);
+    line-height: pixelsCalc(22);
     letter-spacing: -0.8px;
   }
 }
