@@ -10,13 +10,11 @@ import TopicCard from "@/components/Cards/TopicCard/TopicCard";
 import Footer from "@/components/Footer/footer";
 
 export default function User() {
-  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
 
   const router = useRouter();
   const id = router.query.id as string;
-  const { getSavedArticles } = useUser();
   const { getTopicsByThemes } = useTopic();
 
   function getCurrentDay() {
@@ -46,7 +44,6 @@ export default function User() {
   }
 
 
-
   useEffect(() => {
     if (!id) {
       return;
@@ -60,20 +57,11 @@ export default function User() {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
 
-    getSavedArticles(id)
-      .then((articles) => {
-        if (articles) {
-          setSavedArticles(articles);
-        }
-      })
-      .catch((err) => console.log(err));
-
     return () => {
       clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
 
   return (
     <>
@@ -87,11 +75,15 @@ export default function User() {
         </div>
         {topicsList && topicsList.length > 0 ? (
           topicsList.map((topic, index) => {
+            const hasArticle = topic.articles.length > 0 ? true : false;
+            console.log(hasArticle, 'hasArticle')
             return (
-              <div key={index} style={{paddingBottom: 30}}>
-                <TopicCard topic={topic} isTopicPage={false} />
-              </div>
-            )
+              hasArticle ? (
+                <div key={index} style={{ borderTop: "solid", borderTopWidth: 2  }}>
+                  <TopicCard topic={topic} isTopicPage={false} />
+                </div>
+              ) : null
+            );
           })
         ) : null}
         <Footer />
