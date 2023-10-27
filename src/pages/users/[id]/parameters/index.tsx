@@ -57,81 +57,80 @@ export default function Parameters() {
     return null;
   }
 
-  return null;
 
-  // return (
-  //   <div>
-  //     <button onClick={() => router.push(`/users/${userId}`)}>Retour</button>
-  //     <h1>{currentUser.db.user_name}</h1>
-  //     <DropdownInformation
-  //       isOpen={dropDownTheme.personalInformation}
-  //       title={"Mes information personnel"}
-  //       onClick={() =>
-  //         setDropDownTheme((prevState) => ({
-  //           ...prevState,
-  //           personalInformation: !dropDownTheme.personalInformation,
-  //         }))
-  //       }
-  //     >
-  //       {/*<label>Adresse Email</label>*/}
-  //       {/*<input placeholder={}/>*/}
-  //       <label>Mon pseudo</label>
-  //       <input
-  //         placeholder={currentUser?.db.user_name || ""}
-  //         name="pseudo"
-  //         value={updateUserObject?.db.user_name}
-  //         onChange={(event) => handleUpdateUserObject("user_name", event.target.value)}
-  //       />
-  //     </DropdownInformation>
-  //     <DropdownInformation
-  //       isOpen={dropDownTheme.themes}
-  //       title={"Mes thèmes sélectionnés"}
-  //       onClick={() => setDropDownTheme((prevState) => ({ ...prevState, themes: !dropDownTheme.themes }))}
-  //     >
-  //       <div>
-  //         {saveThemes.map((theme, index) => {
-  //           return (
-  //             <div key={index}>
-  //               <button>{theme.title}</button>
-  //             </div>
-  //           );
-  //         })}
-  //         <p style={{ fontWeight: "bold" }}>Themes disponibles</p>
-  //         {nonSaveThemes.map((theme, index) => {
-  //           return (
-  //             <div key={index}>
-  //               <button>{theme.title}</button>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </DropdownInformation>
-  //     <DropdownInformation
-  //       isOpen={dropDownTheme.frequency}
-  //       title={"Le nombre et les fréquences"}
-  //       onClick={() => setDropDownTheme((prevState) => ({ ...prevState, frequency: !dropDownTheme.frequency }))}
-  //     >
-  //       <label>Choisi ta quantité de news</label>
-  //       <input
-  //         type="number"
-  //         placeholder={currentUser.db.article_number ? String(currentUser.db.article_number) : undefined}
-  //         value={updateUserObject ? String(updateUserObject.article_number) : 0}
-  //         onChange={(event) => handleUpdateUserObject("article_number", event.target.value)}
-  //       />
-  //       <label>Choisi ta fréquence</label>
-  //       <select onChange={(event) => handleUpdateUserObject("article_frequency", event.target.value)}>
-  //         {articleFrequencyList.map((frequency, index) => {
-  //           return (
-  //             <option value={frequency.value} key={index} selected={frequency === currentUser.db.article_frequency}>
-  //               {frequency.label}
-  //             </option>
-  //           );
-  //         })}
-  //       </select>
-  //     </DropdownInformation>
-  //     <button type={"submit"}>Enregistrer les informations</button>
-  //     <button onClick={() => onSignOut()}>Me déconnecter</button>
-  //     <button>Supprimer on compte</button>
-  //   </div>
-  // );
+  return (
+    <div>
+      <button onClick={() => router.push(`/users/${userId}`)}>Retour</button>
+      <h1>{currentUser.db.user_name}</h1>
+      <DropdownInformation
+        isOpen={dropDownTheme.personalInformation}
+        title={"Mes information personnel"}
+        onClick={() =>
+          setDropDownTheme((prevState) => ({
+            ...prevState,
+            personalInformation: !dropDownTheme.personalInformation,
+          }))
+        }
+      >
+        {/*<label>Adresse Email</label>*/}
+        {/*<input placeholder={}/>*/}
+        <label>Mon pseudo</label>
+        <input
+          placeholder={currentUser?.db.user_name || ""}
+          name="pseudo"
+          value={updateUserObject?.db.user_name}
+          onChange={(event) => handleUpdateUserObject("user_name", event.target.value)}
+        />
+      </DropdownInformation>
+      <DropdownInformation
+        isOpen={dropDownTheme.themes}
+        title={"Mes thèmes sélectionnés"}
+        onClick={() => setDropDownTheme((prevState) => ({ ...prevState, themes: !dropDownTheme.themes }))}
+      >
+        <div>
+          {saveThemes.map((theme, index) => {
+            return (
+              <div key={index}>
+                <button>{theme.title}</button>
+              </div>
+            );
+          })}
+          <p style={{ fontWeight: "bold" }}>Themes disponibles</p>
+          {nonSaveThemes.map((theme, index) => {
+            return (
+              <div key={index}>
+                <button>{theme.title}</button>
+              </div>
+            );
+          })}
+        </div>
+      </DropdownInformation>
+      <DropdownInformation
+        isOpen={dropDownTheme.frequency}
+        title={"Le nombre et les fréquences"}
+        onClick={() => setDropDownTheme((prevState) => ({ ...prevState, frequency: !dropDownTheme.frequency }))}
+      >
+        <label>Choisi ta quantité de news</label>
+        <input
+          type="number"
+          placeholder={currentUser.db.article_number ? String(currentUser.db.article_number) : undefined}
+          value={updateUserObject ? String(updateUserObject.article_number) : 0}
+          onChange={(event) => handleUpdateUserObject("article_number", event.target.value)}
+        />
+        <label>Choisi ta fréquence</label>
+        <select onChange={(event) => handleUpdateUserObject("article_frequency", event.target.value)}>
+          {articleFrequencyList.map((frequency, index) => {
+            return (
+              <option value={frequency.value} key={index} selected={frequency === currentUser.db.article_frequency}>
+                {frequency.label}
+              </option>
+            );
+          })}
+        </select>
+      </DropdownInformation>
+      <button type={"submit"}>Enregistrer les informations</button>
+      <button onClick={() => onSignOut()}>Me déconnecter</button>
+      <button>Supprimer on compte</button>
+    </div>
+  );
 }
