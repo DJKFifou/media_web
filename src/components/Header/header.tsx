@@ -1,7 +1,7 @@
 import styles from "@/components/feed/feed.module.scss";
 import Link from "next/link";
 import ModalBurger from "../Modal/ModalBurger";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/router";
 import useUser from "@/hooks/useUser";
 import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
@@ -26,6 +26,11 @@ export default function Header({ id }: { id: string }) {
   };
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    console.log({ userId });
     getSavedArticles(userId)
       .then((articles) => {
         if (articles) {
@@ -33,15 +38,15 @@ export default function Header({ id }: { id: string }) {
         }
       })
       .catch((err) => console.log(err));
-    getTopicsByThemes(id)
+    getTopicsByThemes(userId)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   return (
     <div className={styles.header}>
       <nav className={styles.navigation}>
-        <button className={styles.buttonOpenModal}
-                onClick={handleOpenModal}>
+        <button className={styles.buttonOpenModal} onClick={handleOpenModal}>
           <img src="/assets/burgerMenu.svg" alt="" />
         </button>
         <ModalBurger
@@ -53,9 +58,7 @@ export default function Header({ id }: { id: string }) {
         />
         <img src="/assets/logo.svg" alt="" />
         {/*TODO: parameters page*/}
-        <Link href={`/users/${id}/parameters`}>
-          {/*<img src="/assets/settings.svg" alt="" />*/}
-        </Link>
+        <Link href={`/users/${id}/parameters`}>{/*<img src="/assets/settings.svg" alt="" />*/}</Link>
       </nav>
     </div>
   );

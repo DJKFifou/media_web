@@ -46,6 +46,8 @@ export default function User() {
       return;
     }
 
+    console.log({ id });
+
     getTopicsByThemes(id)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
@@ -77,7 +79,7 @@ export default function User() {
         </div>
         {topicsList && topicsList.length > 0
           ? topicsList.map((topic, index) => {
-              const hasArticle = topic.articles.length > 0 ? true : false;
+              const hasArticle = topic.articles && topic.articles.length > 0 ? true : false;
               return hasArticle ? (
                 <div key={index} style={{ borderTop: "solid", borderTopWidth: 2 }}>
                   <TopicCard topic={topic} isTopicPage={false} />

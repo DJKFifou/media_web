@@ -25,13 +25,7 @@ export default async function main(req: NextApiRequest, res: NextApiResponse) {
       },
     },
     include: {
-      articles: {
-        where: {
-          format: {
-            in: user.subscribed_formats,
-          },
-        },
-      },
+      articles: true,
       theme: true,
     },
     take: user.article_number || undefined,
