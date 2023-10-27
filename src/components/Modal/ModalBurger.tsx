@@ -2,7 +2,6 @@ import Link from "next/link";
 import { TopicThemeArticlePayload } from "@/types";
 import styles from "@/components/feed/feed.module.scss";
 import SecondaryCard from "@/components/Cards/SecondaryCard/SecondaryCard.component";
-import TopicCardHot from "@/components/Cards/TopicCard/TopicCardHot";
 
 type ModalBurgerType = {
   isModalOpen: boolean;
@@ -37,8 +36,8 @@ export default function ModalBurger({
           <div className={styles.noneContent}></div>
         </nav>
       </div>
-      <div className={styles.containerMenuBurger}>
-        <Link className={styles.contentReco} href={`/users/${userId}/savedArticles/`}>
+      <div className={styles.containerMenuBurger} >
+        <Link className={styles.contentReco} href={`/users/${userId}/savedArticles/`} style={{marginBottom: 10}}>
           <img src="/assets/fullReco.svg" alt="" />
           <p>{`Mes articles enregistrés (${savedArticlesLength})`}</p>
         </Link>
@@ -57,7 +56,7 @@ export default function ModalBurger({
           {topics && topics.length > 0
             ? topics.map((topic, index) => {
                 return (
-                  <SecondaryCard key={index} title={topic.title} label={topic.theme.title} />
+                  <SecondaryCard key={index} title={topic.title} label={topic.theme.title} userId={userId} topicId={topic.id} />
                 );
               })
             : null}

@@ -1,6 +1,5 @@
 import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
-import { Article, Prisma } from "@prisma/client";
-import Link from "next/link";
+import { Article } from "@prisma/client";
 import { useRouter } from "next/router";
 import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
 import styles from "@/components/feed/feed.module.scss";
@@ -8,7 +7,6 @@ import OneButton from "@/components/Buttons/OneButton/OneButton.component";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
-import TopicCardHot from "@/components/Cards/TopicCard/TopicCardHot";
 
 export default function TopicCard({
   topic,
