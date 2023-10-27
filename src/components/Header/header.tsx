@@ -7,8 +7,9 @@ export default function Header({id} : {id: string}){
       <nav className={styles.navigation}>
         <img src="/assets/burgerMenu.svg" alt="" />
         <img src="/assets/logo.svg" alt="" />
+        {/*TODO: parameters page*/}
         <Link href={`/users/${id}/parameters`}>
-          <img src="/assets/settings.svg" alt="" />
+          {/*<img src="/assets/settings.svg" alt="" />*/}
         </Link>
       </nav>
     </div>
