@@ -29,6 +29,17 @@ const Topics = (props: any) => {
     }
   };
 
+  function getDaytranslate() {
+    if (selectedArticleFrequencies === Article_Frequency.DAY) {
+      return "jour";
+    } else if (selectedArticleFrequencies === Article_Frequency.WEEK) {
+      return "semaine";
+    } else if (selectedArticleFrequencies === Article_Frequency.MONTH) {
+      return "mois";
+    }
+    return "";
+  }
+
   const handleSubmit = () => {
     props.onSuccess();
   };
@@ -83,12 +94,8 @@ const Topics = (props: any) => {
           <div className={styles.containerContinue}>
             <h4>
               {numberArticle >= 2
-                ? `${numberArticle ? numberArticle : "0"} sujets par ${
-                    selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
-                  }`
-                : `${numberArticle ? numberArticle : "0"} sujet par ${
-                    selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
-                  }`}
+                ? `${numberArticle} sujets par ${getDaytranslate() || "jour"}`
+                : `${numberArticle} sujet par ${getDaytranslate() || "jour"}`}
             </h4>
             <PrimaryButton onClick={handleSubmit} type="button" title="Continuer" />
           </div>
