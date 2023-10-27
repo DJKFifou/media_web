@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RegisterPage() {
   type Step = "step1" | "step2" | "step3" | "step4" | "step5";
-  const [currentStep, setCurrentStep] = useState<Step>("step4");
+  const [currentStep, setCurrentStep] = useState<Step>("step1");
   const router = useRouter();
   return (
     <>
