@@ -11,8 +11,8 @@ export default function Layout({ userId, children }: LayoutType) {
   return (
     <div className={styles.bottomNav}>
       {children}
-      <Link href={`/users/${userId}/`}>Vos actualité</Link>
-      <Link href={`/users/${userId}/friends/`}>Vos amis</Link>
+      <Link className={styles.leftContent} href={`/users/${userId}/`}>Vos actualités</Link>
+      <Link className={styles.rightContent} href={`/users/${userId}/friends/`}>Vos amis</Link>
     </div>
   );
 }

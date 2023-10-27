@@ -1,0 +1,66 @@
+@import "@/styles/_variables.scss";
+
+.articleCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-bottom: 12px;
+    background-color: $color-bg-2;
+    border-radius: 8px;
+    border: 1.5px solid $color-primary-1;
+    .imageArticle {
+        border-radius: 6px;
+    }
+    .contentText {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px 0;
+        color: $color-text-1;
+    }
+    .containerButton {
+        position: absolute;
+        top: 0;
+        right: 56px;
+        button {
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+        }
+        // .buttonLike {
+        //     .containerReco {
+        //         position: absolute;
+        //     }
+        //     .reco {
+        //         position: absolute;
+        //     }
+        // }
+        .buttonReco {
+            .containerReco {
+                position: absolute;
+            }
+            .reco {
+                position: absolute;
+                z-index: 10;
+                top: 25px;
+                left: 12px;
+            }
+        }
+    }
+    .infosArticle {
+        display: flex;
+        gap: 8px;
+        color: $color-text-2;
+        .leftContent {
+            display: flex;
+            gap: 6px;
+        }
+        .rightContent {
+            display: flex;
+            gap: 6px;
+            label {
+                width: calc(100% + 10px);
+            }
+        }
+    }
+}
