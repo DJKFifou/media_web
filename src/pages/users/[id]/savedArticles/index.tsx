@@ -1,11 +1,12 @@
 import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
-import useAuth from "@/hooks/useAuth";
 import useUser from "@/hooks/useUser";
 import { SavedArticlePayload } from "@/types";
-import { Prisma } from "@prisma/client";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import styles from "@/components/feed/feed.module.scss";
+import BackButton from "@/components/Buttons/BackButton/BackButton.component";
+import Header from "@/components/Header/header";
+
 
 export default function SavedArticles() {
   const router = useRouter();
@@ -14,32 +15,31 @@ export default function SavedArticles() {
   const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
 
   useEffect(() => {
-    (async () => {
-      if (userId) {
-        const result = await getSavedArticles(userId);
-        console.log("🚀 ~ file: index.tsx:20 ~ result:", result);
-
-        if (result) {
-          setSavedArticles(result);
+    getSavedArticles(userId)
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
         }
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      })
+      .catch((err) => console.log(err));
   }, [userId]);
 
   return (
     <div>
-      <Link href={`/users/${userId}/`}>Retour</Link>
-      <h1>Articles sauvegardés</h1>
-      {savedArticles &&
-        savedArticles.length > 0 &&
-        savedArticles.map((article, index) => {
-          return (
-            <div key={index}>
-              <ArticleCard article={article} />
-            </div>
-          );
-        })}
+        <Header id={userId} />
+      <div className={styles.main} style={{ paddingBottom: 20, paddingTop: 80, paddingLeft: 20, paddingRight: 20 }}>
+        <BackButton />
+        <h1 className={styles.title}>Articles sauvegardés</h1>
+        {savedArticles &&
+          savedArticles.length > 0 &&
+          savedArticles.map((article, index) => {
+            return (
+              <div key={index}>
+                <ArticleCard article={article} />
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }

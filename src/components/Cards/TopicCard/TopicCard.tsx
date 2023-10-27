@@ -42,7 +42,7 @@ export default function TopicCard({
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [userId]);
 
   return (
     <div>
