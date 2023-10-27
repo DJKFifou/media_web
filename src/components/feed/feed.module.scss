@@ -19,9 +19,75 @@ $breakpoint-tablet: 768px;
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
         background-color: $color-bg-2;
+        .buttonOpenModal,
+        .buttonCloseModal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            width: 32px;
+            background-color: rgba(0,0,0,0);
+            border: none;
+        }
+        .noneContent {
+            width: 32px;
+            height: 32px;
+        }
         a {
             display: flex;
         }
+    }
+}
+.dialog {
+    width: 100%;
+    border: none;
+    margin-top: -12px;
+    z-index: 20;
+    .containerMenuBurger {
+        padding: 68px 20px 12px;
+        background-color: $color-bg-1;
+        width: 100%;
+        min-height: 100vh;
+        .contentReco {
+            display: flex;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: $color-text-1;
+            background-color: $color-bg-2;
+            border: 1px solid $color-primary-1;
+            p {
+                display: flex;
+                align-items: center;
+                text-transform: none;
+                font-weight: 600;
+            }
+        }
+        .containerHotNews {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px 16px;
+            margin: 40px 0 12px;
+            background-color: $color-primary-1;
+            border-radius: 6px;
+            .titleHotNews {
+                display: flex;
+                gap: 8px;
+            }
+            .textHotNews {
+                text-align: center;
+            }
+        }
+        .containerGridTopics {
+            display: grid;
+            justify-items: center;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 8px;
+            grid-row-gap: 8px;
+          }
     }
 }
 

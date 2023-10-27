@@ -11,8 +11,9 @@ import Footer from "@/components/Footer/footer";
 
 export default function User() {
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
-
+  const [timeRemaining, setTimeRemaining] = useState("...");
+  const [isVisible, setIsVisible] = useState(true);
+  const [turnOff, setTurnOff] = useState(true);
   const router = useRouter();
   const id = router.query.id as string;
   const { getTopicsByThemes } = useTopic();
