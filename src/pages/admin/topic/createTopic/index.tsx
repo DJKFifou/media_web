@@ -14,7 +14,7 @@ export default function CreateTopic() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const newTopic = {
-      title: event.currentTarget.title.value,
+      title: event.currentTarget.title_name.value,
       introduction_text: event.currentTarget.introduction_text.value,
       theme_id: event.currentTarget.theme.value,
       is_hot: event.currentTarget.is_hot.checked,
@@ -34,7 +34,7 @@ export default function CreateTopic() {
       <h1>Votre nouveau sujet</h1>
       <form onSubmit={onSubmit}>
         <label>Titre</label>
-        <input type="text" name="title" id="title" />
+        <input type="text" name="title_name" id="title_name" />
         <label>Résumé</label>
         <input type="text" name="introduction_text" id="introduction_text" />
         <label>Themes</label>

@@ -1,3 +1,5 @@
+import { TopicThemeArticlePayload } from "@/types";
+
 export default function useTopic() {
   async function createTopic(body: any) {
     try {
@@ -53,12 +55,13 @@ export default function useTopic() {
     }
   }
 
-  async function getTopicsByThemes(userId: string){
-    try{
-      const topics = await fetch(`/api/topics/getTopicsByThemes?userId=${userId}`)
-      return await topics.json()
-    }catch (e) {
-      console.error(e)
+  async function getTopicsByThemes(userId: string) {
+    try {
+      const topics = await fetch(`/api/topics/getTopicsByThemes?userId=${userId}`);
+      const result = await topics.json();
+      return result as TopicThemeArticlePayload[];
+    } catch (e) {
+      console.error(e);
     }
   }
 

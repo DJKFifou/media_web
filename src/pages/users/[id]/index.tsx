@@ -1,9 +1,11 @@
 import TopicCard from "@/components/Cards/TopicCard/TopicCard";
-import Layout from "@/components/user/layout";
+import ModalBurger from "@/components/Modal/ModalBurger";
+import styles from "@/components/feed/feed.module.scss";
 import useTheme from "@/hooks/useTheme";
 import useTopic from "@/hooks/useTopic";
 import useUser from "@/hooks/useUser";
-import { Prisma, User } from "@prisma/client";
+import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
+import { Article, Prisma, User } from "@prisma/client";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,6 +16,11 @@ import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.comp
 import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
 
 type Topics = Prisma.TopicGetPayload<{ include: { articles: true; theme: true } }>[];
+export default function User() {
+  const [timeRemaining, setTimeRemaining] = useState("...");
+  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
+  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 export default function User() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -23,12 +30,11 @@ export default function User() {
   const [turnOff, setTurnOff] = useState(true);
   const router = useRouter();
   const id = router.query.id as string;
-  const { getUser } = useUser();
+  const { getSavedArticles, currentUser } = useUser();
   const { getTopicsByThemes } = useTopic();
-  const { getTheme } = useTheme();
 
   const title = () => {
-    const article_frequency = currentUser?.article_frequency;
+    const article_frequency = currentUser?.db.article_frequency;
     const today = dayjs();
     const dayString = today.format("dddd");
     const monthString = today.format("MMMM");
@@ -42,15 +48,7 @@ export default function User() {
     }
   };
   function getCurrentDay() {
-    const daysOfWeek = [
-      "Dimanche",
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi"
-    ];
+    const daysOfWeek = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
     const currentDate = new Date();
     const currentDay = currentDate.getDay();
     return daysOfWeek[currentDay];
@@ -62,7 +60,7 @@ export default function User() {
     nextDay.setDate(now.getDate() + 1);
     nextDay.setHours(0, 0, 0, 0);
 
-    const timeDifference = nextDay - now;
+    const timeDifference = nextDay.getTime() - now.getTime();
 
     const hours = Math.floor(timeDifference / 3600000);
     const minutes = Math.floor((timeDifference % 3600000) / 60000);
@@ -71,8 +69,8 @@ export default function User() {
     return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
   }
 
-  function padZero(number) {
-    return number.toString().padStart(2, '0');
+  function padZero(number: number) {
+    return number.toString().padStart(2, "0");
   }
 
   const containerArticles = () => {
@@ -81,18 +79,30 @@ export default function User() {
   };
 
   useEffect(() => {
-    getUser(id).then((user) => {
-      setCurrentUser(user);
-    });
-    getTopicsByThemes(id).then((topics) => setTopicsList(topics));
+    if (!id) {
+      return;
+    }
+
+    getTopicsByThemes(id)
+      .then((topics) => topics && setTopicsList(topics))
+      .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const interval = setInterval(() => {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
 
+    getSavedArticles(id)
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
+        }
+      })
+      .catch((err) => console.log(err));
+
     return () => {
       clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const firstArticle = {

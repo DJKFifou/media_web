@@ -32,8 +32,10 @@ export default function Article() {
       {currentArticle !== null ? (
         <ModifyArticle isModify={isModify} articleData={currentArticle} onSuccess={loadArticle} />
       ) : null}
-      <button onClick={() => setIsModify(!isModify)}>{isModify ? "Mode visualisation" : "Mode édition"}</button>
-      <button>Supprimer</button>
+      <button type="button" onClick={() => setIsModify(!isModify)}>
+        {isModify ? "Mode visualisation" : "Mode édition"}
+      </button>
+      <button type="button">Supprimer</button>
     </div>
   );
 }

@@ -37,5 +37,5 @@ export default function ArticleCard({article} : {article: Article}){
         </div>
       </div>
     </div>
-  )
+  );
 }

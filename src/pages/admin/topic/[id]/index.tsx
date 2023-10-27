@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-import useTopic from "@/hooks/useTopic";
-import { FormEvent, useEffect, useState } from "react";
-import { Article, Theme, Topic } from "@prisma/client";
-import Link from "next/link";
 import useTheme from "@/hooks/useTheme";
-import useArticle from "@/hooks/useArticle";
+import useTopic from "@/hooks/useTopic";
+import { Theme, Topic } from "@prisma/client";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function Topic() {
   const router = useRouter();
@@ -23,7 +22,8 @@ export default function Topic() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const updatedTopic = {
-      title: event.currentTarget.title.value as string,
+      // @todo Fix TS error
+      title: event.currentTarget.title_name.value as string,
       introduction_text: event.currentTarget.introduction_text.value,
       theme: event.currentTarget.theme.value,
       is_hot: event.currentTarget.is_hot.checked,
@@ -43,12 +43,14 @@ export default function Topic() {
     }
   }
 
+  // @todo Remove the 3 useEffect to 1
   useEffect(() => {
     if (topicId && typeof topicId === "string") {
       getTopic(topicId).then((topic) => {
         setCurrentTopic(topic);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topicId]);
 
   useEffect(() => {
@@ -58,12 +60,14 @@ export default function Topic() {
         setCurrentTopicTheme(theme);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTopic]);
 
   useEffect(() => {
     getThemes().then((themes) => {
       setThemesList(themes);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -71,7 +75,7 @@ export default function Topic() {
       <Link href="/admin">Retour</Link>
       <form onSubmit={onSubmit}>
         <label>Titre</label>
-        <input type="text" name="title" id="title" defaultValue={currentTopic?.title} disabled={!isModify} />
+        <input type="text" name="title_name" id="title_name" defaultValue={currentTopic?.title} disabled={!isModify} />
         <label>{"Text d'introduction"}</label>
         <input
           type="text"
@@ -98,8 +102,12 @@ export default function Topic() {
         <input type="file" name="audio" id="audio" />
         {isModify ? <button type="submit">Enregistrer les modifications</button> : null}
       </form>
-      <button onClick={() => handleShowModifyView()}>{isModify ? "mode visualisation" : "mode edition"}</button>
-      <button onClick={() => onDelete()}>Supprimer</button>
+      <button type="button" onClick={() => handleShowModifyView()}>
+        {isModify ? "mode visualisation" : "mode edition"}
+      </button>
+      <button type="button" onClick={() => onDelete()}>
+        Supprimer
+      </button>
     </div>
   );
 }
