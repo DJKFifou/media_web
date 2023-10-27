@@ -10,8 +10,8 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Header from "@/components/Header/header";
 
-type Topics = Prisma.TopicGetPayload<{ include: { articles: true; theme: true } }>[];
 export default function User() {
   const [timeRemaining, setTimeRemaining] = useState("...");
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
@@ -23,20 +23,6 @@ export default function User() {
   const { getSavedArticles, currentUser } = useUser();
   const { getTopicsByThemes } = useTopic();
 
-  const title = () => {
-    const article_frequency = currentUser?.db.article_frequency;
-    const today = dayjs();
-    const dayString = today.format("dddd");
-    const monthString = today.format("MMMM");
-    switch (article_frequency) {
-      case "DAY":
-        return `Selection du ${dayString}`;
-      case "WEEK":
-        return "Selection de la semaine";
-      case "MONTH":
-        return `Selection du ${monthString}`;
-    }
-  };
   function getCurrentDay() {
     const daysOfWeek = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
     const currentDate = new Date();
@@ -92,29 +78,19 @@ export default function User() {
 
   return (
     <>
-      <div className={styles.header}>
-        <nav className={styles.navigation}>
-          <img src="/assets/burgerMenu.svg" alt="" />
-          <img src="/assets/logo.svg" alt="" />
-          <Link href={`/users/${id}/parameters`}>
-            <img src="/assets/settings.svg" alt="" />
-          </Link>
-        </nav>
-      </div>
+      <Header id={id} />
       <div className={styles.main}>
-        {/* <h1>{`Bienvenue ${currentUser?.user_name}`}</h1> */}
         <div className={styles.containerEmptyNav}></div>
         <h1 className={styles.title}>
           sélection du <span>{getCurrentDay()}</span>
         </h1>
         <label className={styles.labelTitle}>Nouveaux sujets dans {timeRemaining} </label>
-        <p>{title()}</p>
         <div className={styles.containerTopicsList}>
           {topicsList && topicsList.length > 0
             ? topicsList.map((topic, index) => {
                 return (
                   <div style={{ paddingBottom: 20 }} key={index}>
-                    <TopicCard topic={topic} />
+                    <TopicCard topic={topic} isTopicPage={false} />
                   </div>
                 );
               })
