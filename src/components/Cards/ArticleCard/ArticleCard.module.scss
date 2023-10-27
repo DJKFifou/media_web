@@ -11,6 +11,8 @@
     border: 1.5px solid $color-primary-1;
     .imageArticle {
         border-radius: 6px;
+        object-fit: contain;
+        width: 100%;
     }
     .contentText {
         display: flex;

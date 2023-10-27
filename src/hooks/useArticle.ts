@@ -85,5 +85,17 @@ export default function useArticle() {
     }
   }
 
-  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle, checkIsArticleSaved };
+  async function unSaveArticle(articleId: string, userId: string){
+    try{
+      await fetcher({
+        url: `/api/articles/${articleId}/unSaveArticle`,
+        method: 'PUT',
+        body: {userId: userId}
+      })
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { getArticle, updateArticle, getArticles, getArticlesByTopicId, saveArticle, checkIsArticleSaved, unSaveArticle };
 }

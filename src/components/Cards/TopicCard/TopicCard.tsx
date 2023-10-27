@@ -2,11 +2,12 @@ import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
 import { Article, Prisma } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { TopicThemeArticlePayload } from "@/types";
+import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
 import styles from "@/components/feed/feed.module.scss";
 import OneButton from "@/components/Buttons/OneButton/OneButton.component";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useUser from "@/hooks/useUser";
 
 export default function TopicCard({
   topic,
@@ -16,7 +17,9 @@ export default function TopicCard({
   isTopicPage: boolean
 }) {
   const router = useRouter();
-  const userId = router.query.id
+  const { getSavedArticles } = useUser();
+  const userId = router.query.id as string
+  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [isVisible, setIsVisible] = useState(true);
   const [turnOff, setTurnOff] = useState(true);
   function getFirstThreeElements(arr: Article[]) {
@@ -30,6 +33,17 @@ export default function TopicCard({
   function isOdd(number: number) {
     return number % 2 !== 0;
   }
+
+  useEffect(() => {
+    getSavedArticles(userId)
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
       {topic.is_hot ? (
@@ -59,8 +73,9 @@ export default function TopicCard({
             <h3 className={styles.titleLastArticles}>les derniers articles<img src="/assets/iconBarTitle.svg" alt="" /></h3>
             {articleList.length > 0 ? (
               articleList.map((article, index) => {
+                const isSaveArticle = savedArticles.some(saveArticle => saveArticle.id === article.id)
                 return(
-                  <ArticleCard article={article} key={index} />
+                  <ArticleCard article={article} key={index} isSaveArticle={isSaveArticle} />
                 )
               })
             ) : null}
