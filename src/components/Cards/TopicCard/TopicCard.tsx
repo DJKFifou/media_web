@@ -58,7 +58,9 @@ export default function TopicCard({
           </button>
           <div className={styles.containerTitleTimer}>
             <h2>{topic.title}</h2>
-            <OneButton title="00:35" img="/assets/play.svg" alt="Bouton de lecture" />
+            {topic.audio ? (
+              <OneButton title="00:35" img="/assets/play.svg" alt="Bouton de lecture" audioLink={topic.audio} />
+            ) : null}
           </div>
           <p className={styles.textHat}>{topic.introduction_text}</p>
           <div id="containerArticles" className={styles.containerArticles} style={{ display: isVisible ? 'block' : 'none' }}>
