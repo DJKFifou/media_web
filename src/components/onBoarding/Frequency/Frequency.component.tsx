@@ -3,12 +3,12 @@ import SecondaryButton from "@/components/Buttons/SecondaryButton/SecondaryButto
 import { Article_Frequency } from "@prisma/client";
 import { useState } from "react";
 import styles from "./Frequency.module.scss";
+import { useRouter } from "next/router";
 
 const Topics = (props: any) => {
   const [selectedArticleFrequencies, setSelectedArticleFrequencies] = useState<Article_Frequency | null>(null);
   // @todo Add better default value or check for falsy value here #1
   const [numberArticle, setNumberArticle] = useState<number>(0);
-
   const handleIncrement = () => {
     // #1
     setNumberArticle(numberArticle + 1);
@@ -27,6 +27,10 @@ const Topics = (props: any) => {
     if (!isNaN(newValue)) {
       setNumberArticle(newValue);
     }
+  };
+
+  const handleSubmit = () => {
+    props.onSuccess();
   };
 
   return (
@@ -86,7 +90,7 @@ const Topics = (props: any) => {
                     selectedArticleFrequencies ? selectedArticleFrequencies : "jour"
                   }`}
             </h4>
-            <PrimaryButton type="button" title="Continuer" />
+            <PrimaryButton onClick={handleSubmit} type="button" title="Continuer" />
           </div>
         </div>
       </form>
