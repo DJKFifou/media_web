@@ -18,7 +18,7 @@ export default function User() {
   const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
+  const [timeRemaining, setTimeRemaining] = useState("...");
   const [isVisible, setIsVisible] = useState(true);
   const [turnOff, setTurnOff] = useState(true);
   const router = useRouter();
