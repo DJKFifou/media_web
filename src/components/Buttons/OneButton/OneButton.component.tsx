@@ -7,16 +7,13 @@ const OneButton = (
     title: string;
     img: string;
     alt: string;
-    audioLink: string;
   }
 ) => {
   return (
-    <Link href={props.audioLink}>
       <button type="button" className={styles.oneButton} {...props}>
         <h3>{props.title}</h3>
         <img src={props.img} alt={props.alt} />
       </button>
-    </Link>
   );
 };
 
