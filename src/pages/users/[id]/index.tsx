@@ -1,7 +1,4 @@
-import TopicCard from "@/components/Cards/TopicCard/TopicCard";
-import ModalBurger from "@/components/Modal/ModalBurger";
-import styles from "@/components/feed/feed.module.scss";
-import useTheme from "@/hooks/useTheme";
+
 import useTopic from "@/hooks/useTopic";
 import useUser from "@/hooks/useUser";
 import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
@@ -17,20 +14,16 @@ import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.comp
 import ArticleCard from "@/components/Cards/ArticleCard/ArticleCard";
 
 export default function User() {
-  const [timeRemaining, setTimeRemaining] = useState("...");
-  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[] | null>(null);
-  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-export default function User() {
+  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [topicsList, setTopicsList] = useState<Topics>([]);
+  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
   const [isVisible, setIsVisible] = useState(true);
   const [turnOff, setTurnOff] = useState(true);
   const router = useRouter();
   const id = router.query.id as string;
-  const { getSavedArticles, currentUser } = useUser();
+  const { getSavedArticles } = useUser();
   const { getTopicsByThemes } = useTopic();
 
   function getCurrentDay() {

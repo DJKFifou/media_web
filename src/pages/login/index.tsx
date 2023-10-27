@@ -32,7 +32,9 @@ export default function Login() {
     try {
       const result = await signIn(payload);
       if (result?.data.user) {
+        const user = result.data.user
         console.log("Succesfully logged in");
+        await router.replace(`/users/${user.id}`)
         return;
       }
 
