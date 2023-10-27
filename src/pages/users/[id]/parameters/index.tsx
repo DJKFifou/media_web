@@ -57,7 +57,6 @@ export default function Parameters() {
     return null;
   }
 
-
   return (
     <div>
       <button onClick={() => router.push(`/users/${userId}`)}>Retour</button>
@@ -78,7 +77,7 @@ export default function Parameters() {
         <input
           placeholder={currentUser?.db.user_name || ""}
           name="pseudo"
-          value={updateUserObject?.db.user_name}
+          value={String(updateUserObject?.user_name)}
           onChange={(event) => handleUpdateUserObject("user_name", event.target.value)}
         />
       </DropdownInformation>
@@ -117,16 +116,20 @@ export default function Parameters() {
           value={updateUserObject ? String(updateUserObject.article_number) : 0}
           onChange={(event) => handleUpdateUserObject("article_number", event.target.value)}
         />
-        <label>Choisi ta fréquence</label>
+        {/* <label>Choisi ta fréquence</label>
         <select onChange={(event) => handleUpdateUserObject("article_frequency", event.target.value)}>
           {articleFrequencyList.map((frequency, index) => {
             return (
-              <option value={frequency.value} key={index} selected={frequency === currentUser.db.article_frequency}>
+              <option
+                value={frequency.value}
+                key={index}
+                selected={currentUser.db.article_frequency ? frequency[] === currentUser.db.article_frequency : null}
+              >
                 {frequency.label}
               </option>
             );
           })}
-        </select>
+        </select> */}
       </DropdownInformation>
       <button type={"submit"}>Enregistrer les informations</button>
       <button onClick={() => onSignOut()}>Me déconnecter</button>
