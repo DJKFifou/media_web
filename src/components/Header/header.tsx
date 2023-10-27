@@ -1,23 +1,21 @@
 import styles from "@/components/feed/feed.module.scss";
 import Link from "next/link";
 import ModalBurger from "../Modal/ModalBurger";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import useUser from "@/hooks/useUser";
+import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
+import useTopic from "@/hooks/useTopic";
 
-export default function Header({id} : {id: string}){
+export default function Header({ id }: { id: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const userId = "12345";
-  const savedArticlesLength = 10; // Remplacez par la longueur réelle des articles enregistrés
-  const topics = [
-    {
-      title: "Sujet 1",
-      theme: { title: "Thème 1" },
-    },
-    {
-      title: "Sujet 2",
-      theme: { title: "Thème 2" },
-    },
-    // ... Ajoutez d'autres sujets si nécessaire
-  ];
+  const [savedArticles, setSavedArticles] = useState<SavedArticlePayload[]>([]);
+  const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
+  const { getSavedArticles } = useUser();
+  const { getTopicsByThemes } = useTopic();
+  const router = useRouter();
+  const userId = router.query.id as string;
+  const savedArticlesLength = savedArticles.length;
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -26,20 +24,33 @@ export default function Header({id} : {id: string}){
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    getSavedArticles(userId)
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
+        }
+      })
+      .catch((err) => console.log(err));
+    getTopicsByThemes(id)
+      .then((topics) => topics && setTopicsList(topics))
+      .catch((err) => console.log(err));
+  }, [userId]);
   return (
     <div className={styles.header}>
       <nav className={styles.navigation}>
         <button className={styles.buttonOpenModal}
-         onClick={handleOpenModal}>
+                onClick={handleOpenModal}>
           <img src="/assets/burgerMenu.svg" alt="" />
         </button>
         <ModalBurger
-        isModalOpen={isModalOpen}
-        topics={topics}
-        onCloseModal={handleCloseModal}
-        savedArticlesLength={savedArticlesLength}
-        userId={userId}
-      />
+          isModalOpen={isModalOpen}
+          topics={topicsList}
+          onCloseModal={handleCloseModal}
+          savedArticlesLength={savedArticlesLength}
+          userId={userId}
+        />
         <img src="/assets/logo.svg" alt="" />
         {/*TODO: parameters page*/}
         <Link href={`/users/${id}/parameters`}>
@@ -47,5 +58,5 @@ export default function Header({id} : {id: string}){
         </Link>
       </nav>
     </div>
-  )
+  );
 }

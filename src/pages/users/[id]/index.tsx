@@ -12,8 +12,6 @@ import Footer from "@/components/Footer/footer";
 export default function User() {
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
   const [timeRemaining, setTimeRemaining] = useState("...");
-  const [isVisible, setIsVisible] = useState(true);
-  const [turnOff, setTurnOff] = useState(true);
   const router = useRouter();
   const id = router.query.id as string;
   const { getTopicsByThemes } = useTopic();
@@ -77,7 +75,6 @@ export default function User() {
         {topicsList && topicsList.length > 0 ? (
           topicsList.map((topic, index) => {
             const hasArticle = topic.articles.length > 0 ? true : false;
-            console.log(hasArticle, 'hasArticle')
             return (
               hasArticle ? (
                 <div key={index} style={{ borderTop: "solid", borderTopWidth: 2  }}>

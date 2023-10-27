@@ -8,6 +8,7 @@ import OneButton from "@/components/Buttons/OneButton/OneButton.component";
 import PrimaryButton from "@/components/Buttons/PrimaryButton/PrimaryButton.component";
 import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
+import TopicCardHot from "@/components/Cards/TopicCard/TopicCardHot";
 
 export default function TopicCard({
   topic,
@@ -46,16 +47,9 @@ export default function TopicCard({
 
   return (
     <div>
-      {topic.is_hot ? (
-        <Link href="" className={styles.containerHotNews} >
-          <div className={styles.titleHotNews}>
-            <img src="/assets/fire.svg" alt="Image de l'actu Hot" />
-            <h3>l’actu du jour</h3>
-            <img src="/assets/fire.svg" alt="Image de l'actu Hot" />
-          </div>
-          <h4 className={styles.textHotNews}>{topic.title}</h4>
-        </Link>
-      ) : (
+      {/*{topic.is_hot ? (*/}
+      {/*  <TopicCardHot topic={topic} />*/}
+      {/*) : (*/}
         <div className={styles.containerTopicsList}>
           <button className={styles.contentTopic} onClick={containerArticles}>
             <div>
@@ -84,7 +78,7 @@ export default function TopicCard({
             <PrimaryButton title="Voir les articles" onClick={() => router.push(`/users/${userId}/topic/${topic.id}`)}/>
           ) : null }
         </div>
-      )}
+      {/*)}*/}
     </div>
   );
 }

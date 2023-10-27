@@ -26,7 +26,7 @@ export default function SavedArticles() {
 
   return (
     <div>
-        <Header id={userId} />
+      <Header id={userId} />
       <div className={styles.main} style={{ paddingBottom: 20, paddingTop: 80, paddingLeft: 20, paddingRight: 20 }}>
         <BackButton />
         <h1 className={styles.title}>Articles sauvegardés</h1>
@@ -35,7 +35,7 @@ export default function SavedArticles() {
           savedArticles.map((article, index) => {
             return (
               <div key={index}>
-                <ArticleCard article={article} />
+                <ArticleCard article={article} isSaveArticle={true}/>
               </div>
             );
           })}
