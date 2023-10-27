@@ -1,13 +1,12 @@
-import useTopic from "@/hooks/useTopic";
-import useUser from "@/hooks/useUser";
-import { SavedArticlePayload, TopicThemeArticlePayload } from "@/types";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Header from "@/components/Header/header";
-import styles from "@/components/feed/feed.module.scss";
 import OneButton from "@/components/Buttons/OneButton/OneButton.component";
 import TopicCard from "@/components/Cards/TopicCard/TopicCard";
 import Footer from "@/components/Footer/footer";
+import Header from "@/components/Header/header";
+import styles from "@/components/feed/feed.module.scss";
+import useTopic from "@/hooks/useTopic";
+import { TopicThemeArticlePayload } from "@/types";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function User() {
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
@@ -42,7 +41,6 @@ export default function User() {
     return number.toString().padStart(2, "0");
   }
 
-
   useEffect(() => {
     if (!id) {
       return;
@@ -70,20 +68,23 @@ export default function User() {
         <h1 className={styles.title}>sélection du {getCurrentDay()}</h1>
         <h5 className={styles.subTitle}>Nouveaux sujets dans {timeRemaining}</h5>
         <div className={styles.containerOneButton}>
-          <OneButton title="le récap en 5 min " img="/assets/play.svg" alt="Bouton de lecture" />
+          <a
+            target="_blank"
+            href="https://pub-9ad95f0fa0634c2792ac941e97a2ed8c.r2.dev/active-users-widget-bucket/avatars/recap.mp3"
+          >
+            <OneButton title="le récap en 5 min " img="/assets/play.svg" alt="Bouton de lecture" />
+          </a>
         </div>
-        {topicsList && topicsList.length > 0 ? (
-          topicsList.map((topic, index) => {
-            const hasArticle = topic.articles.length > 0 ? true : false;
-            return (
-              hasArticle ? (
-                <div key={index} style={{ borderTop: "solid", borderTopWidth: 2  }}>
+        {topicsList && topicsList.length > 0
+          ? topicsList.map((topic, index) => {
+              const hasArticle = topic.articles.length > 0 ? true : false;
+              return hasArticle ? (
+                <div key={index} style={{ borderTop: "solid", borderTopWidth: 2 }}>
                   <TopicCard topic={topic} isTopicPage={false} />
                 </div>
-              ) : null
-            );
-          })
-        ) : null}
+              ) : null;
+            })
+          : null}
         <Footer />
       </div>
     </>

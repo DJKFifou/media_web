@@ -9,11 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: "Missing userId or articleId" });
   }
 
-  const article = await prisma.article.findFirst({
+  const article = await prisma.article.findUnique({
     where: {
-      id: {
-        equals: articleId,
-      },
+      id: articleId,
       liked_by: {
         some: {
           id: userId,
