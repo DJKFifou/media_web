@@ -7,8 +7,10 @@ import useTopic from "@/hooks/useTopic";
 import { TopicThemeArticlePayload } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import useAuth from "@/hooks/useAuth";
 
 export default function User() {
+  const {logOut} = useAuth()
   const [topicsList, setTopicsList] = useState<TopicThemeArticlePayload[]>([]);
   const [timeRemaining, setTimeRemaining] = useState("...");
   const router = useRouter();
@@ -62,6 +64,16 @@ export default function User() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
+  async function onLogOut(){
+    try{
+      await logOut().then(() => {
+        router.replace('/login')
+      })
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
   return (
     <>
       <Header id={id} />
@@ -76,6 +88,7 @@ export default function User() {
           >
             <OneButton title="le récap en 5 min " img="/assets/play.svg" alt="Bouton de lecture" />
           </a>
+          <button onClick={() => onLogOut()}>deconnexion</button>
         </div>
         {topicsList && topicsList.length > 0
           ? topicsList.map((topic, index) => {
