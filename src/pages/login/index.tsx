@@ -74,9 +74,7 @@ export default function Login() {
             <SecondaryButton type="button" title="Créer un compte" />
           </Link>
           {/* @todo Add Password Reset */}
-          <a href="" className={styles.forgottenPasswordLink}>
-            Mot de passe oublié ?
-          </a>
+          <Link href="/forgotPassword" className={styles.forgottenPasswordLink}>Mot de passe oublié ?</Link>
         </div>
       </form>
     </section>

@@ -2,6 +2,7 @@ import { supabase } from "@/lib/initSupabase";
 import { Credentials } from "@/types";
 import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+import { __DEV__ } from "@/constants";
 
 export default function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -42,9 +43,28 @@ export default function useAuth() {
     try {
       await supabase.auth.signOut();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
-  return { signUp, signIn, logOut, session };
+  async function forgotPassword(email: string){
+    const redirectUrl = __DEV__ ? 'http://localhost:3000/resetPassword' : 'https://media-web.aureliane.dev/resetPassword'
+    try{
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: redirectUrl,
+      })
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  async function resetPassword(password: string){
+    try{
+      await supabase.auth.updateUser({ password: password })
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  return { signUp, signIn, logOut, session, forgotPassword, resetPassword };
 }
