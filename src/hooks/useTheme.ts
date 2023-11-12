@@ -27,11 +27,29 @@ export default function useTheme() {
     }
   }
 
+  async function getSaveThemes(userId: string){
+    try{
+      const saveThemes = await fetch(`/api/themes/save?userId=${userId}`)
+      return await saveThemes.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
+  async function getNoSaveThemes(userId: string){
+    try{
+      const noSaveThemes = await fetch(`/api/themes/noSave?userId=${userId}`)
+      return await noSaveThemes.json()
+    }catch (e) {
+      console.error(e)
+    }
+  }
+
   useEffect(() => {
     getThemes()
       .then((themes: Theme[]) => setThemes(themes))
       .catch((e) => console.error(e));
   }, []);
 
-  return { getThemes, getTheme, themes };
+  return { getThemes, getTheme, themes, getSaveThemes, getNoSaveThemes };
 }

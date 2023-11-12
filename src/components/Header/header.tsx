@@ -55,8 +55,9 @@ export default function Header({ id }: { id: string }) {
           userId={userId}
         />
         <img src="/assets/logo.svg" alt="" />
-        {/*TODO: parameters page*/}
-        <Link href={`/users/${id}/parameters`}>{/*<img src="/assets/settings.svg" alt="" />*/}</Link>
+        <Link href={`/users/${id}/parameters`}>
+          <img src="/assets/settings.svg" alt="" />
+        </Link>
       </nav>
     </div>
   );

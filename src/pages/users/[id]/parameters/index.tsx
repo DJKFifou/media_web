@@ -1,32 +1,25 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
-import { Article_Frequency, Prisma, User } from "@prisma/client";
+import { Article_Frequency, Prisma, Theme, User } from "@prisma/client";
 import useAuth from "@/hooks/useAuth";
 import DropdownInformation from "@/components/user/DropdownInformation";
 import useTheme from "@/hooks/useTheme";
 import { EnhancedUser } from "@/types";
 
-type UserWithTheme = Prisma.UserGetPayload<{ include: { subscribed_themes: true } }>;
-
 export default function Parameters() {
   const router = useRouter();
-  const { getUser, currentUser } = useUser();
+  const { currentUser } = useUser();
   const { logOut } = useAuth();
-  const { themes } = useTheme();
+  const {getSaveThemes, getNoSaveThemes} = useTheme()
   const userId = router.query.id as string;
   // @todo robust this
   const [updateUserObject, setUpdateUserObject] = useState<EnhancedUser["db"] | null>(null);
   const [dropDownTheme, setDropDownTheme] = useState({ personalInformation: false, themes: false, frequency: false });
-  const saveThemes = themes.filter((theme) => {
-    return theme.subscribers.some((subscriber) => subscriber.id === userId);
-  });
-  const nonSaveThemes = themes.filter((theme) => {
-    if (theme.subscribers.length === 0) {
-      return theme;
-    }
-    return theme.subscribers.some((subscriber) => subscriber.id !== userId);
-  });
+  const [saveThemes, setSaveThemes] = useState<Theme[]>([]);
+  const [noSaveThemes, setNoSaveThemes] = useState<Theme[]>([]);
+
+
   const articleFrequencyList = [
     {
       label: "jours",
@@ -47,11 +40,37 @@ export default function Parameters() {
     setUpdateUserObject((prevState: any) => ({ ...prevState, [key]: value }));
   }
 
+  function onClickSaveTheme(theme: Theme){
+    setNoSaveThemes((prevState: Theme[]) => ([...prevState, theme]))
+    const newSaveList: Theme[] = saveThemes.filter((saveTheme: Theme) => saveTheme.id !== theme.id)
+    setSaveThemes(newSaveList)
+  }
+
+  function onClickNoSaveTheme(theme: Theme){
+    setSaveThemes((prevState: Theme[]) => ([...prevState, theme]))
+    const newNoSaveList: Theme[] = noSaveThemes.filter((noSave: Theme) => noSave.id !== theme.id)
+    setNoSaveThemes(newNoSaveList)
+  }
+
+  function handleSubmit(){
+    const userSaveTheme
+  }
+
   async function onSignOut() {
     logOut().then(() => {
       router.replace("/");
     });
   }
+
+  useEffect(() => {
+    getSaveThemes(userId).then((res) => {
+      setSaveThemes(res)
+    })
+    getNoSaveThemes(userId).then((res) => {
+      setNoSaveThemes(res)
+    })
+  }, [userId]);
+
 
   if (!currentUser) {
     return null;
@@ -90,15 +109,15 @@ export default function Parameters() {
           {saveThemes.map((theme, index) => {
             return (
               <div key={index}>
-                <button>{theme.title}</button>
+                <button onClick={() => onClickSaveTheme(theme)}>{theme.title}</button>
               </div>
             );
           })}
           <p style={{ fontWeight: "bold" }}>Themes disponibles</p>
-          {nonSaveThemes.map((theme, index) => {
+          {noSaveThemes.map((theme, index) => {
             return (
               <div key={index}>
-                <button>{theme.title}</button>
+                <button onClick={() => onClickNoSaveTheme(theme)}>{theme.title}</button>
               </div>
             );
           })}
