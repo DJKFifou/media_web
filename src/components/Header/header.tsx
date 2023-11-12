@@ -30,7 +30,6 @@ export default function Header({ id }: { id: string }) {
       return;
     }
 
-    console.log({ userId });
     getSavedArticles(userId)
       .then((articles) => {
         if (articles) {
@@ -41,8 +40,7 @@ export default function Header({ id }: { id: string }) {
     getTopicsByThemes(userId)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [userId, getSavedArticles, getTopicsByThemes]);
   return (
     <div className={styles.header}>
       <nav className={styles.navigation}>

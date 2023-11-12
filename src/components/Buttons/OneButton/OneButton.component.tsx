@@ -1,6 +1,5 @@
 import { ComponentProps } from "react";
 import styles from "./OneButton.module.scss";
-import Link from "next/link";
 
 const OneButton = (
   props: ComponentProps<"button"> & {

@@ -48,12 +48,9 @@ export default function User() {
       return;
     }
 
-    console.log({ id });
-
     getTopicsByThemes(id)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const interval = setInterval(() => {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
@@ -61,8 +58,7 @@ export default function User() {
     return () => {
       clearInterval(interval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [getTopicsByThemes, id]);
 
   async function onLogOut(){
     try{

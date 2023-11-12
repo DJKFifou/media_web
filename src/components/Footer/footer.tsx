@@ -19,9 +19,6 @@ export default function Footer() {
         <h5>
           <Link href="/legalNotice">Mentions légales</Link>
         </h5>
-        {/*<h5><a href="/CGu">Conditions générales d’utilisation</a></h5>*/}
-        {/*<h5><a href="/cookies">Gestion des cookies</a></h5>*/}
-        {/*<h5><a href="/contact">Contact</a></h5>*/}
       </div>
     </footer>
   );

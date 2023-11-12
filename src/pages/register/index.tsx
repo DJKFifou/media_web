@@ -17,7 +17,6 @@ export default function RegisterPage() {
       <div className={`${inter.className}`}>
         {currentStep == "step1" ? <Register onSuccess={() => setCurrentStep("step2")} /> : null}
         {currentStep == "step2" ? <Topics onSuccess={() => setCurrentStep("step3")} /> : null}
-        {/* {currentStep == "step2" ? <Topics onBack={() => setCurrentStep("step1")} /> : null} */}
         {currentStep == "step3" ? <Frequency onSuccess={() => setCurrentStep("step4")} /> : null}
         {currentStep == "step4" ? <Medias onSuccess={() => router.replace("/")} /> : null}
       </div>
