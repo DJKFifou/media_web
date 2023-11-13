@@ -10,14 +10,11 @@ const Topics = (props: any) => {
   // @todo Add better default value or check for falsy value here #1
   const [numberArticle, setNumberArticle] = useState<number>(0);
   const handleIncrement = () => {
-    // #1
     setNumberArticle(numberArticle + 1);
   };
 
   const handleDecrement = () => {
-    // #1
     if (numberArticle > 0) {
-      // #1
       setNumberArticle(numberArticle - 1);
     }
   };

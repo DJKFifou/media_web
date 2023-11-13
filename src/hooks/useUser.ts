@@ -1,7 +1,7 @@
 import { fetcher } from "@/lib/fetcher";
 import { Article_Frequency } from "@prisma/client";
 
-type UpdateUserPayload = {
+export type UpdateUserPayload = {
   id: string,
   user_name?: string,
   themes?: string[],
