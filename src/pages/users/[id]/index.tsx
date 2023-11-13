@@ -47,18 +47,14 @@ export default function User() {
     if (!id) {
       return;
     }
-
-    getTopicsByThemes(id)
-      .then((topics) => topics && setTopicsList(topics))
-      .catch((err) => console.log(err));
     const interval = setInterval(() => {
       setTimeRemaining(getTimeRemainingUntilNextDay());
     }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [getTopicsByThemes, id]);
+    getTopicsByThemes(id)
+    .then((topics) => topics && setTopicsList(topics))
+    .catch((err) => console.log(err));
+    clearInterval(interval);
+  }, []);
 
   async function onLogOut(){
     try{

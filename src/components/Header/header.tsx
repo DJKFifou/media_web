@@ -40,7 +40,7 @@ export default function Header({ id }: { id: string }) {
     getTopicsByThemes(userId)
       .then((topics) => topics && setTopicsList(topics))
       .catch((err) => console.log(err));
-  }, [userId, getSavedArticles, getTopicsByThemes]);
+  }, [userId]);
   return (
     <div className={styles.header}>
       <nav className={styles.navigation}>
