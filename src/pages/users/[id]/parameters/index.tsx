@@ -5,7 +5,6 @@ import { Article_Frequency, Prisma, Theme, User } from "@prisma/client";
 import useAuth from "@/hooks/useAuth";
 import DropdownInformation from "@/components/user/DropdownInformation";
 import useTheme from "@/hooks/useTheme";
-import { EnhancedUser } from "@/types";
 
 interface CustomElements extends HTMLFormControlsCollection {
   pseudo?: HTMLInputElement;
@@ -23,8 +22,6 @@ export default function Parameters() {
   const { logOut } = useAuth();
   const {getSaveThemes, getNoSaveThemes} = useTheme()
   const userId = router.query.id as string;
-  // @todo robust this
-  const [updateUserObject, setUpdateUserObject] = useState<EnhancedUser["db"] | null>(null);
   const [dropDownTheme, setDropDownTheme] = useState({ personalInformation: false, themes: false, frequency: false });
   const [saveThemes, setSaveThemes] = useState<Theme[]>([]);
   const [noSaveThemes, setNoSaveThemes] = useState<Theme[]>([]);
@@ -45,11 +42,6 @@ export default function Parameters() {
     },
   ];
 
-  function handleUpdateUserObject(key: string, value: string) {
-    // @todo Improve type
-    setUpdateUserObject((prevState: any) => ({ ...prevState, [key]: value }));
-  }
-
   function onClickSaveTheme(theme: Theme){
     setNoSaveThemes((prevState: Theme[]) => ([...prevState, theme]))
     const newSaveList: Theme[] = saveThemes.filter((saveTheme: Theme) => saveTheme.id !== theme.id)
@@ -66,7 +58,7 @@ export default function Parameters() {
   async function handleSubmit(event: FormEvent<CustomForm> ){
     event.preventDefault();
     const target = event.currentTarget.elements;
-    const user_name = target.pseudo?.name;
+    const user_name = target.pseudo?.value;
     const frequency_name = target.frequency_name?.value;
     const frequency_number = target.frequency_number?.valueAsNumber
     const selectedThemes = saveThemes.map((theme) => theme.id)
@@ -77,9 +69,11 @@ export default function Parameters() {
     let payload : UpdateUserPayload = {id: currentUser.db.id}
 
     if(user_name){
+      console.log(user_name)
       payload = {...payload, user_name: user_name}
     }
     if(frequency_name){
+      console.log(frequency_name)
       const article_frequency = frequency_name as Article_Frequency
       payload = {...payload, article_frequency: article_frequency}
     }
@@ -87,11 +81,14 @@ export default function Parameters() {
       payload = {...payload, article_number: frequency_number}
     }
     if(selectedThemes.length > 0 ){
+      console.log(selectedThemes)
       payload= {...payload, themes: selectedThemes}
     }
 
     try{
-      await updateUser(payload)
+      await updateUser(payload).then(() => {
+        router.replace(`/users/${currentUser.db.id}`)
+      })
     }catch (e) {
       console.error(e)
     }
@@ -133,14 +130,12 @@ export default function Parameters() {
             }))
           }
         >
-          {/*<label>Adresse Email</label>*/}
-          {/*<input placeholder={}/>*/}
           <label>Mon pseudo</label>
           <input
             placeholder={currentUser?.db.user_name || ""}
             name="pseudo"
-            id="pseduo"
-            // onChange={(event) => handleUpdateUserObject("user_name", event.target.value)}
+            id="pseudo"
+            type="text"
           />
         </DropdownInformation>
         <DropdownInformation
@@ -177,11 +172,9 @@ export default function Parameters() {
             id="frequency_number"
             name="frequency_number"
             placeholder={currentUser.db.article_number ? String(currentUser.db.article_number) : undefined}
-            // onChange={(event) => handleUpdateUserObject("article_number", event.target.value)}
           />
           <label>Choisi ta fréquence</label>
           <select
-            onChange={(event) => handleUpdateUserObject("article_frequency", event.target.value)}
             id="frequency_name"
             name="frequency_name"
           >
@@ -190,6 +183,7 @@ export default function Parameters() {
                 <option
                   value={frequency.value}
                   key={index}
+                  selected={frequency.value === currentUser.db.article_frequency}
                 >
                   {frequency.label}
                 </option>
