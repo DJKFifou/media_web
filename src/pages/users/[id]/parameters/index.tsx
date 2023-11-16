@@ -5,6 +5,9 @@ import { Article_Frequency, Prisma, Theme, User } from "@prisma/client";
 import useAuth from "@/hooks/useAuth";
 import DropdownInformation from "@/components/user/DropdownInformation";
 import useTheme from "@/hooks/useTheme";
+import UserName from "@/components/user/userName/UserName.";
+import Header from "@/components/Header/header";
+import styles from '@/styles/userProfil.module.scss'
 
 interface CustomElements extends HTMLFormControlsCollection {
   pseudo?: HTMLInputElement;
@@ -117,84 +120,88 @@ export default function Parameters() {
 
   return (
     <div>
-      <button onClick={() => router.push(`/users/${userId}`)}>Retour</button>
-      <h1>{currentUser.db.user_name}</h1>
-      <form onSubmit={handleSubmit}>
-        <DropdownInformation
-          isOpen={dropDownTheme.personalInformation}
-          title={"Mes information personnel"}
-          onClick={() =>
-            setDropDownTheme((prevState) => ({
-              ...prevState,
-              personalInformation: !dropDownTheme.personalInformation,
-            }))
-          }
-        >
-          <label>Mon pseudo</label>
-          <input
-            placeholder={currentUser?.db.user_name || ""}
-            name="pseudo"
-            id="pseudo"
-            type="text"
-          />
-        </DropdownInformation>
-        <DropdownInformation
-          isOpen={dropDownTheme.themes}
-          title={"Mes thèmes sélectionnés"}
-          onClick={() => setDropDownTheme((prevState) => ({ ...prevState, themes: !dropDownTheme.themes }))}
-        >
-          <div>
-            {saveThemes.map((theme, index) => {
-              return (
-                <div key={index}>
-                  <button onClick={() => onClickSaveTheme(theme)}>{theme.title}</button>
-                </div>
-              );
-            })}
-            <p style={{ fontWeight: "bold" }}>Themes disponibles</p>
-            {noSaveThemes.map((theme, index) => {
-              return (
-                <div key={index}>
-                  <button onClick={() => onClickNoSaveTheme(theme)}>{theme.title}</button>
-                </div>
-              );
-            })}
-          </div>
-        </DropdownInformation>
-        <DropdownInformation
-          isOpen={dropDownTheme.frequency}
-          title={"Le nombre et les fréquences"}
-          onClick={() => setDropDownTheme((prevState) => ({ ...prevState, frequency: !dropDownTheme.frequency }))}
-        >
-          <label>Choisi ta quantité de news</label>
-          <input
-            type="number"
-            id="frequency_number"
-            name="frequency_number"
-            placeholder={currentUser.db.article_number ? String(currentUser.db.article_number) : undefined}
-          />
-          <label>Choisi ta fréquence</label>
-          <select
-            id="frequency_name"
-            name="frequency_name"
+      <Header id={userId} />
+      <div className={styles.container}>
+        {currentUser.db.user_name ? (
+          <UserName userName={currentUser.db.user_name} />
+        ) : null}
+        <form onSubmit={handleSubmit}>
+          <DropdownInformation
+            isOpen={dropDownTheme.personalInformation}
+            title={"Mes information personnel"}
+            onClick={() =>
+              setDropDownTheme((prevState) => ({
+                ...prevState,
+                personalInformation: !dropDownTheme.personalInformation,
+              }))
+            }
           >
-            {articleFrequencyList.map((frequency, index) => {
-              return (
-                <option
-                  value={frequency.value}
-                  key={index}
-                  selected={frequency.value === currentUser.db.article_frequency}
-                >
-                  {frequency.label}
-                </option>
-              );
-            })}
-          </select>
-        </DropdownInformation>
-        <button type={"submit"}>Enregistrer les informations</button>
-        <button onClick={() => onSignOut()}>Me déconnecter</button>
-        <button>Supprimer on compte</button>
-      </form>
+            <label>Mon pseudo</label>
+            <input
+              placeholder={currentUser?.db.user_name || ""}
+              name="pseudo"
+              id="pseudo"
+              type="text"
+            />
+          </DropdownInformation>
+          <DropdownInformation
+            isOpen={dropDownTheme.themes}
+            title={"Mes thèmes sélectionnés"}
+            onClick={() => setDropDownTheme((prevState) => ({ ...prevState, themes: !dropDownTheme.themes }))}
+          >
+            <div>
+              {saveThemes.map((theme, index) => {
+                return (
+                  <div key={index}>
+                    <button onClick={() => onClickSaveTheme(theme)}>{theme.title}</button>
+                  </div>
+                );
+              })}
+              <p style={{ fontWeight: "bold" }}>Themes disponibles</p>
+              {noSaveThemes.map((theme, index) => {
+                return (
+                  <div key={index}>
+                    <button onClick={() => onClickNoSaveTheme(theme)}>{theme.title}</button>
+                  </div>
+                );
+              })}
+            </div>
+          </DropdownInformation>
+          <DropdownInformation
+            isOpen={dropDownTheme.frequency}
+            title={"Le nombre et les fréquences"}
+            onClick={() => setDropDownTheme((prevState) => ({ ...prevState, frequency: !dropDownTheme.frequency }))}
+          >
+            <label>Choisi ta quantité de news</label>
+            <input
+              type="number"
+              id="frequency_number"
+              name="frequency_number"
+              placeholder={currentUser.db.article_number ? String(currentUser.db.article_number) : undefined}
+            />
+            <label>Choisi ta fréquence</label>
+            <select
+              id="frequency_name"
+              name="frequency_name"
+            >
+              {articleFrequencyList.map((frequency, index) => {
+                return (
+                  <option
+                    value={frequency.value}
+                    key={index}
+                    selected={frequency.value === currentUser.db.article_frequency}
+                  >
+                    {frequency.label}
+                  </option>
+                );
+              })}
+            </select>
+          </DropdownInformation>
+          <button type={"submit"}>Enregistrer les informations</button>
+          <button onClick={() => onSignOut()}>Me déconnecter</button>
+          <button>Supprimer on compte</button>
+        </form>
+      </div>
     </div>
   );
 }

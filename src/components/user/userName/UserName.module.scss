@@ -1,0 +1,11 @@
+@import "@/styles/_variables.scss";
+
+.container{
+  background-color: $color-bg-2;
+
+  .text{
+    color: $color-primary-1;
+    text-transform: uppercase;
+    font-family: "Cousine-Bold";
+  }
+}
