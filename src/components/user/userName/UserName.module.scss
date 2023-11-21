@@ -1,11 +1,32 @@
 @import "@/styles/_variables.scss";
 
-.container{
-  background-color: $color-bg-2;
-
-  .text{
-    color: $color-primary-1;
-    text-transform: uppercase;
-    font-family: "Cousine-Bold";
+.userInformationContainer{
+  display: flex;
+  gap: 5%;
+  .profilePicture{
+    background-color: red;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+  }
+  .textContainer{
+    .userNameContainer{
+      background-color: $color-bg-2;
+      margin-top: auto;
+      margin-bottom: auto;
+      padding: 5px 10px;
+      border-radius: 32px;
+      .text{
+        color: $color-primary-1;
+        text-transform: uppercase;
+        font-family: "Cousine-Bold";
+        font-size: 2rem;
+      }
+    }
+    .articleText{
+      font-family: "Source Sans Pro";
+      color: $color-primary-2;
+      font-weight: 600;
+    }
   }
 }

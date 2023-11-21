@@ -1,0 +1,15 @@
+.containerTitle{
+  display: flex;
+  justify-content: space-between;
+  .title{
+    font-family: "Source Sans Pro";
+    font-weight: 600;
+    color: black;
+  }
+  .button{
+    background-color: transparent;
+    color: black;
+    border: 0px;
+    padding: 5px;
+  }
+}
