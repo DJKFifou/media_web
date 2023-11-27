@@ -178,7 +178,9 @@ export default function Parameters() {
 									);
 								})}
 							</div>
-							<p style={{ fontWeight: 'bold' }}>Themes disponibles</p>
+							<p className={styles.label} style={{ fontWeight: 'bold' }}>
+								Themes disponibles
+							</p>
 							<div className={styles.themesContainer}>
 								{noSaveThemes.map((theme, index) => {
 									return (
@@ -204,39 +206,53 @@ export default function Parameters() {
 							}))
 						}
 					>
-						<label>Choisi ta quantité de news</label>
-						<input
-							type='number'
-							id='frequency_number'
-							name='frequency_number'
-							placeholder={
-								currentUser.db.article_number
-									? String(currentUser.db.article_number)
-									: undefined
-							}
-						/>
-						<label>Choisi ta fréquence</label>
-						<select id='frequency_name' name='frequency_name'>
-							{articleFrequencyList.map((frequency, index) => {
-								return (
-									<option
-										value={frequency.value}
-										key={index}
-										selected={
-											frequency.value === currentUser.db.article_frequency
-										}
-									>
-										{frequency.label}
-									</option>
-								);
-							})}
-						</select>
+						<div className={styles.quantityContainer}>
+							<label className={styles.label}>
+								Choisis ta quantité de news
+							</label>
+							<div className={styles.inputContainer}>
+								<input
+									type='number'
+									id='frequency_number'
+									name='frequency_number'
+									placeholder={
+										currentUser.db.article_number
+											? String(currentUser.db.article_number)
+											: '0'
+									}
+									className={styles.input}
+								/>
+								<img src={'/assets/edit.svg'} alt={'icon editing'} />
+							</div>
+						</div>
+						<div className={styles.frequencyContainer}>
+							<label className={styles.label}>Choisis ta fréquence</label>
+							<select id='frequency_name' name='frequency_name'>
+								{articleFrequencyList.map((frequency, index) => {
+									return (
+										<option
+											value={frequency.value}
+											key={index}
+											selected={
+												frequency.value === currentUser.db.article_frequency
+											}
+										>
+											{frequency.label}
+										</option>
+									);
+								})}
+							</select>
+						</div>
 					</DropdownInformation>
-					<button type={'submit'}>Enregistrer les informations</button>
+					<button type={'submit'} className={styles.saveButton}>
+						Enregistrer les informations
+					</button>
 				</form>
 				<div className={styles.formContainer}>
-					<button onClick={() => onSignOut()}>Me déconnecter</button>
-					<button>Supprimer on compte</button>
+					<button className={styles.otherButton} onClick={() => onSignOut()}>
+						Me déconnecter
+					</button>
+					<button className={styles.otherButton}>Supprimer on compte</button>
 				</div>
 			</div>
 		</div>

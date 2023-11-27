@@ -17,15 +17,9 @@ export default function DropdownInformation({
 	const buttonSvg = isOpen ? '/assets/-.svg' : '/assets/+.svg';
 	return (
 		<div>
-			<div className={styles.containerTitle}>
+			<div className={styles.containerTitle} onClick={() => onClick()}>
 				<p className={styles.title}>{title}</p>
-				<button
-					className={styles.button}
-					type='button'
-					onClick={() => onClick()}
-				>
-					<img src={buttonSvg} alt={'icon'} />
-				</button>
+				<img src={buttonSvg} alt={'icon'} />
 			</div>
 			{isOpen ? <div>{children}</div> : null}
 		</div>
