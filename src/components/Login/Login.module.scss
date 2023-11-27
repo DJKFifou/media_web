@@ -88,13 +88,6 @@ $breakpoint-tablet: 768px;
       align-items: center;
       gap: 4px;
 
-      button {
-        width: 176px;
-        @include end-tablet {
-          width: 170px;
-        }
-      }
-
       .forgottenPasswordLink {
         color: $color-bg-1;
         margin-top: 2px;
